@@ -126,8 +126,45 @@ function setupGame() {
     globalObjects.timeManager = new TimeManager();
     globalObjects.keyboardControls = new KeyboardControls();
 
+    let levelButton = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "menu_btn_normal.png",
+            x: 65,
+            y: 24,
+            scaleX: 0.47,
+            scaleY: 0.47
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "menu_btn_hover.png",
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "menu_btn_press.png",
+        },
+        onHover: () => {
+            if (canvas) {
+                playSound('click').detune = -50;
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            openLevelPopup();
+        }
+    });
+    levelButton.addText("LVL SELECT", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'});
+    levelButton.setTextOffset(0, 1)
+    levelButton.setDepth(2)
+
+
     globalObjects.extras = [];
-    globalObjects.roomTitle = PhaserScene.add.text(gameConsts.halfWidth, 50, 'TRAINING LOCK', {fontFamily: 'kingthings', fontSize: 40, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(1001).setOrigin(0.5, 0.5);
+    globalObjects.roomTitle = PhaserScene.add.text(gameConsts.halfWidth, 50, 'TRAINING LOCK', {fontFamily: 'kingthings', fontSize: 40, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(99).setOrigin(0.5, 0.5);
 
     // globalObjects.hoverTextManager = new InternalHoverTextManager(PhaserScene);
     PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'background.png');
@@ -158,9 +195,9 @@ function setRoom(room) {
     if (room == "practice") {
         createPins(3);
         globalObjects.roomTitle.setText('TRAINING LOCK')
-        let instructions = PhaserScene.add.text(35, gameConsts.height - 150, "CONTROLS:\n- Left/Right to move pick\n- Up to push up tumbler\n- Space/Enter to set tumbler when\n   it reaches the top of the lock", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(1001).setStroke('#000000', 4).setOrigin(0, 0);
+        let instructions = PhaserScene.add.text(35, gameConsts.height - 150, "CONTROLS:\n- Left/Right to move pick\n- Up to push up tumbler\n- Space/Enter to set tumbler when\n   it reaches the top of the lock", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
         globalObjects.extras.push(instructions);
-        let goalText = PhaserScene.add.text(570, gameConsts.height - 135, 'GOAL:\nSet all the\ntumblers\nin place ->', {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(1001).setOrigin(0, 0);
+        let goalText = PhaserScene.add.text(570, gameConsts.height - 135, 'GOAL:\nSet all the\ntumblers\nin place ->', {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setOrigin(0, 0);
         goalText.setStroke('#000000', 4)
         globalObjects.extras.push(goalText);
         let goalPic = PhaserScene.add.image(720, gameConsts.height - 72, 'lock', 'goal.png').setScale(0.8);
@@ -215,7 +252,28 @@ function updatePickSpot() {
     globalObjects.pickshadow.y = gameConsts.halfHeight;
 }
 
-function pickMoveUp() {
+function pickMoveUp(canBuffer = true) {
+    if (gameVars.pickDelayed) {
+        if (gameVars.pickCanBuffer) {
+            gameVars.pickCanBuffer = false;
+            setTimeout(() => {
+                pickMoveUp(false);
+            }, 80)
+        }
+        return;
+    }
+
+    gameVars.pickDelayed = true;
+    if (canBuffer) {
+        setTimeout(() => {
+            gameVars.pickCanBuffer = true;
+        }, 440)
+    }
+
+    setTimeout(() => {
+        gameVars.pickDelayed = false;
+        gameVars.pickCanBuffer = false;
+    }, 540)
     pinMoveUp(gameVars.currentPin);
     gameVars.pickStuck = true;
     let goalX = gameConsts.halfWidth + gameVars.currentPin * 31;
@@ -251,20 +309,23 @@ function pickMoveUp() {
 
 function pinMoveUp(pinNum) {
     let currPin = globalObjects.pins[pinNum];
+
     if (!currPin) {
         return;
     }
     if (currPin.locked) {
         return;
     }
+
     if (currPin.currAnim) {
         currPin.currAnim.stop();
     }
     if (!currPin.randDur) {
-        let randVal = Math.max(0, Math.floor(Math.random() * 4.5) - 1);
+        let randVal = Math.min(4, Math.floor(Math.random() * 4.8) + 1);
         currPin.randDur = 85 + randVal * 40;
     }
     let dropDelay = Math.max(0, Math.floor(currPin.randDur * 0.15 - 12));
+    console.log(dropDelay);
 
     currPin.currDelay = PhaserScene.time.delayedCall(Math.max(currPin.randDur - 1, Math.floor(currPin.randDur * 0.76) + 6), () => {
         gameVars.canLock = true;
@@ -272,6 +333,16 @@ function pinMoveUp(pinNum) {
         setTimeout(() => {
             if (gameVars.canShowGreen && !currPin.locked) {
                 globalObjects.indicators[pinNum].setFrame('icon_green.png');
+                let flashObj = getTempPoolObject('lock', 'icon_green_flash.png', 'green_flash', 400).setDepth(10);
+                flashObj.x = globalObjects.indicators[pinNum].x;
+                flashObj.y = globalObjects.indicators[pinNum].y;
+                flashObj.alpha = 0.3 + dropDelay * 0.02;
+                PhaserScene.tweens.add({
+                    targets: flashObj,
+                    alpha: 0,
+                    ease: 'Quad.easeOut',
+                    duration: 150 + dropDelay * 5
+                })
             }
         }, 5)
         currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 115) * 5) + dropDelay), () => {
@@ -301,9 +372,9 @@ function pinMoveUp(pinNum) {
                 onComplete: () => {
                     currPin.inMotion = false;
                     let lastRandDur = currPin.randDur;
-                    let randVal = Math.floor(Math.random() * 4);
+                    let randVal = Math.floor(Math.random() * 4.8);
                     while (lastRandDur < 80 + randVal * 40 + 1 && lastRandDur > 80 + randVal * 40 - 1 ) {
-                        randVal = Math.floor(Math.random() * 4.5);
+                        randVal = Math.floor(Math.random() * 4.8);
                     }
                     currPin.randDur = 80 + randVal * 40;
                 }
@@ -366,4 +437,85 @@ function slideOpenLock() {
 
 function setupPlayer() {
     globalObjects.options = new Options(PhaserScene, gameConsts.width - 27, 27);
+}
+
+function openPopup(contents) {
+    if (!globalObjects.currPopup) {
+        globalObjects.currPopup = {
+            active: true
+        };
+    }
+    globalObjects.currPopup.dark = new Button({
+        normal: {
+            ref: "blackPixel",
+            alpha: 0.55,
+            scaleX: 1000,
+            scaleY: 1000,
+            x: gameConsts.halfWidth,
+            y: gameConsts.halfHeight,
+        },
+    });
+    globalObjects.currPopup.dark.setDepth(100);
+    globalObjects.currPopup.bg = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'ui', 'popup.png').setDepth(100).setScale(0.865);
+    PhaserScene.tweens.add({
+        targets: globalObjects.currPopup.bg,
+        scaleX: 0.88,
+        scaleY: 0.88,
+        duration: 180,
+        ease: 'Back.easeOut'
+    })
+
+    let closeButton = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "general_btn.png",
+            x: gameConsts.halfWidth + 158,
+            y: gameConsts.halfHeight - 192,
+            scaleX: 0.8,
+            scaleY: 0.8,
+            alpha: 0.92
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "general_btn.png",
+            alpha: 1
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "general_btn.png",
+            alpha: 0.8
+        },
+        onHover: () => {
+            if (canvas) {
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            for (let i in globalObjects.currPopup) {
+                if (i !== 'active') {
+                    globalObjects.currPopup[i].destroy();
+                }
+            }
+            globalObjects.currPopup.active = false;
+        }
+    });
+    closeButton.addText("X", {fontFamily: 'kingthings', fontSize: 28, color: '#000000', align: 'center'});
+    closeButton.setTextOffset(1, 0)
+    closeButton.setDepth(101);
+    globalObjects.currPopup.closeButton = closeButton;
+    for (let i in contents) {
+        globalObjects.currPopup[i] = contents[i];
+    }
+}
+
+function openLevelPopup() {
+    let lvlContents = {};
+    lvlContents.title = PhaserScene.add.text(gameConsts.halfWidth, 108, 'LEVEL SELECT', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+
+    openPopup(lvlContents)
 }
