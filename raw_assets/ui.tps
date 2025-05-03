@@ -70,7 +70,7 @@
         <key>pngOptimizationLevel</key>
         <uint>1</uint>
         <key>webpQualityLevel</key>
-        <uint>80</uint>
+        <uint>72</uint>
         <key>textureSubPath</key>
         <string></string>
         <key>textureFormat</key>
@@ -173,9 +173,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">ui/combo_btn.png</key>
-            <key type="filename">ui/combo_btn_hover.png</key>
-            <key type="filename">ui/combo_btn_press.png</key>
+            <key type="filename">ui/popup.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -184,184 +182,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>13,11,25,21</rect>
+                <rect>110,130,220,260</rect>
                 <key>scale9Paddings</key>
-                <rect>13,11,25,21</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ui/more.png</key>
-            <key type="filename">ui/more_hover.png</key>
-            <key type="filename">ui/more_press.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>23,11,45,23</rect>
-                <key>scale9Paddings</key>
-                <rect>23,11,45,23</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ui/music.png</key>
-            <key type="filename">ui/music_mute.png</key>
-            <key type="filename">ui/sound_full.png</key>
-            <key type="filename">ui/sound_half.png</key>
-            <key type="filename">ui/sound_most.png</key>
-            <key type="filename">ui/sound_mute.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>15,13,29,25</rect>
-                <key>scale9Paddings</key>
-                <rect>15,13,29,25</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ui/nextLevel.png</key>
-            <key type="filename">ui/nextLevel_hover.png</key>
-            <key type="filename">ui/nextLevel_press.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>45,13,90,25</rect>
-                <key>scale9Paddings</key>
-                <rect>45,13,90,25</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ui/paper.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>256,278,512,556</rect>
-                <key>scale9Paddings</key>
-                <rect>256,278,512,556</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ui/paper_half.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>154,100,307,200</rect>
-                <key>scale9Paddings</key>
-                <rect>154,100,307,200</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ui/play_btn.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>16,16,31,31</rect>
-                <key>scale9Paddings</key>
-                <rect>16,16,31,31</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ui/play_btn_hover.png</key>
-            <key type="filename">ui/play_btn_press.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>16,16,33,33</rect>
-                <key>scale9Paddings</key>
-                <rect>16,16,33,33</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ui/slider.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>83,16,165,32</rect>
-                <key>scale9Paddings</key>
-                <rect>83,16,165,32</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ui/slider_indicator.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>10,10,19,19</rect>
-                <key>scale9Paddings</key>
-                <rect>10,10,19,19</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ui/slider_indicator_glow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>12,12,23,23</rect>
-                <key>scale9Paddings</key>
-                <rect>12,12,23,23</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">ui/small_paper.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>110,58,220,115</rect>
-                <key>scale9Paddings</key>
-                <rect>110,58,220,115</rect>
+                <rect>110,130,220,260</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

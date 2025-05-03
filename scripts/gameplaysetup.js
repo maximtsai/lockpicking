@@ -238,7 +238,7 @@ function createPins(amt) {
 }
 
 function updatePickSpot() {
-    let goalX = gameConsts.halfWidth + gameVars.currentPin * 31;
+    let goalX = gameConsts.halfWidth + gameVars.currentPin * 30.3;
     if (globalObjects.pick.currAnim) {
         globalObjects.pick.currAnim.stop();
     }
@@ -276,7 +276,7 @@ function pickMoveUp(canBuffer = true) {
     }, 540)
     pinMoveUp(gameVars.currentPin);
     gameVars.pickStuck = true;
-    let goalX = gameConsts.halfWidth + gameVars.currentPin * 31;
+    let goalX = gameConsts.halfWidth + gameVars.currentPin * 30.3;
     let goalY = gameConsts.halfHeight - 20;
     if (globalObjects.pick.currAnim) {
         globalObjects.pick.currAnim.stop();
@@ -321,45 +321,55 @@ function pinMoveUp(pinNum) {
         currPin.currAnim.stop();
     }
     if (!currPin.randDur) {
-        let randVal = Math.min(4, Math.floor(Math.random() * 4.8) + 1);
-        currPin.randDur = 85 + randVal * 40;
+        let randVal = Math.floor(Math.random() * 5.5) - 0.5;
+        if (!gameVars.firstPin) {
+            gameVars.firstPin = true;
+            randVal = Math.max(2, randVal);
+        }
+        currPin.randDur = Math.max(80, 80 + randVal * 30);
     }
-    let dropDelay = Math.max(0, Math.floor(currPin.randDur * 0.15 - 12));
-    console.log(dropDelay);
+    let dropDelay = Math.max(0, Math.floor(currPin.randDur * 1 - 50));
+    let overrideCantOpen = currPin.randDur < 130;
+    if (overrideCantOpen) {
+        dropDelay = 0;
+    }
 
-    currPin.currDelay = PhaserScene.time.delayedCall(Math.max(currPin.randDur - 1, Math.floor(currPin.randDur * 0.76) + 6), () => {
-        gameVars.canLock = true;
-        gameVars.canShowGreen = true;
-        setTimeout(() => {
-            if (gameVars.canShowGreen && !currPin.locked) {
-                globalObjects.indicators[pinNum].setFrame('icon_green.png');
-                let flashObj = getTempPoolObject('lock', 'icon_green_flash.png', 'green_flash', 400).setDepth(10);
-                flashObj.x = globalObjects.indicators[pinNum].x;
-                flashObj.y = globalObjects.indicators[pinNum].y;
-                flashObj.alpha = 0.3 + dropDelay * 0.02;
-                PhaserScene.tweens.add({
-                    targets: flashObj,
-                    alpha: 0,
-                    ease: 'Quad.easeOut',
-                    duration: 150 + dropDelay * 5
-                })
-            }
-        }, 5)
-        currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 115) * 5) + dropDelay), () => {
-            gameVars.canShowGreen = false;
+    currPin.currDelay = PhaserScene.time.delayedCall(Math.max(currPin.randDur - 1, Math.floor(currPin.randDur * 0.50) + 6), () => {
+        if (!overrideCantOpen) {
+            gameVars.canLock = true;
+            gameVars.canShowGreen = true;
             setTimeout(() => {
-                gameVars.canLock = false;
+                if (gameVars.canShowGreen && !currPin.locked) {
+                    globalObjects.indicators[pinNum].setFrame('icon_green.png');
+                    let flashObj = getTempPoolObject('lock', 'icon_green_flash.png', 'green_flash', 400).setDepth(10);
+                    flashObj.x = globalObjects.indicators[pinNum].x;
+                    flashObj.y = globalObjects.indicators[pinNum].y;
+                    flashObj.alpha = 0.3 + dropDelay * 0.02;
+                    PhaserScene.tweens.add({
+                        targets: flashObj,
+                        alpha: 0,
+                        ease: 'Quad.easeOut',
+                        duration: 130 + dropDelay * 4
+                    })
+                }
             }, 5)
-            if (!currPin.locked) {
-                globalObjects.indicators[pinNum].setFrame('icon_yellow.png');
-            }
-        })
+            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 4) + dropDelay * 1.1), () => {
+                gameVars.canShowGreen = false;
+                setTimeout(() => {
+                    gameVars.canLock = false;
+                }, 5)
+                if (!currPin.locked) {
+                    globalObjects.indicators[pinNum].setFrame('icon_yellow.png');
+                }
+            })
+        }
+
     })
     currPin.inMotion = true;
 
     currPin.currAnim = PhaserScene.tweens.add({
         targets: currPin,
-        y: gameConsts.halfHeight - 45,
+        y: gameConsts.halfHeight - 47,
         ease: 'Quad.easeOut',
         duration: currPin.randDur,
         onComplete: () => {
@@ -368,15 +378,16 @@ function pinMoveUp(pinNum) {
                 targets: currPin,
                 y: currPin.startY,
                 ease: 'Quad.easeIn',
-                duration: Math.max(380, currPin.randDur * 6 - 160),
+                duration: Math.max(420, currPin.randDur * 6.5 - 190),
                 onComplete: () => {
                     currPin.inMotion = false;
                     let lastRandDur = currPin.randDur;
-                    let randVal = Math.floor(Math.random() * 4.8);
-                    while (lastRandDur < 80 + randVal * 40 + 1 && lastRandDur > 80 + randVal * 40 - 1 ) {
-                        randVal = Math.floor(Math.random() * 4.8);
+                    let randVal = Math.floor(Math.random() * 5.5) - 0.5;
+                    let canExtraCheck = true;
+                    while (lastRandDur < 80 + randVal * 40 + 1 && lastRandDur > 70 + randVal * 32 - 1 ) {
+                        randVal = Math.floor(Math.random() * 5.5) - 0.5;
                     }
-                    currPin.randDur = 80 + randVal * 40;
+                    currPin.randDur = Math.max(80, 70 + randVal * 32);
                 }
             })
         }
@@ -470,7 +481,7 @@ function openPopup(contents) {
             atlas: 'buttons',
             ref: "general_btn.png",
             x: gameConsts.halfWidth + 158,
-            y: gameConsts.halfHeight - 192,
+            y: gameConsts.halfHeight - 177,
             scaleX: 0.8,
             scaleY: 0.8,
             alpha: 0.92
@@ -515,7 +526,98 @@ function openPopup(contents) {
 
 function openLevelPopup() {
     let lvlContents = {};
-    lvlContents.title = PhaserScene.add.text(gameConsts.halfWidth, 108, 'LEVEL SELECT', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
-
+    lvlContents.title = PhaserScene.add.text(gameConsts.halfWidth, 123, 'LEVEL SELECT', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
     openPopup(lvlContents)
+    let extraContents = {};
+
+    let levelNames = [
+        "Training Lock",
+        "Level 1: Unshackled",
+        "Level 2: Escape",
+        "Level 3: Dressing Up",
+        "Level 4: Palace Gate",
+        "Level 5: Tricky Door",
+        "Level 6: Bedroom",
+        "Level 7: Her Heart"];
+    let levelNamesAlt = [
+        "Training Lock",
+        "Level 1: Unshackled",
+        "Level 2",
+        "Level 3",
+        "Level 4",
+        "Level 5",
+        "Level 6",
+        "Level 7"];
+    for (let i = 0; i < levelNames.length; i++) {
+        let btnName = "level_"+i;
+        let levelButton = new Button({
+            normal: {
+                atlas: 'buttons',
+                ref: "menu_btn_normal.png",
+                    x: gameConsts.halfWidth,
+                    y: gameConsts.halfHeight - 140 + i * 41,
+                scaleX: 1,
+                scaleY: 0.65,
+                alpha: 1,
+            },
+            hover: {
+                atlas: 'buttons',
+                ref: "menu_btn_hover.png",
+                alpha: 1,
+            },
+            press: {
+                atlas: 'buttons',
+                ref: "menu_btn_press.png",
+                alpha: 1,
+            },
+            disable: {
+                atlas: 'buttons',
+                ref: "menu_btn_press.png",
+                alpha: 0.5,
+            },
+            onHover: () => {
+                if (canvas) {
+                    canvas.style.cursor = 'pointer';
+                }
+            },
+            onHoverOut: () => {
+                if (canvas) {
+                    canvas.style.cursor = 'default';
+                }
+            },
+            onMouseUp: () => {
+                gotoLevel(i);
+                for (let i in globalObjects.currPopup) {
+                    if (i !== 'active') {
+                        globalObjects.currPopup[i].destroy();
+                    }
+                }
+                globalObjects.currPopup.active = false;
+            }
+        });
+        levelButton.addText(levelNames[i], {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'})
+
+        //closeButton.setTextOffset(1, 0)
+        levelButton.setDepth(102);
+        if (i > gameVars.latestLevel) {
+            levelButton.setState(DISABLE);
+            levelButton.setText(levelNamesAlt[i]);
+        }
+
+
+        extraContents[btnName] = levelButton;
+    }
+
+    addPopupContents(extraContents);
+
+}
+
+function addPopupContents(contents) {
+    for (let i in contents) {
+        globalObjects.currPopup[i] = contents[i];
+    }
+}
+
+function gotoLevel(lvl) {
+    console.log("going to level ", lvl);
 }

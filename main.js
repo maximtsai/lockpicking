@@ -56,8 +56,7 @@ let funnies = {};
 let gameOptions = {};
 let gameVars = {
     hideCheatVal: 0,
-    latestLevel: 0,
-    maxLevel: 0,
+    latestLevel: 1,
     isHardMode: false,
     gameConstructed: false,
     mousedown: false,
@@ -90,12 +89,8 @@ function preload ()
 {
     handleBorders();
     gameVars.latestLevel = parseInt(localStorage.getItem("latestLevel"));
-    gameVars.maxLevel = parseInt(localStorage.getItem("maxLevel"));
     if (!gameVars.latestLevel) {
-        gameVars.latestLevel = 0;
-    }
-    if (!gameVars.maxLevel) {
-        gameVars.maxLevel = gameVars.latestLevel;
+        gameVars.latestLevel = 1;
     }
 
     // if (isMobile && screen && screen.orientation && screen.orientation.lock) {
@@ -210,7 +205,7 @@ function update(time, delta) {
                 gameVars.currentPin = Math.max(0, gameVars.currentPin - 1);
                 updatePickSpot();
             } else if (globalObjects.keyboardControls.getRightJustDown()) {
-                gameVars.currentPin = Math.min(gameVars.maxPins - 1, gameVars.currentPin + 1);
+                gameVars.currentPin = Math.min(5, gameVars.currentPin + 1);
                 updatePickSpot();
             } else if (globalObjects.keyboardControls.getUpJustDown()) {
                 pickMoveUp();
