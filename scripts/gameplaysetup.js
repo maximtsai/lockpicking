@@ -159,15 +159,53 @@ function setupGame() {
         }
     });
     levelButton.addText("LVL SELECT", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'});
-    levelButton.setTextOffset(0, 1)
-    levelButton.setDepth(2)
+    levelButton.setTextOffset(0, 1);
+    levelButton.setDepth(2);
+
+    let questionButton = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "general_btn.png",
+            x: gameConsts.width - 30,
+            y: 30,
+            scaleX: 0.8,
+            scaleY: 0.8,
+            alpha: 0.92
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "general_btn_hover.png",
+            alpha: 1
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "general_btn_press.png",
+            alpha: 0.8
+        },
+        onHover: () => {
+            if (canvas) {
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            openInstructPopup()
+        }
+    });
+    questionButton.addText("?", {fontFamily: 'kingthings', fontSize: 28, color: '#000000', align: 'center'});
+    questionButton.setTextOffset(1, 0)
+    questionButton.setDepth(1);
 
 
     globalObjects.extras = [];
     globalObjects.roomTitle = PhaserScene.add.text(gameConsts.halfWidth, 50, 'TRAINING LOCK', {fontFamily: 'kingthings', fontSize: 40, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(99).setOrigin(0.5, 0.5);
 
     // globalObjects.hoverTextManager = new InternalHoverTextManager(PhaserScene);
-    PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'background.png');
+    globalObjects.currBackground = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'backgrounds', 'door.png');
     PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'lock.png');
     globalObjects.pickshadow = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'pickshadow.png').setAlpha(0.6);
     globalObjects.mechanism = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'mechanism.png');
@@ -185,6 +223,8 @@ function setupGame() {
     PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'lockshadow.png').setDepth(1);
 
     setRoom('practice');
+
+    playMusic('quietshadows', 1, true);
 }
 
 function setRoom(room) {
@@ -321,15 +361,15 @@ function pinMoveUp(pinNum) {
         currPin.currAnim.stop();
     }
     if (!currPin.randDur) {
-        let randVal = Math.floor(Math.random() * 5.5) - 0.5;
+        let randVal = Math.floor(Math.random() * 5);
         if (!gameVars.firstPin) {
             gameVars.firstPin = true;
             randVal = Math.max(2, randVal);
         }
-        currPin.randDur = Math.max(80, 80 + randVal * 30);
+        currPin.randDur = Math.max(100, 90 + randVal * 25);
     }
-    let dropDelay = Math.max(0, Math.floor(currPin.randDur * 1 - 50));
-    let overrideCantOpen = currPin.randDur < 130;
+    let dropDelay = Math.max(0, Math.floor(currPin.randDur * 1.7 - 130));
+    let overrideCantOpen = currPin.randDur < 90;
     if (overrideCantOpen) {
         dropDelay = 0;
     }
@@ -344,20 +384,20 @@ function pinMoveUp(pinNum) {
                     let flashObj = getTempPoolObject('lock', 'icon_green_flash.png', 'green_flash', 400).setDepth(10);
                     flashObj.x = globalObjects.indicators[pinNum].x;
                     flashObj.y = globalObjects.indicators[pinNum].y;
-                    flashObj.alpha = 0.3 + dropDelay * 0.02;
+                    flashObj.alpha = 0.25 + dropDelay * 0.006;
                     PhaserScene.tweens.add({
                         targets: flashObj,
                         alpha: 0,
                         ease: 'Quad.easeOut',
-                        duration: 130 + dropDelay * 4
+                        duration: 100 + dropDelay * 4.5
                     })
                 }
-            }, 5)
-            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 4) + dropDelay * 1.1), () => {
+            }, 10)
+            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3.9) + dropDelay * 1.75), () => {
                 gameVars.canShowGreen = false;
                 setTimeout(() => {
                     gameVars.canLock = false;
-                }, 5)
+                }, 40)
                 if (!currPin.locked) {
                     globalObjects.indicators[pinNum].setFrame('icon_yellow.png');
                 }
@@ -366,7 +406,6 @@ function pinMoveUp(pinNum) {
 
     })
     currPin.inMotion = true;
-
     currPin.currAnim = PhaserScene.tweens.add({
         targets: currPin,
         y: gameConsts.halfHeight - 47,
@@ -378,16 +417,26 @@ function pinMoveUp(pinNum) {
                 targets: currPin,
                 y: currPin.startY,
                 ease: 'Quad.easeIn',
-                duration: Math.max(420, currPin.randDur * 6.5 - 190),
+                duration: Math.max(420, currPin.randDur * 6.85 - 210),
                 onComplete: () => {
                     currPin.inMotion = false;
                     let lastRandDur = currPin.randDur;
-                    let randVal = Math.floor(Math.random() * 5.5) - 0.5;
-                    let canExtraCheck = true;
-                    while (lastRandDur < 80 + randVal * 40 + 1 && lastRandDur > 70 + randVal * 32 - 1 ) {
-                        randVal = Math.floor(Math.random() * 5.5) - 0.5;
+                    let randVal = Math.floor(Math.random() * 5);
+                    while (currPin.lastRandVal === randVal) {
+                        randVal = Math.floor(Math.random() * 5);
                     }
-                    currPin.randDur = Math.max(80, 70 + randVal * 32);
+                    if (randVal == currPin.secondLastRandVal) {
+                        // reduce chances of getting second last one, but not impossible.
+                        let testRandVal = Math.floor(Math.random() * 5);
+                        if (testRandVal != currPin.lastRandVal) {
+                            // make sure we don't get last rand val either.
+                            randVal = testRandVal;
+                        }
+                    }
+
+                    currPin.secondLastRandVal = currPin.lastRandVal;
+                    currPin.lastRandVal = randVal;
+                    currPin.randDur = Math.max(75, 60 + randVal * 32);
                 }
             })
         }
@@ -451,6 +500,7 @@ function setupPlayer() {
 }
 
 function openPopup(contents) {
+    playSound("paperflip", 0.6);
     if (!globalObjects.currPopup) {
         globalObjects.currPopup = {
             active: true
@@ -488,12 +538,12 @@ function openPopup(contents) {
         },
         hover: {
             atlas: 'buttons',
-            ref: "general_btn.png",
+            ref: "general_btn_hover.png",
             alpha: 1
         },
         press: {
             atlas: 'buttons',
-            ref: "general_btn.png",
+            ref: "general_btn_press.png",
             alpha: 0.8
         },
         onHover: () => {
@@ -524,6 +574,17 @@ function openPopup(contents) {
     }
 }
 
+function openInstructPopup() {
+    let instructContent = {};
+    instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, 'INSTRUCTIONS', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+    instructContent.goal = PhaserScene.add.text(gameConsts.halfWidth - 158, 200, 'GOAL: Set all\ntumblers in place\nto unlock the lock', {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0, 0.5);
+    instructContent.tips = PhaserScene.add.text(gameConsts.halfWidth, 288, "Tumblers can only be set when they're\nat the top of the lock", {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+
+    instructContent.image = PhaserScene.add.image(gameConsts.halfWidth + 20, gameConsts.halfHeight - 150, 'lock', 'goal.png').setDepth(102).setScale(0.8).setOrigin(0 ,0);
+
+    openPopup(instructContent)
+}
+
 function openLevelPopup() {
     let lvlContents = {};
     lvlContents.title = PhaserScene.add.text(gameConsts.halfWidth, 123, 'LEVEL SELECT', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
@@ -532,7 +593,7 @@ function openLevelPopup() {
 
     let levelNames = [
         "Training Lock",
-        "Level 1: Unshackled",
+        "Level 1: Chains",
         "Level 2: Escape",
         "Level 3: Dressing Up",
         "Level 4: Palace Gate",
@@ -541,7 +602,7 @@ function openLevelPopup() {
         "Level 7: Her Heart"];
     let levelNamesAlt = [
         "Training Lock",
-        "Level 1: Unshackled",
+        "Level 1: Chains",
         "Level 2",
         "Level 3",
         "Level 4",
@@ -620,4 +681,26 @@ function addPopupContents(contents) {
 
 function gotoLevel(lvl) {
     console.log("going to level ", lvl);
+    let flavorStory = [
+        "I'm bound in chains for slipping into forbidden places and claiming forbidden treasures. The chains are strong, but the lock is crude, barely a challenge for my skills.",
+        "The shackles are off, but iron bars still cage me in this prison. The lock is flimsy, begging for a quick twist of my tools. A little finesse, and I’ll be out in no time.",
+        "I have escaped, but to reach the castle’s treasure, I need finer clothes to be presentable. The clothier’s lock is sturdy, a step above the prison’s, but I’m confident I can slip in and claim the attire I need.",
+        "The castle looms, its treasures calling, but sturdy outer gates bar my path. Their locks are well-crafted, yet familiar. I find a blind spot in the security patrols and begin.",
+        "An unassuming door blocks my way, its plain facade hiding a tricky lock enchanted to reset if I falter. One wrong move could undo my progress. I steady my hands and listen closely to crack its magic.",
+        "The princess's door stands before me, its locks a masterpiece of craft and enchantment. Every safeguard known protects this final barrier. Failure is not an option, but victory is within reach.",
+        "I’ve reached the true treasure: Princess Liora's guarded heart, protected by the most intricate lock of all. Each move must be deliberate, each word precise, to unlock her trust and love. I tread with utmost care, knowing this is my greatest challenge yet.",
+        "The final tumbler clicks, and Liora's heart opens, her warm smile inviting me to talk by the fire for hours, undisturbed by guards. As dawn approaches, I slip out the tower window, heart full, certain I’ll return to her another night."
+    ]
+}
+
+function failLevel() {
+    let flavorText = [
+        "My hasty fingers fumble the crude lock, leaving me chained and stalled.",
+        "The flimsy lock jams under my rushed picks, keeping me caged behind bars.",
+        "The clothier’s sturdy lock catches my tools, leaving me in rags unfit for the castle.",
+        "A misstep alerts the guards, and the gate’s lock holds firm, blocking my path.",
+        "The enchanted lock resets at my slightest mistake, sealing the door tight.",
+        "The masterful lock defies my trembling hands, keeping the princess beyond reach.",
+        "A clumsy word locks Liora's heart tighter, her trust slipping away. I retreat, vowing to tread more carefully next time."
+    ]
 }

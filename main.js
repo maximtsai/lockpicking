@@ -214,6 +214,14 @@ function update(time, delta) {
         if (globalObjects.keyboardControls.getLockJustDown()) {
             tryLock();
         }
+        if (globalObjects.currBackground) {
+            console.log(gameVars.mouseposx);
+            let goalXOffset = (gameConsts.halfWidth -gameVars.mouseposx) * 0.025;// + gameConsts.halfWidth;
+            let goalYOffset = (gameConsts.halfHeight -gameVars.mouseposy) * 0.025;// - gameConsts.halfHeight;
+            let goalX = (globalObjects.currBackground.x - gameConsts.halfWidth) * 0.94 + 0.06 * goalXOffset;
+            let goalY = (globalObjects.currBackground.y - gameConsts.halfHeight) * 0.94 + 0.06 * goalYOffset;
+            globalObjects.currBackground.setPosition(goalX + gameConsts.halfWidth, goalY + gameConsts.halfHeight);
+        }
 
     }
 

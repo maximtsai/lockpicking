@@ -70,7 +70,7 @@
         <key>pngOptimizationLevel</key>
         <uint>1</uint>
         <key>webpQualityLevel</key>
-        <uint>90</uint>
+        <uint>94</uint>
         <key>textureSubPath</key>
         <string></string>
         <key>textureFormat</key>
@@ -173,27 +173,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">lock/background.png</key>
-            <key type="filename">lock/lock.png</key>
-            <key type="filename">lock/lockshadow.png</key>
-            <key type="filename">lock/mechanism.png</key>
-            <key type="filename">lock/pick.png</key>
-            <key type="filename">lock/pickbroke.png</key>
-            <key type="filename">lock/pickshadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>200,150,400,300</rect>
-                <key>scale9Paddings</key>
-                <rect>200,150,400,300</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">lock/goal.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -240,6 +219,26 @@
                 <rect>8,8,15,15</rect>
                 <key>scale9Paddings</key>
                 <rect>8,8,15,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">lock/lock.png</key>
+            <key type="filename">lock/lockshadow.png</key>
+            <key type="filename">lock/mechanism.png</key>
+            <key type="filename">lock/pick.png</key>
+            <key type="filename">lock/pickbroke.png</key>
+            <key type="filename">lock/pickshadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>200,150,400,300</rect>
+                <key>scale9Paddings</key>
+                <rect>200,150,400,300</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

@@ -6,6 +6,7 @@ const imageFilesPreload = [
 const imageAtlases = [
     {name: 'pixels', src: 'sprites/pixels.json'},
     {name: 'lock', src: 'sprites/lock.json'},
+    {name: 'backgrounds', src: 'sprites/backgrounds.json'},
     {name: 'buttons', src: 'sprites/buttons.json'},
     {name: 'ui', src: 'sprites/ui.json'},
 ];

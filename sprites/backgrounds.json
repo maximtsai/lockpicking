@@ -1,0 +1,45 @@
+{
+	"textures": [
+		{
+			"image": "sprites/backgrounds-0.webp",
+			"format": "RGBA8888",
+			"size": {
+				"w": 882,
+				"h": 662
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "door.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 880,
+						"h": 660
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 880,
+						"h": 660
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 880,
+						"h": 660
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:8dce0d776dc1628556aad360287a86da:2c6ba071ff150361bf5065b17209c6fe:6ce2ab4a85f7daf91b8ccc33ab04fb60$"
+	}
+}
