@@ -215,7 +215,6 @@ function update(time, delta) {
             tryLock();
         }
         if (globalObjects.currBackground) {
-            console.log(gameVars.mouseposx);
             let goalXOffset = (gameConsts.halfWidth -gameVars.mouseposx) * 0.025;// + gameConsts.halfWidth;
             let goalYOffset = (gameConsts.halfHeight -gameVars.mouseposy) * 0.025;// - gameConsts.halfHeight;
             let goalX = (globalObjects.currBackground.x - gameConsts.halfWidth) * 0.94 + 0.06 * goalXOffset;

@@ -160,6 +160,31 @@
 					}
 				},
 				{
+					"filename": "pickbroke.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 104,
+						"h": 104
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 2,
+						"w": 96,
+						"h": 96
+					},
+					"frame": {
+						"x": 143,
+						"y": 180,
+						"w": 96,
+						"h": 96
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
 					"filename": "icon_green_flash.png",
 					"rotated": false,
 					"trimmed": true,
@@ -174,8 +199,8 @@
 						"h": 30
 					},
 					"frame": {
-						"x": 313,
-						"y": 137,
+						"x": 241,
+						"y": 180,
 						"w": 30,
 						"h": 30
 					},
@@ -199,8 +224,8 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 313,
-						"y": 169,
+						"x": 273,
+						"y": 199,
 						"w": 21,
 						"h": 21
 					},
@@ -224,8 +249,8 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 313,
-						"y": 192,
+						"x": 241,
+						"y": 212,
 						"w": 21,
 						"h": 21
 					},
@@ -249,8 +274,8 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 143,
-						"y": 180,
+						"x": 296,
+						"y": 199,
 						"w": 21,
 						"h": 21
 					},
@@ -274,8 +299,8 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 166,
-						"y": 180,
+						"x": 313,
+						"y": 137,
 						"w": 21,
 						"h": 21
 					},
@@ -299,8 +324,8 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 189,
-						"y": 180,
+						"x": 313,
+						"y": 160,
 						"w": 21,
 						"h": 21
 					},
@@ -333,31 +358,6 @@
 						"x": 0.5,
 						"y": 0.5
 					}
-				},
-				{
-					"filename": "pickbroke.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 800,
-						"h": 600
-					},
-					"spriteSourceSize": {
-						"x": 60,
-						"y": 322,
-						"w": 310,
-						"h": 34
-					},
-					"frame": {
-						"x": 1,
-						"y": 317,
-						"w": 310,
-						"h": 34
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
 				}
 			]
 		}
@@ -365,6 +365,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:a2c9746a58cb51c050d5d6879f881a95:2472d6bfe5f8b6147759b716ea302809:827d362ceaf98d4a0088a2f3b765f464$"
+		"smartupdate": "$TexturePacker:SmartUpdate:9d7153a5d944a9e233530f5cb94c31a1:3f5aefe13a829fe8a4b899087aa278f4:827d362ceaf98d4a0088a2f3b765f464$"
 	}
 }

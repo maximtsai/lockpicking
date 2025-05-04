@@ -317,7 +317,7 @@ function pickMoveUp(canBuffer = true) {
     pinMoveUp(gameVars.currentPin);
     gameVars.pickStuck = true;
     let goalX = gameConsts.halfWidth + gameVars.currentPin * 30.3;
-    let goalY = gameConsts.halfHeight - 20;
+    let goalY = gameConsts.halfHeight - 16;
     if (globalObjects.pick.currAnim) {
         globalObjects.pick.currAnim.stop();
     }
@@ -328,7 +328,7 @@ function pickMoveUp(canBuffer = true) {
     globalObjects.pick.currAnim = PhaserScene.tweens.add({
         targets: [globalObjects.pick, globalObjects.pickshadow],
         y: goalY,
-        rotation: -0.02,
+        rotation: -0.019,
         duration: 120,
         ease: 'Cubic.easeOut',
         onComplete: () => {
@@ -366,7 +366,7 @@ function pinMoveUp(pinNum) {
             gameVars.firstPin = true;
             randVal = Math.max(2, randVal);
         }
-        currPin.randDur = Math.max(100, 90 + randVal * 25);
+        currPin.randDur = Math.max(90, 90 + randVal * 25);
     }
     let dropDelay = Math.max(0, Math.floor(currPin.randDur * 1.7 - 130));
     let overrideCantOpen = currPin.randDur < 90;
@@ -374,12 +374,12 @@ function pinMoveUp(pinNum) {
         dropDelay = 0;
     }
 
-    currPin.currDelay = PhaserScene.time.delayedCall(Math.max(currPin.randDur - 1, Math.floor(currPin.randDur * 0.50) + 6), () => {
+    currPin.currDelay = PhaserScene.time.delayedCall(Math.max(currPin.randDur - 1, Math.floor(currPin.randDur * 0.6) + 6), () => {
         if (!overrideCantOpen) {
             gameVars.canLock = true;
             gameVars.canShowGreen = true;
             setTimeout(() => {
-                if (gameVars.canShowGreen && !currPin.locked) {
+                if (gameVars.canShowGreen && !currPin.locked && !globalObjects.indicators[pinNum].stuck) {
                     globalObjects.indicators[pinNum].setFrame('icon_green.png');
                     let flashObj = getTempPoolObject('lock', 'icon_green_flash.png', 'green_flash', 400).setDepth(10);
                     flashObj.x = globalObjects.indicators[pinNum].x;
@@ -436,7 +436,7 @@ function pinMoveUp(pinNum) {
 
                     currPin.secondLastRandVal = currPin.lastRandVal;
                     currPin.lastRandVal = randVal;
-                    currPin.randDur = Math.max(75, 60 + randVal * 32);
+                    currPin.randDur = Math.max(65, 60 + randVal * 32);
                 }
             })
         }
@@ -447,8 +447,30 @@ function tryLock() {
     let currPin = globalObjects.pins[gameVars.currentPin];
     if (!currPin) {
         return;
-    } else if (!currPin.inMotion) {
+    } else if (!currPin.inMotion || currPin.locked) {
         // not even being moved, nothing happens other than warning message
+        PhaserScene.tweens.add({
+            targets: [globalObjects.pick, globalObjects.pickshadow],
+            rotation: -0.02,
+            x: "-=2",
+            duration: 10,
+            onComplete: () => {
+                PhaserScene.tweens.add({
+                    targets: [globalObjects.pick, globalObjects.pickshadow],
+                    rotation: 0,
+                    x: "+=5",
+                    duration: 40,
+                    onComplete: () => {
+                        PhaserScene.tweens.add({
+                            targets: [globalObjects.pick, globalObjects.pickshadow],
+                            x: "-=3",
+                            duration: 40,
+                            ease: 'Back.easeOut',
+                        })
+                    },
+                })
+            },
+        })
     } else if (gameVars.canLock) {
         // Lock
         if (currPin.currAnim) {
@@ -478,9 +500,72 @@ function tryLock() {
         }
 
     } else {
-        // Break lockpick
+        playSound('pickbreak');
+        if (globalObjects.pick.currAnim) {
+            globalObjects.pick.currAnim.stop();
+        }
+        let redIndicator = globalObjects.indicators[gameVars.currentPin];
+        redIndicator.setFrame('icon_red.png');
+        redIndicator.stuck = true;
+        setTimeout(() => {
+            redIndicator.stuck = false;
+            redIndicator.setFrame('icon_yellow.png');
+        }, 400)
+        let pickBrokeVfx = getTempPoolObject('lock', 'pickbroke.png', 'pickbroke', 300).setDepth(5);
+        pickBrokeVfx.setPosition(globalObjects.pick.x - 80, globalObjects.pick.y + 50);
+        pickBrokeVfx.setScale(0.7).setAlpha(1).setRotation(Math.random() * 3);
+        PhaserScene.tweens.add({
+            targets: pickBrokeVfx,
+            alpha: 0,
+            y: "+=20",
+            scaleX: 1.1,
+            scaleY: 1.1,
+            duration: 300,
+            ease: 'Quad.easeOut'
+        })
+        gameVars.pickStuck = true;
+        PhaserScene.tweens.add({
+            targets: [globalObjects.pick, globalObjects.pickshadow],
+            rotation: 0.35,
+            y: gameConsts.halfHeight + 130,
+            x: "+=25",
+            duration: 290,
+            alpha: 0,
+            onComplete: () => {
+                resetPick();
+
+            },
+        })
+
     }
 }
+
+function resetPick() {
+    gameVars.currentPin = 0;
+    let goalX = gameConsts.halfWidth;
+    if (globalObjects.pick.currAnim) {
+        globalObjects.pick.currAnim.stop();
+    }
+    globalObjects.pick.currAnim = PhaserScene.tweens.add({
+        targets: [globalObjects.pick, globalObjects.pickshadow],
+        x: goalX,
+        alpha: 1,
+        duration: 140,
+        ease: 'Quart.easeOut',
+    })
+
+
+    globalObjects.pick.alpha = 0.5;
+    globalObjects.pickshadow.alpha = 0.5;
+    globalObjects.pick.rotation = 0;
+    globalObjects.pickshadow.rotation = 0;
+    globalObjects.pick.x = gameConsts.halfWidth - 25;
+    globalObjects.pickshadow.x = gameConsts.halfWidth - 25;
+    globalObjects.pick.y = gameConsts.halfHeight;
+    globalObjects.pickshadow.y = gameConsts.halfHeight;
+    gameVars.pickStuck = false;
+}
+
 
 function slideOpenLock() {
     PhaserScene.tweens.add({
