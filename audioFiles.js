@@ -7,5 +7,18 @@ const audioFiles = [
     {name: 'quietshadows', src: 'audio/quietshadows.mp3'},
     {name: 'focus', src: 'audio/focus.mp3'},
     {name: 'pickbreak', src: 'audio/pickbreak.mp3'},
+    {name: 'scratch1', src: 'audio/scratch1.mp3'},
+    {name: 'scratch2', src: 'audio/scratch2.mp3'},
+    {name: 'scratch3', src: 'audio/scratch3.mp3'},
+    {name: 'scratch4', src: 'audio/scratch4.mp3'},
+    {name: 'lockin1', src: 'audio/lockin1.mp3'},
+    {name: 'lockin2', src: 'audio/lockin2.mp3'},
+    {name: 'pinfall1', src: 'audio/pinfall1.mp3'},
+    {name: 'pinfall2', src: 'audio/pinfall2.mp3'},
+    {name: 'pinfall3', src: 'audio/pinfall3.mp3'},
+    {name: 'nudge', src: 'audio/nudge.mp3'},
+    {name: 'metalclink', src: 'audio/metalclink.mp3'},
+    {name: 'success', src: 'audio/success.mp3'},
+    {name: 'clicktop', src: 'audio/clicktop.mp3'},
 
 ]

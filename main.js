@@ -205,7 +205,7 @@ function update(time, delta) {
                 gameVars.currentPin = Math.max(0, gameVars.currentPin - 1);
                 updatePickSpot();
             } else if (globalObjects.keyboardControls.getRightJustDown()) {
-                gameVars.currentPin = Math.min(5, gameVars.currentPin + 1);
+                gameVars.currentPin = Math.min(4, gameVars.currentPin + 1);
                 updatePickSpot();
             } else if (globalObjects.keyboardControls.getUpJustDown()) {
                 pickMoveUp();

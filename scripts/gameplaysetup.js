@@ -278,6 +278,7 @@ function createPins(amt) {
 }
 
 function updatePickSpot() {
+    playSound('metalclink').detune = 200 - Math.random() * 400;
     let goalX = gameConsts.halfWidth + gameVars.currentPin * 30.3;
     if (globalObjects.pick.currAnim) {
         globalObjects.pick.currAnim.stop();
@@ -374,7 +375,7 @@ function pinMoveUp(pinNum) {
         dropDelay = 0;
     }
 
-    currPin.currDelay = PhaserScene.time.delayedCall(Math.max(currPin.randDur - 1, Math.floor(currPin.randDur * 0.6) + 6), () => {
+    currPin.currDelay = PhaserScene.time.delayedCall(Math.max(currPin.randDur - 1, Math.floor(currPin.randDur * 0.55) + 6), () => {
         if (!overrideCantOpen) {
             gameVars.canLock = true;
             gameVars.canShowGreen = true;
@@ -393,7 +394,7 @@ function pinMoveUp(pinNum) {
                     })
                 }
             }, 10)
-            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3.9) + dropDelay * 1.75), () => {
+            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3.5) + dropDelay * 1.75), () => {
                 gameVars.canShowGreen = false;
                 setTimeout(() => {
                     gameVars.canLock = false;
@@ -406,18 +407,40 @@ function pinMoveUp(pinNum) {
 
     })
     currPin.inMotion = true;
+    if (currPin.fallSoundTimeout) {
+        clearTimeout(currPin.fallSoundTimeout);
+    }
+    if (currPin.currSound) {
+        currPin.currSound.stop();
+    }
     currPin.currAnim = PhaserScene.tweens.add({
         targets: currPin,
+        delay: 10,
         y: gameConsts.halfHeight - 47,
         ease: 'Quad.easeOut',
         duration: currPin.randDur,
+        onStart: () => {
+            playSound('nudge').detune = 100 - Math.random() * 80 - currPin.randDur * 1.5;
+
+        },
         onComplete: () => {
+            playSound('clicktop', 0.4 + currPin.randDur * 0.002 - Math.random() * 0.35).detune = 100 - Math.random() * 100 - currPin.randDur * 0.4;
             currPin.currAnim = PhaserScene.tweens.add({
                 delay: dropDelay,
                 targets: currPin,
                 y: currPin.startY,
                 ease: 'Quad.easeIn',
                 duration: Math.max(420, currPin.randDur * 6.85 - 210),
+                onStart: () => {
+                    currPin.fallSoundTimeout = setTimeout(() => {
+                        let randIdx = Math.floor(Math.random() * 2.5) + 1;
+                        let soundToPlay = 'pinfall' + randIdx;
+                        currPin.currSound = playSound(soundToPlay);
+                        currPin.currSound.detune = 200 - Math.random() * 100 - dropDelay * 1;
+                        let seekSpot = (230 - dropDelay + Math.random() * 70) * 0.0032;
+                        currPin.currSound.seek = Math.max(0, Math.min(1, seekSpot));
+                    }, 300)
+                },
                 onComplete: () => {
                     currPin.inMotion = false;
                     let lastRandDur = currPin.randDur;
@@ -472,9 +495,16 @@ function tryLock() {
             },
         })
     } else if (gameVars.canLock) {
+        let randSoundIdx = Math.floor(Math.random() * 4) + 1;
+        let randSound = "scratch" + randSoundIdx;
+        playSound(randSound).detune = 100 - Math.random() * 200;
+        // playSound(Math.random() < 0.5 ? 'lockin1' : 'lockin2').detune = 100 - Math.random() * 200;
         // Lock
         if (currPin.currAnim) {
             currPin.currAnim.stop();
+        }
+        if (currPin.currSound) {
+            currPin.currSound.stop();
         }
         currPin.locked = true;
         globalObjects.indicators[gameVars.currentPin].setFrame('icon_black.png');
@@ -568,6 +598,7 @@ function resetPick() {
 
 
 function slideOpenLock() {
+    playSound('success');
     PhaserScene.tweens.add({
         targets: globalObjects.mechanism,
         x: gameConsts.halfWidth - 55,
