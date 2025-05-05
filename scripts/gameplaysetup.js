@@ -234,9 +234,22 @@ function setRoom(room) {
     globalObjects.extras = [];
     if (room == "practice") {
         createPins(3);
+        let arrowLeft = PhaserScene.add.image(42, gameConsts.height - 112, 'ui', 'arrow.png').setRotation(Math.PI*-0.5).setScale(0.8);
+        let arrowRight = PhaserScene.add.image(77, gameConsts.height - 112, 'ui', 'arrow.png').setRotation(Math.PI*0.5).setScale(0.8);
+        let arrowUp = PhaserScene.add.image(42, gameConsts.height - 78, 'ui', 'arrow.png').setScale(0.8);
+        globalObjects.extras.push(arrowLeft);
+        globalObjects.extras.push(arrowRight);
+        globalObjects.extras.push(arrowUp);
+
         globalObjects.roomTitle.setText('TRAINING LOCK')
-        let instructions = PhaserScene.add.text(35, gameConsts.height - 150, "CONTROLS:\n- Left/Right to move pick\n- Up to push up tumbler\n- Space/Enter to set tumbler when\n   it reaches the top of the lock", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
+        let instructions = PhaserScene.add.text(25, gameConsts.height - 155, "CONTROLS:", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
         globalObjects.extras.push(instructions);
+        let instructions2 = PhaserScene.add.text(97, gameConsts.height - 126, "Move pick", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
+        globalObjects.extras.push(instructions2);
+        let instructions3 = PhaserScene.add.text(64, gameConsts.height - 92, "Lift tumbler", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
+        globalObjects.extras.push(instructions3);
+        let instructions4 = PhaserScene.add.text(30, gameConsts.height - 62, "Space/Enter to set tumbler when\nit reaches the top of the lock", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
+        globalObjects.extras.push(instructions4);
         let goalText = PhaserScene.add.text(570, gameConsts.height - 135, 'GOAL:\nSet all the\ntumblers\nin place ->', {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setOrigin(0, 0);
         goalText.setStroke('#000000', 4)
         globalObjects.extras.push(goalText);
@@ -278,10 +291,12 @@ function createPins(amt) {
 }
 
 function updatePickSpot() {
-    playSound('metalclink').detune = 200 - Math.random() * 400;
     let goalX = gameConsts.halfWidth + gameVars.currentPin * 30.3;
     if (globalObjects.pick.currAnim) {
         globalObjects.pick.currAnim.stop();
+    }
+    if (Math.abs(goalX - globalObjects.pick.x) > 5) {
+        playSound('metalclink').detune = 200 - Math.random() * 400;
     }
     globalObjects.pick.currAnim = PhaserScene.tweens.add({
         targets: [globalObjects.pick, globalObjects.pickshadow],
@@ -375,7 +390,7 @@ function pinMoveUp(pinNum) {
         dropDelay = 0;
     }
 
-    currPin.currDelay = PhaserScene.time.delayedCall(Math.max(currPin.randDur - 1, Math.floor(currPin.randDur * 0.55) + 6), () => {
+    currPin.currDelay = PhaserScene.time.delayedCall(Math.max(currPin.randDur - 1, Math.floor(currPin.randDur * 0.6) + 6), () => {
         if (!overrideCantOpen) {
             gameVars.canLock = true;
             gameVars.canShowGreen = true;
@@ -394,7 +409,7 @@ function pinMoveUp(pinNum) {
                     })
                 }
             }, 10)
-            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3.5) + dropDelay * 1.75), () => {
+            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3.25) + dropDelay * 1.75), () => {
                 gameVars.canShowGreen = false;
                 setTimeout(() => {
                     gameVars.canLock = false;
@@ -437,9 +452,9 @@ function pinMoveUp(pinNum) {
                         let soundToPlay = 'pinfall' + randIdx;
                         currPin.currSound = playSound(soundToPlay);
                         currPin.currSound.detune = 200 - Math.random() * 100 - dropDelay * 1;
-                        let seekSpot = (230 - dropDelay + Math.random() * 70) * 0.0032;
+                        let seekSpot = (240 - dropDelay + Math.random() * 70) * 0.0032;
                         currPin.currSound.seek = Math.max(0, Math.min(1, seekSpot));
-                    }, 300)
+                    }, 200 + Math.floor(dropDelay * 0.45))
                 },
                 onComplete: () => {
                     currPin.inMotion = false;
@@ -562,7 +577,7 @@ function tryLock() {
             duration: 290,
             alpha: 0,
             onComplete: () => {
-                resetPick();
+                resetPick(false);
 
             },
         })
@@ -570,12 +585,26 @@ function tryLock() {
     }
 }
 
-function resetPick() {
-    gameVars.currentPin = 0;
-    let goalX = gameConsts.halfWidth;
+function resetPick(setToZero = true) {
+    if (setToZero) {
+        gameVars.currentPin = 0;
+    }
+    let goalX = gameConsts.halfWidth + gameVars.currentPin * 30.3;
     if (globalObjects.pick.currAnim) {
         globalObjects.pick.currAnim.stop();
     }
+
+
+    globalObjects.pick.alpha = 0.5;
+    globalObjects.pickshadow.alpha = 0.5;
+    globalObjects.pick.rotation = 0;
+    globalObjects.pickshadow.rotation = 0;
+    globalObjects.pick.x = goalX - 35;
+    globalObjects.pickshadow.x = goalX - 35;
+    globalObjects.pick.y = gameConsts.halfHeight;
+    globalObjects.pickshadow.y = gameConsts.halfHeight;
+    gameVars.pickStuck = false;
+
     globalObjects.pick.currAnim = PhaserScene.tweens.add({
         targets: [globalObjects.pick, globalObjects.pickshadow],
         x: goalX,
@@ -583,17 +612,6 @@ function resetPick() {
         duration: 140,
         ease: 'Quart.easeOut',
     })
-
-
-    globalObjects.pick.alpha = 0.5;
-    globalObjects.pickshadow.alpha = 0.5;
-    globalObjects.pick.rotation = 0;
-    globalObjects.pickshadow.rotation = 0;
-    globalObjects.pick.x = gameConsts.halfWidth - 25;
-    globalObjects.pickshadow.x = gameConsts.halfWidth - 25;
-    globalObjects.pick.y = gameConsts.halfHeight;
-    globalObjects.pickshadow.y = gameConsts.halfHeight;
-    gameVars.pickStuck = false;
 }
 
 

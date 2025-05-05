@@ -5,7 +5,7 @@
 			"format": "RGBA5555",
 			"size": {
 				"w": 239,
-				"h": 385
+				"h": 374
 			},
 			"scale": 1,
 			"frames": [
@@ -110,31 +110,6 @@
 					}
 				},
 				{
-					"filename": "arrow.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 363,
-						"h": 150
-					},
-					"spriteSourceSize": {
-						"x": 44,
-						"y": 38,
-						"w": 78,
-						"h": 74
-					},
-					"frame": {
-						"x": 1,
-						"y": 248,
-						"w": 78,
-						"h": 74
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
 					"filename": "general_btn_hover.png",
 					"rotated": false,
 					"trimmed": false,
@@ -150,7 +125,7 @@
 					},
 					"frame": {
 						"x": 1,
-						"y": 324,
+						"y": 248,
 						"w": 60,
 						"h": 60
 					},
@@ -174,8 +149,8 @@
 						"h": 58
 					},
 					"frame": {
-						"x": 81,
-						"y": 248,
+						"x": 1,
+						"y": 310,
 						"w": 58,
 						"h": 58
 					},
@@ -199,8 +174,8 @@
 						"h": 56
 					},
 					"frame": {
-						"x": 141,
-						"y": 205,
+						"x": 63,
+						"y": 248,
 						"w": 56,
 						"h": 56
 					},
@@ -225,6 +200,31 @@
 					},
 					"frame": {
 						"x": 141,
+						"y": 205,
+						"w": 56,
+						"h": 56
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "general_btn_press.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 56,
+						"h": 56
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 56,
+						"h": 56
+					},
+					"frame": {
+						"x": 121,
 						"y": 263,
 						"w": 56,
 						"h": 56
@@ -260,31 +260,6 @@
 					}
 				},
 				{
-					"filename": "general_btn_press.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 56,
-						"h": 56
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 56,
-						"h": 56
-					},
-					"frame": {
-						"x": 63,
-						"y": 324,
-						"w": 56,
-						"h": 56
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
 					"filename": "closebtn_press.png",
 					"rotated": false,
 					"trimmed": true,
@@ -299,10 +274,35 @@
 						"h": 50
 					},
 					"frame": {
-						"x": 121,
-						"y": 321,
+						"x": 179,
+						"y": 263,
 						"w": 50,
 						"h": 50
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "arrow.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 45,
+						"h": 45
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 45,
+						"h": 45
+					},
+					"frame": {
+						"x": 179,
+						"y": 315,
+						"w": 45,
+						"h": 45
 					},
 					"anchor": {
 						"x": 0.5,
@@ -324,8 +324,8 @@
 						"h": 30
 					},
 					"frame": {
-						"x": 199,
-						"y": 243,
+						"x": 63,
+						"y": 306,
 						"w": 32,
 						"h": 30
 					},
@@ -349,8 +349,8 @@
 						"h": 30
 					},
 					"frame": {
-						"x": 199,
-						"y": 275,
+						"x": 61,
+						"y": 338,
 						"w": 32,
 						"h": 30
 					},
@@ -374,8 +374,8 @@
 						"h": 28
 					},
 					"frame": {
-						"x": 173,
-						"y": 321,
+						"x": 95,
+						"y": 338,
 						"w": 28,
 						"h": 28
 					},
@@ -399,8 +399,8 @@
 						"h": 26
 					},
 					"frame": {
-						"x": 173,
-						"y": 351,
+						"x": 125,
+						"y": 321,
 						"w": 26,
 						"h": 26
 					},
@@ -424,8 +424,8 @@
 						"h": 24
 					},
 					"frame": {
-						"x": 203,
-						"y": 307,
+						"x": 153,
+						"y": 321,
 						"w": 24,
 						"h": 24
 					},
@@ -449,8 +449,8 @@
 						"h": 24
 					},
 					"frame": {
-						"x": 203,
-						"y": 333,
+						"x": 125,
+						"y": 349,
 						"w": 24,
 						"h": 24
 					},
@@ -474,8 +474,8 @@
 						"h": 24
 					},
 					"frame": {
-						"x": 201,
-						"y": 359,
+						"x": 153,
+						"y": 347,
 						"w": 24,
 						"h": 24
 					},
@@ -499,8 +499,8 @@
 						"h": 3
 					},
 					"frame": {
-						"x": 81,
-						"y": 308,
+						"x": 121,
+						"y": 248,
 						"w": 3,
 						"h": 3
 					},
@@ -515,6 +515,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:97d296662479afc172338cea35611175:7c368eb23d041586c4a379fa6976ab0e:76d98c9e3f665caad5fa5a5151215d9e$"
+		"smartupdate": "$TexturePacker:SmartUpdate:2e248870b544985cbbb6a9589192b240:91cd6da0be0c3f9874ec9edbaf975583:76d98c9e3f665caad5fa5a5151215d9e$"
 	}
 }
