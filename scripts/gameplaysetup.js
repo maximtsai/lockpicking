@@ -682,7 +682,65 @@ function slideOpenLock() {
         ease: 'Back.easeOut',
         duration: 800,
         onComplete: () => {
-            console.log("victory!");
+            globalObjects.victoryDark = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight - 14, 'lock', 'shadow.png').setScale(4).setDepth(50).setAlpha(0);
+            globalObjects.title = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.halfHeight - 36, 'SUCCESS!', {fontFamily: 'kingthings', fontSize: 72, color: '#FFFF00', align: 'center'}).setStroke('#000000', 14).setDepth(50).setOrigin(0.5, 0.5).setAlpha(0);
+            PhaserScene.tweens.add({
+                targets: globalObjects.victoryDark,
+                alpha: 0.88,
+                scaleX: 3.2,
+                scaleY: 3.2,
+                ease: 'Back.easeOut',
+                duration: 500
+            });
+
+            globalObjects.title.setScale(1.3).setAlpha(0);
+            PhaserScene.tweens.add({
+                targets: globalObjects.title,
+                alpha: 1,
+                scaleX: 1,
+                scaleY: 1,
+                ease: 'Cubic.easeIn',
+                duration: 500,
+                completeDelay: 500,
+                onComplete: () => {
+                    let nextLvl = new Button({
+                        normal: {
+                            atlas: 'buttons',
+                            ref: "menu_btn_normal.png",
+                            x: gameConsts.halfWidth,
+                            y: gameConsts.halfHeight + 24,
+                            scaleX: 0.62,
+                            scaleY: 0.62
+                        },
+                        hover: {
+                            atlas: 'buttons',
+                            ref: "menu_btn_hover.png",
+                        },
+                        press: {
+                            atlas: 'buttons',
+                            ref: "menu_btn_press.png",
+                        },
+                        onHover: () => {
+                            if (canvas) {
+                                playSound('click').detune = -50;
+                                canvas.style.cursor = 'pointer';
+                            }
+                        },
+                        onHoverOut: () => {
+                            if (canvas) {
+                                canvas.style.cursor = 'default';
+                            }
+                        },
+                        onMouseUp: () => {
+                            openLevelPopup();
+                        }
+                    });
+                    nextLvl.addText("NEXT LEVEL", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
+                    nextLvl.setTextOffset(0, 1);
+                    nextLvl.setDepth(51);
+                }
+            })
+
         }
     })
 }

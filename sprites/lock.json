@@ -4,8 +4,8 @@
 			"image": "sprites/lock-0.webp",
 			"format": "RGBA8888",
 			"size": {
-				"w": 739,
-				"h": 352
+				"w": 502,
+				"h": 585
 			},
 			"scale": 1,
 			"frames": [
@@ -35,131 +35,6 @@
 					}
 				},
 				{
-					"filename": "lock.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 800,
-						"h": 600
-					},
-					"spriteSourceSize": {
-						"x": 311,
-						"y": 94,
-						"w": 353,
-						"h": 349
-					},
-					"frame": {
-						"x": 385,
-						"y": 1,
-						"w": 353,
-						"h": 349
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "goal.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 140,
-						"h": 140
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 140,
-						"h": 140
-					},
-					"frame": {
-						"x": 1,
-						"y": 137,
-						"w": 140,
-						"h": 140
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "pickshadow.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 800,
-						"h": 600
-					},
-					"spriteSourceSize": {
-						"x": 63,
-						"y": 325,
-						"w": 312,
-						"h": 36
-					},
-					"frame": {
-						"x": 1,
-						"y": 279,
-						"w": 312,
-						"h": 36
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "lockshadow.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 800,
-						"h": 600
-					},
-					"spriteSourceSize": {
-						"x": 353,
-						"y": 221,
-						"w": 145,
-						"h": 41
-					},
-					"frame": {
-						"x": 143,
-						"y": 137,
-						"w": 145,
-						"h": 41
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "pin.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 21,
-						"h": 60
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 21,
-						"h": 60
-					},
-					"frame": {
-						"x": 290,
-						"y": 137,
-						"w": 21,
-						"h": 60
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
 					"filename": "pickbroke.png",
 					"rotated": false,
 					"trimmed": true,
@@ -174,8 +49,8 @@
 						"h": 96
 					},
 					"frame": {
-						"x": 143,
-						"y": 180,
+						"x": 385,
+						"y": 1,
 						"w": 96,
 						"h": 96
 					},
@@ -199,10 +74,35 @@
 						"h": 30
 					},
 					"frame": {
-						"x": 241,
-						"y": 180,
+						"x": 385,
+						"y": 99,
 						"w": 30,
 						"h": 30
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "pin.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 21,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 21,
+						"h": 60
+					},
+					"frame": {
+						"x": 417,
+						"y": 99,
+						"w": 21,
+						"h": 60
 					},
 					"anchor": {
 						"x": 0.5,
@@ -224,10 +124,85 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 273,
-						"y": 199,
+						"x": 385,
+						"y": 131,
 						"w": 21,
 						"h": 21
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "lock.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 800,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 311,
+						"y": 94,
+						"w": 353,
+						"h": 349
+					},
+					"frame": {
+						"x": 1,
+						"y": 137,
+						"w": 353,
+						"h": 349
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "shadow.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 300,
+						"h": 102
+					},
+					"spriteSourceSize": {
+						"x": 57,
+						"y": 5,
+						"w": 183,
+						"h": 96
+					},
+					"frame": {
+						"x": 1,
+						"y": 488,
+						"w": 183,
+						"h": 96
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "lockshadow.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 800,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 353,
+						"y": 221,
+						"w": 145,
+						"h": 41
+					},
+					"frame": {
+						"x": 356,
+						"y": 161,
+						"w": 145,
+						"h": 41
 					},
 					"anchor": {
 						"x": 0.5,
@@ -249,10 +224,60 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 241,
-						"y": 212,
+						"x": 356,
+						"y": 137,
 						"w": 21,
 						"h": 21
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "pickshadow.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 800,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 63,
+						"y": 325,
+						"w": 312,
+						"h": 36
+					},
+					"frame": {
+						"x": 186,
+						"y": 488,
+						"w": 312,
+						"h": 36
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "pick.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 800,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 60,
+						"y": 322,
+						"w": 310,
+						"h": 34
+					},
+					"frame": {
+						"x": 186,
+						"y": 526,
+						"w": 310,
+						"h": 34
 					},
 					"anchor": {
 						"x": 0.5,
@@ -274,8 +299,8 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 296,
-						"y": 199,
+						"x": 186,
+						"y": 562,
 						"w": 21,
 						"h": 21
 					},
@@ -299,8 +324,8 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 313,
-						"y": 137,
+						"x": 209,
+						"y": 562,
 						"w": 21,
 						"h": 21
 					},
@@ -324,8 +349,8 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 313,
-						"y": 160,
+						"x": 232,
+						"y": 562,
 						"w": 21,
 						"h": 21
 					},
@@ -335,24 +360,24 @@
 					}
 				},
 				{
-					"filename": "pick.png",
+					"filename": "goal.png",
 					"rotated": false,
-					"trimmed": true,
+					"trimmed": false,
 					"sourceSize": {
-						"w": 800,
-						"h": 600
+						"w": 140,
+						"h": 140
 					},
 					"spriteSourceSize": {
-						"x": 60,
-						"y": 322,
-						"w": 310,
-						"h": 34
+						"x": 0,
+						"y": 0,
+						"w": 140,
+						"h": 140
 					},
 					"frame": {
-						"x": 1,
-						"y": 317,
-						"w": 310,
-						"h": 34
+						"x": 356,
+						"y": 204,
+						"w": 140,
+						"h": 140
 					},
 					"anchor": {
 						"x": 0.5,
@@ -365,6 +390,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:9d7153a5d944a9e233530f5cb94c31a1:3f5aefe13a829fe8a4b899087aa278f4:827d362ceaf98d4a0088a2f3b765f464$"
+		"smartupdate": "$TexturePacker:SmartUpdate:448339b39b75ea0cb35473f8d9eac18a:52e630c4979ddcafbea14fca81c416e0:827d362ceaf98d4a0088a2f3b765f464$"
 	}
 }
