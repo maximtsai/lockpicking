@@ -55,6 +55,8 @@ let cheats = {};
 let funnies = {};
 let gameOptions = {};
 let gameVars = {
+    soundStatus: 2,
+    musicStatus: 1,
     hideCheatVal: 0,
     latestLevel: 1,
     isHardMode: false,

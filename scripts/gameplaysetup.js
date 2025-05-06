@@ -35,65 +35,6 @@ function setupLoadingBar(scene) {
     });
 }
 
-
-function clickIntro() {
-    gameVars.runningIntro = true;
-
-    PhaserScene.tweens.add({
-        targets: PhaserScene.cameras.main,
-        scrollX: 0,
-        scrollY: 0,
-        duration: 750,
-        ease: 'Cubic.easeOut'
-    });
-
-    PhaserScene.tweens.add({
-        targets: [loadObjects.loadingText2, loadObjects.loadingText3],
-        alpha: 0,
-        duration: 800,
-        ease: 'Quad.easeOut'
-    });
-
-
-    if (gameOptions.skipIntroFull) {
-        loadObjects.glowBG.alpha = 0;
-        PhaserScene.tweens.add({
-            targets: loadObjects.glowBG,
-            alpha: 1,
-            duration: 900,
-            ease: 'Quart.easeIn',
-            onComplete: () => {
-                this.skipIntro();
-            }
-        });
-        loadObjects.glowBG.setScale(14);
-
-    } else {
-        PhaserScene.tweens.add({
-            delay: 1500,
-            targets: loadObjects.glowBG,
-            alpha: 1.25,
-            scaleX: 14,
-            scaleY: 14,
-            duration: 500,
-            ease: 'Quart.easeIn',
-            onComplete: () => {
-                cleanupIntro(PhaserScene);
-            }
-        });
-    }
-
-    loadObjects.skipIntroText = PhaserScene.add.text(gameConsts.width - 5, gameConsts.height - 5, getLangText('click_to_skip'), {fontFamily: 'verdana', fontSize: 18, color: '#FFFFFF', align: 'right'}).setDepth(1005).setAlpha(0).setOrigin(1, 1);
-    // loadObjects.loadingText.setText(" ").setAlpha(0).setScale(0.75).y -= 18;
-    loadObjects.whiteOverall = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'whitePixel').setDepth(2000).setAlpha(0).setScale(1000);
-    PhaserScene.tweens.add({
-        targets: loadObjects.whiteOverall,
-        alpha: 0.75,
-        ease: 'Quad.easeIn',
-        duration: 2100
-    });
-}
-
 function cleanupIntro() {
     if (gameVars.introFinished) {
         return;
@@ -126,6 +67,38 @@ function setupGame() {
     globalObjects.timeManager = new TimeManager();
     globalObjects.keyboardControls = new KeyboardControls();
 
+    setupLevelButton();
+    setupMuteButtons();
+    setupQuestionButton();
+
+
+    globalObjects.extras = [];
+    globalObjects.roomTitle = PhaserScene.add.text(gameConsts.halfWidth, 50, 'TRAINING LOCK', {fontFamily: 'kingthings', fontSize: 40, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(99).setOrigin(0.5, 0.5);
+
+    // globalObjects.hoverTextManager = new InternalHoverTextManager(PhaserScene);
+    globalObjects.currBackground = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'backgrounds', 'door.png');
+    PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'lock.png');
+    globalObjects.pickshadow = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'pickshadow.png').setAlpha(0.6);
+    globalObjects.mechanism = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'mechanism.png');
+    globalObjects.pick = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'pick.png');
+    globalObjects.pins = [];
+    globalObjects.indicators = [];
+    gameVars.currentPin = 0;
+    for (let i = 0; i < 5; i++) {
+        let xOffset = 0;
+        if (i == 1) {
+            xOffset = 1;
+        }
+        globalObjects.indicators[i] = PhaserScene.add.image(gameConsts.halfWidth - 35 + i * 30.6 + xOffset, gameConsts.halfHeight - 88, 'lock', 'icon_black.png');
+    }
+    PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'lockshadow.png').setDepth(1);
+
+    setRoom('practice');
+
+    playMusic('quietshadows', 1, true);
+}
+
+function setupLevelButton() {
     let levelButton = new Button({
         normal: {
             atlas: 'buttons',
@@ -161,15 +134,124 @@ function setupGame() {
     levelButton.addText("LVL SELECT", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'});
     levelButton.setTextOffset(0, 1);
     levelButton.setDepth(2);
+}
 
+function setupMuteButtons() {
+    let mutebtn;
+    let musicbtn;
+
+    let isMuted = globalVolume < 0.2;
+    let isQuiet = globalVolume < 0.4;
+    gameVars.soundStatus = isMuted ? 0 : (isQuiet ? 1 : 2);
+
+    mutebtn = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: isMuted ? "audio_off.png" : (isQuiet ? "audio_mid.png" : "audio_on.png"),
+            scaleX: 0.75,
+            scaleY: 0.75,
+            x: gameConsts.width - 74,
+            y: 28,
+        },
+        hover: {
+            atlas: 'buttons',
+            alpha: 1,
+            ref: isMuted ? "audio_off_hover.png" : (isQuiet ? "audio_mid_hover.png" : "audio_on_hover.png")
+        },
+        onHover: () => {
+            if (canvas) {
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            toggleMute();
+        }
+    });
+    mutebtn.setOrigin(0.5, 0.5);
+    globalObjects.mutebtn = mutebtn;
+    mutebtn.setDepth(1);
+
+    let isMusicMuted = globalMusicVol < 0.5;
+    gameVars.musicStatus = isMusicMuted ? 0 : 1;
+    musicbtn = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: isMusicMuted ? "music_off.png" : "music_on.png",
+            scaleX: 0.75,
+            scaleY: 0.75,
+            x: gameConsts.width - 118,
+            y: 28,
+        },
+        hover: {
+            atlas: 'buttons',
+            alpha: 1,
+            ref: isMusicMuted ? "music_off_hover.png" : "music_on_hover.png"
+        },
+        onHover: () => {
+            if (canvas) {
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            toggleMusic();
+        }
+    });
+    musicbtn.setOrigin(0.5, 0.5);
+    globalObjects.musicbtn = musicbtn;
+    musicbtn.setDepth(1);
+}
+
+function toggleMute() {
+    gameVars.soundStatus = (gameVars.soundStatus + 1) % 3;
+    if (gameVars.soundStatus === 0) {
+        updateGlobalVolume(0);
+        globalObjects.mutebtn.setNormalRef("audio_off.png");
+        globalObjects.mutebtn.setHoverRef("audio_off_hover.png");
+    } else if (gameVars.soundStatus === 1) {
+        updateGlobalVolume(0.25);
+        globalObjects.mutebtn.setNormalRef("audio_mid.png");
+        globalObjects.mutebtn.setHoverRef("audio_mid_hover.png");
+        playSound('click', 1.5)
+    } else {
+        updateGlobalVolume(1)
+        globalObjects.mutebtn.setNormalRef("audio_on.png");
+        globalObjects.mutebtn.setHoverRef("audio_on_hover.png");
+        playSound('click', 1.5)
+    }
+}
+
+function toggleMusic() {
+    gameVars.musicStatus = (gameVars.musicStatus + 1) % 2;
+    if (gameVars.musicStatus === 0) {
+        updateGlobalMusicVolume(0);
+        globalObjects.musicbtn.setNormalRef("music_off.png");
+        globalObjects.musicbtn.setHoverRef("music_off_hover.png");
+    } else if (gameVars.musicStatus === 1) {
+        updateGlobalMusicVolume(0.9);
+        globalObjects.musicbtn.setNormalRef("music_on.png");
+        globalObjects.musicbtn.setHoverRef("music_on_hover.png");
+    }
+}
+
+function setupQuestionButton() {
     let questionButton = new Button({
         normal: {
             atlas: 'buttons',
             ref: "general_btn.png",
             x: gameConsts.width - 30,
-            y: 30,
-            scaleX: 0.8,
-            scaleY: 0.8,
+            y: 28,
+            scaleX: 0.75,
+            scaleY: 0.75,
             alpha: 0.92
         },
         hover: {
@@ -197,34 +279,8 @@ function setupGame() {
         }
     });
     questionButton.addText("?", {fontFamily: 'kingthings', fontSize: 28, color: '#000000', align: 'center'});
-    questionButton.setTextOffset(1, 0)
+    questionButton.setTextOffset(0, 0)
     questionButton.setDepth(1);
-
-
-    globalObjects.extras = [];
-    globalObjects.roomTitle = PhaserScene.add.text(gameConsts.halfWidth, 50, 'TRAINING LOCK', {fontFamily: 'kingthings', fontSize: 40, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(99).setOrigin(0.5, 0.5);
-
-    // globalObjects.hoverTextManager = new InternalHoverTextManager(PhaserScene);
-    globalObjects.currBackground = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'backgrounds', 'door.png');
-    PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'lock.png');
-    globalObjects.pickshadow = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'pickshadow.png').setAlpha(0.6);
-    globalObjects.mechanism = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'mechanism.png');
-    globalObjects.pick = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'pick.png');
-    globalObjects.pins = [];
-    globalObjects.indicators = [];
-    gameVars.currentPin = 0;
-    for (let i = 0; i < 5; i++) {
-        let xOffset = 0;
-        if (i == 1) {
-            xOffset = 1;
-        }
-        globalObjects.indicators[i] = PhaserScene.add.image(gameConsts.halfWidth - 35 + i * 30.6 + xOffset, gameConsts.halfHeight - 88, 'lock', 'icon_black.png');
-    }
-    PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'lockshadow.png').setDepth(1);
-
-    setRoom('practice');
-
-    playMusic('quietshadows', 1, true);
 }
 
 function setRoom(room) {
@@ -390,7 +446,7 @@ function pinMoveUp(pinNum) {
         dropDelay = 0;
     }
 
-    currPin.currDelay = PhaserScene.time.delayedCall(Math.max(currPin.randDur - 1, Math.floor(currPin.randDur * 0.6) + 6), () => {
+    currPin.currDelay = PhaserScene.time.delayedCall(Math.max(currPin.randDur - 1, Math.floor(currPin.randDur * 0.55) + 6), () => {
         if (!overrideCantOpen) {
             gameVars.canLock = true;
             gameVars.canShowGreen = true;
@@ -409,7 +465,7 @@ function pinMoveUp(pinNum) {
                     })
                 }
             }, 10)
-            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3.25) + dropDelay * 1.75), () => {
+            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3.3) + dropDelay * 1.75), () => {
                 gameVars.canShowGreen = false;
                 setTimeout(() => {
                     gameVars.canLock = false;
@@ -448,12 +504,14 @@ function pinMoveUp(pinNum) {
                 duration: Math.max(420, currPin.randDur * 6.85 - 210),
                 onStart: () => {
                     currPin.fallSoundTimeout = setTimeout(() => {
-                        let randIdx = Math.floor(Math.random() * 2.5) + 1;
-                        let soundToPlay = 'pinfall' + randIdx;
-                        currPin.currSound = playSound(soundToPlay);
-                        currPin.currSound.detune = 200 - Math.random() * 100 - dropDelay * 1;
-                        let seekSpot = (240 - dropDelay + Math.random() * 70) * 0.0032;
-                        currPin.currSound.seek = Math.max(0, Math.min(1, seekSpot));
+                        if (!currPin.locked) {
+                            let randIdx = Math.floor(Math.random() * 2.5) + 1;
+                            let soundToPlay = 'pinfall' + randIdx;
+                            currPin.currSound = playSound(soundToPlay, 2);
+                            currPin.currSound.detune = 200 - Math.random() * 100 - dropDelay * 1;
+                            let seekSpot = (245 - dropDelay * 0.75 + Math.random() * 50) * 0.0032;
+                            currPin.currSound.seek = Math.max(0, Math.min(1, seekSpot));
+                        }
                     }, 200 + Math.floor(dropDelay * 0.45))
                 },
                 onComplete: () => {
@@ -712,9 +770,21 @@ function openInstructPopup() {
     let instructContent = {};
     instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, 'INSTRUCTIONS', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
     instructContent.goal = PhaserScene.add.text(gameConsts.halfWidth - 158, 200, 'GOAL: Set all\ntumblers in place\nto unlock the lock', {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0, 0.5);
-    instructContent.tips = PhaserScene.add.text(gameConsts.halfWidth, 288, "Tumblers can only be set when they're\nat the top of the lock", {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+    instructContent.tips = PhaserScene.add.text(gameConsts.halfWidth, 295, "Tumblers can only be set at the top\nof the lock, or else the lockpick breaks.", {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
 
     instructContent.image = PhaserScene.add.image(gameConsts.halfWidth + 20, gameConsts.halfHeight - 150, 'lock', 'goal.png').setDepth(102).setScale(0.8).setOrigin(0 ,0);
+
+    let xOffset = 214;
+    let yOffset = -92;
+    instructContent.arrowLeft = PhaserScene.add.image(xOffset+42, yOffset+gameConsts.height - 112, 'ui', 'arrow.png').setRotation(Math.PI*-0.5).setScale(0.8).setDepth(102).setTint(0x000000);
+    instructContent.arrowRight = PhaserScene.add.image(xOffset+76, yOffset+gameConsts.height - 112, 'ui', 'arrow.png').setRotation(Math.PI*0.5).setScale(0.8).setDepth(102).setTint(0x000000);
+    instructContent.arrowUp = PhaserScene.add.image(xOffset+42, yOffset+gameConsts.height - 78, 'ui', 'arrow.png').setScale(0.8).setDepth(102).setTint(0x000000);
+    instructContent.controls = PhaserScene.add.text(xOffset+29, yOffset+gameConsts.height - 157, "CONTROLS:", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
+    instructContent.movepick = PhaserScene.add.text(xOffset+97, yOffset+gameConsts.height - 124, "Move pick", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
+    instructContent.lifttumbler = PhaserScene.add.text(xOffset+64, yOffset+gameConsts.height - 90, "Lift tumbler", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
+    instructContent.spaceenter = PhaserScene.add.text(xOffset+30, yOffset+gameConsts.height - 62, "Space/Enter to set tumbler", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
+    // instructContent.tips2 = PhaserScene.add.text(gameConsts.halfWidth, 472, "Tip: Listen and observe carefully\nhow the tumblers move", {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+
 
     openPopup(instructContent)
 }
