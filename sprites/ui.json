@@ -4,8 +4,8 @@
 			"image": "sprites/ui-0.webp",
 			"format": "RGBA8888",
 			"size": {
-				"w": 488,
-				"h": 497
+				"w": 804,
+				"h": 591
 			},
 			"scale": 1,
 			"frames": [
@@ -28,6 +28,31 @@
 						"y": 1,
 						"w": 450,
 						"h": 495
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "top.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 802,
+						"h": 110
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 802,
+						"h": 92
+					},
+					"frame": {
+						"x": 1,
+						"y": 498,
+						"w": 802,
+						"h": 92
 					},
 					"anchor": {
 						"x": 0.5,
@@ -65,6 +90,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:e0e15528dec0c365fb7507e8f8eda551:0fa0cf09f47e588d461066193791df1f:6af6d199855d1c5980a61db04791f8fb$"
+		"smartupdate": "$TexturePacker:SmartUpdate:0a5346b1b1a3cfaf23c9f24cf6ed525d:1f9c44486f8d74d333b12887eeed6ebf:6af6d199855d1c5980a61db04791f8fb$"
 	}
 }

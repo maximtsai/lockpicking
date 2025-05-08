@@ -157,7 +157,7 @@
             <key>extrude</key>
             <uint>1</uint>
             <key>trimThreshold</key>
-            <uint>3</uint>
+            <uint>1</uint>
             <key>trimMargin</key>
             <uint>1</uint>
             <key>trimMode</key>
@@ -200,6 +200,21 @@
                 <rect>110,130,220,260</rect>
                 <key>scale9Paddings</key>
                 <rect>110,130,220,260</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ui/top.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>201,23,401,45</rect>
+                <key>scale9Paddings</key>
+                <rect>201,23,401,45</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

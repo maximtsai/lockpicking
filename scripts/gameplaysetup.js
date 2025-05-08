@@ -84,10 +84,11 @@ function setupGame() {
     setupMuteButtons();
     setupQuestionButton();
 
+    globalObjects.uitop = PhaserScene.add.image(gameConsts.halfWidth, 0, 'ui', 'top.png').setDepth(-1).setOrigin(0.5, 0);
 
     globalObjects.extras = [];
-    globalObjects.roomTitle = PhaserScene.add.text(gameConsts.halfWidth, 42, 'TRAINING LOCK', {fontFamily: 'kingthings', fontSize: 36, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(99).setOrigin(0.5, 0.5);
-    globalObjects.picksleftText = PhaserScene.add.text(12, 60, 'PICKS LEFT: 99', {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'left'}).setStroke('#000000', 4).setDepth(1).setOrigin(0, 0.5);
+    globalObjects.roomTitle = PhaserScene.add.text(gameConsts.halfWidth, 20, 'TRAINING LOCK', {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(99).setOrigin(0.5, 0.5);
+    globalObjects.picksleftText = PhaserScene.add.text(12, 20, 'PICKS LEFT: 99', {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'left'}).setStroke('#000000', 4).setDepth(1).setOrigin(0, 0.5);
     gameVars.picksLeft = 99;
 
     // globalObjects.hoverTextManager = new InternalHoverTextManager(PhaserScene);
@@ -120,10 +121,10 @@ function setupLevelButton() {
         normal: {
             atlas: 'buttons',
             ref: "menu_btn_normal.png",
-            x: 65,
-            y: 24,
-            scaleX: 0.47,
-            scaleY: 0.47
+            x: 73,
+            y: 62,
+            scaleX: 0.54,
+            scaleY: 0.54
         },
         hover: {
             atlas: 'buttons',
@@ -148,7 +149,7 @@ function setupLevelButton() {
             openLevelPopup();
         }
     });
-    levelButton.addText("LVL SELECT", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'});
+    levelButton.addText("LVL SELECT", {fontFamily: 'kingthings', fontSize: 22, color: '#000000', align: 'center'});
     levelButton.setTextOffset(0, 1);
     levelButton.setDepth(2);
 }
@@ -165,10 +166,11 @@ function setupMuteButtons() {
         normal: {
             atlas: 'buttons',
             ref: isMuted ? "audio_off.png" : (isQuiet ? "audio_mid.png" : "audio_on.png"),
-            scaleX: 0.75,
-            scaleY: 0.75,
-            x: gameConsts.width - 74,
-            y: 28,
+            scaleX: 0.8,
+            scaleY: 0.8,
+            x: gameConsts.width - 58,
+            y: 20,
+            alpha: 0.92
         },
         hover: {
             atlas: 'buttons',
@@ -199,10 +201,11 @@ function setupMuteButtons() {
         normal: {
             atlas: 'buttons',
             ref: isMusicMuted ? "music_off.png" : "music_on.png",
-            scaleX: 0.75,
-            scaleY: 0.75,
-            x: gameConsts.width - 118,
-            y: 28,
+            scaleX: 0.8,
+            scaleY: 0.8,
+            x: gameConsts.width - 100,
+            y: 20,
+            alpha: 0.92
         },
         hover: {
             atlas: 'buttons',
@@ -235,10 +238,10 @@ function toggleMute() {
         globalObjects.mutebtn.setNormalRef("audio_off.png");
         globalObjects.mutebtn.setHoverRef("audio_off_hover.png");
     } else if (gameVars.soundStatus === 1) {
-        updateGlobalVolume(0.25);
+        updateGlobalVolume(0.5);
         globalObjects.mutebtn.setNormalRef("audio_mid.png");
         globalObjects.mutebtn.setHoverRef("audio_mid_hover.png");
-        playSound('click', 1.9)
+        playSound('click', 1.65)
     } else {
         updateGlobalVolume(1)
         globalObjects.mutebtn.setNormalRef("audio_on.png");
@@ -264,22 +267,22 @@ function setupQuestionButton() {
     let questionButton = new Button({
         normal: {
             atlas: 'buttons',
-            ref: "general_btn.png",
-            x: gameConsts.width - 30,
-            y: 28,
-            scaleX: 0.75,
-            scaleY: 0.75,
+            ref: "question_btn.png",
+            x: gameConsts.width - 24,
+            y: 20,
+            scaleX: 0.8,
+            scaleY: 0.8,
             alpha: 0.92
         },
         hover: {
             atlas: 'buttons',
-            ref: "general_btn_hover.png",
+            ref: "question_btn_hover.png",
             alpha: 1
         },
         press: {
             atlas: 'buttons',
-            ref: "general_btn_press.png",
-            alpha: 0.8
+            ref: "question_btn_hover.png",
+            alpha: 0.75
         },
         onHover: () => {
             if (canvas) {
@@ -295,8 +298,6 @@ function setupQuestionButton() {
             openInstructPopup()
         }
     });
-    questionButton.addText("?", {fontFamily: 'kingthings', fontSize: 28, color: '#000000', align: 'center'});
-    questionButton.setTextOffset(0, 0)
     questionButton.setDepth(1);
 }
 
@@ -702,15 +703,14 @@ function showFail() {
 
     let flavorText = [
         "I have wasted my entire hoard\nof picks. Hope it was worth it.",
-        "My hasty fingers fumble the crude lock,\nleaving me chained and stalled.",
-        "The flimsy lock jams under my rushed picks,\nkeeping me caged behind bars.",
-        "The clothier’s sturdy lock catches my tools, leaving me in rags unfit for the castle.",
-        "A misstep alerts the guards, and the gate’s lock holds firm, blocking my path.",
-        "The enchanted lock resets at my slightest mistake, sealing the door tight.",
-        "The masterful lock defies my trembling hands, keeping the princess beyond reach.",
-        "A clumsy word locks Liora's heart tighter, her trust slipping away. I retreat, vowing to tread more carefully next time."
+        "I fumble the lock in my haste,\nand remain stuck behind bars.",
+        "The clothier’s sturdy lock catches my tools,\nleaving me in rags unfit for the castle.",
+        "A misstep alerts the guards, and the gate’s\nlock holds firm, blocking my path.",
+        "The enchanted lock resets at my slightest\nmistake, sealing the door tight.",
+        "The masterful lock defies my trembling hands,\nkeeping the princess beyond reach.",
+        "A clumsy word locks Liora's heart tighter, her trust slipping away.\nI retreat, vowing to tread more carefully next time."
     ]
-    globalObjects.victory.extraText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, flavorText[gameVars.currLevel], {fontFamily: 'kingthings', fontSize: 26, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
+    globalObjects.victory.extraText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, flavorText[gameVars.currLevel], {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
 
     globalObjects.victory.title.setScale(1.3).setAlpha(0);
     PhaserScene.tweens.add({

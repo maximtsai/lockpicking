@@ -4,8 +4,8 @@
 			"image": "sprites/buttons.webp",
 			"format": "RGBA5555",
 			"size": {
-				"w": 509,
-				"h": 252
+				"w": 948,
+				"h": 126
 			},
 			"scale": 1,
 			"frames": [
@@ -49,8 +49,8 @@
 						"h": 66
 					},
 					"frame": {
-						"x": 1,
-						"y": 69,
+						"x": 240,
+						"y": 1,
 						"w": 237,
 						"h": 66
 					},
@@ -74,7 +74,7 @@
 						"h": 66
 					},
 					"frame": {
-						"x": 240,
+						"x": 479,
 						"y": 1,
 						"w": 237,
 						"h": 66
@@ -100,84 +100,9 @@
 					},
 					"frame": {
 						"x": 1,
-						"y": 137,
+						"y": 69,
 						"w": 138,
 						"h": 41
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "audio_mid_hover.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 68,
-						"h": 68
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 66,
-						"h": 66
-					},
-					"frame": {
-						"x": 240,
-						"y": 69,
-						"w": 66,
-						"h": 66
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "audio_off_hover.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 68,
-						"h": 68
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 66,
-						"h": 66
-					},
-					"frame": {
-						"x": 1,
-						"y": 180,
-						"w": 66,
-						"h": 66
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "audio_on_hover.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 68,
-						"h": 68
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 66,
-						"h": 66
-					},
-					"frame": {
-						"x": 308,
-						"y": 69,
-						"w": 66,
-						"h": 66
 					},
 					"anchor": {
 						"x": 0.5,
@@ -199,33 +124,8 @@
 						"h": 66
 					},
 					"frame": {
-						"x": 69,
-						"y": 180,
-						"w": 66,
-						"h": 66
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "music_off_hover.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 68,
-						"h": 68
-					},
-					"spriteSourceSize": {
-						"x": 1,
+						"x": 718,
 						"y": 1,
-						"w": 66,
-						"h": 66
-					},
-					"frame": {
-						"x": 376,
-						"y": 69,
 						"w": 66,
 						"h": 66
 					},
@@ -249,110 +149,10 @@
 						"h": 64
 					},
 					"frame": {
-						"x": 444,
-						"y": 69,
+						"x": 786,
+						"y": 1,
 						"w": 64,
 						"h": 64
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "music_on_hover.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 68,
-						"h": 68
-					},
-					"spriteSourceSize": {
-						"x": 1,
-						"y": 1,
-						"w": 66,
-						"h": 66
-					},
-					"frame": {
-						"x": 141,
-						"y": 137,
-						"w": 66,
-						"h": 66
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "audio_mid.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 56,
-						"h": 56
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 56,
-						"h": 56
-					},
-					"frame": {
-						"x": 209,
-						"y": 137,
-						"w": 56,
-						"h": 56
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "audio_off.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 56,
-						"h": 56
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 56,
-						"h": 56
-					},
-					"frame": {
-						"x": 267,
-						"y": 137,
-						"w": 56,
-						"h": 56
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "audio_on.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 56,
-						"h": 56
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 56,
-						"h": 56
-					},
-					"frame": {
-						"x": 325,
-						"y": 137,
-						"w": 56,
-						"h": 56
 					},
 					"anchor": {
 						"x": 0.5,
@@ -374,8 +174,8 @@
 						"h": 56
 					},
 					"frame": {
-						"x": 383,
-						"y": 137,
+						"x": 852,
+						"y": 1,
 						"w": 56,
 						"h": 56
 					},
@@ -385,24 +185,74 @@
 					}
 				},
 				{
-					"filename": "check_box_hover2.png",
+					"filename": "music_off.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
-						"w": 160,
-						"h": 50
+						"w": 52,
+						"h": 52
 					},
 					"spriteSourceSize": {
-						"x": 2,
-						"y": 5,
+						"x": 7,
+						"y": 7,
 						"w": 37,
-						"h": 36
+						"h": 38
 					},
 					"frame": {
-						"x": 137,
-						"y": 205,
+						"x": 910,
+						"y": 1,
 						"w": 37,
-						"h": 36
+						"h": 38
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "audio_off_hover.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 60,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 6,
+						"w": 59,
+						"h": 49
+					},
+					"frame": {
+						"x": 141,
+						"y": 69,
+						"w": 59,
+						"h": 49
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "audio_on_hover.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 62,
+						"h": 62
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 7,
+						"w": 58,
+						"h": 49
+					},
+					"frame": {
+						"x": 202,
+						"y": 69,
+						"w": 58,
+						"h": 49
 					},
 					"anchor": {
 						"x": 0.5,
@@ -424,33 +274,8 @@
 						"h": 56
 					},
 					"frame": {
-						"x": 209,
-						"y": 195,
-						"w": 56,
-						"h": 56
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "general_btn_press - Copy.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 56,
-						"h": 56
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 56,
-						"h": 56
-					},
-					"frame": {
-						"x": 267,
-						"y": 195,
+						"x": 262,
+						"y": 69,
 						"w": 56,
 						"h": 56
 					},
@@ -474,8 +299,8 @@
 						"h": 56
 					},
 					"frame": {
-						"x": 267,
-						"y": 195,
+						"x": 320,
+						"y": 69,
 						"w": 56,
 						"h": 56
 					},
@@ -485,74 +310,24 @@
 					}
 				},
 				{
-					"filename": "music_off.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 56,
-						"h": 56
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 56,
-						"h": 56
-					},
-					"frame": {
-						"x": 325,
-						"y": 195,
-						"w": 56,
-						"h": 56
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "music_on.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 56,
-						"h": 56
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 56,
-						"h": 56
-					},
-					"frame": {
-						"x": 383,
-						"y": 195,
-						"w": 56,
-						"h": 56
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "select_btn_hover.png",
+					"filename": "music_off_hover.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
-						"w": 114,
-						"h": 50
+						"w": 62,
+						"h": 62
 					},
 					"spriteSourceSize": {
-						"x": 5,
-						"y": 11,
-						"w": 28,
-						"h": 28
+						"x": 3,
+						"y": 3,
+						"w": 54,
+						"h": 55
 					},
 					"frame": {
-						"x": 479,
-						"y": 1,
-						"w": 28,
-						"h": 28
+						"x": 378,
+						"y": 69,
+						"w": 54,
+						"h": 55
 					},
 					"anchor": {
 						"x": 0.5,
@@ -560,24 +335,49 @@
 					}
 				},
 				{
-					"filename": "check_box_normal.png",
+					"filename": "music_on_hover.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
-						"w": 160,
-						"h": 50
+						"w": 62,
+						"h": 62
 					},
 					"spriteSourceSize": {
-						"x": 5,
-						"y": 12,
-						"w": 26,
-						"h": 26
+						"x": 4,
+						"y": 3,
+						"w": 52,
+						"h": 55
 					},
 					"frame": {
-						"x": 176,
-						"y": 205,
-						"w": 26,
-						"h": 26
+						"x": 434,
+						"y": 69,
+						"w": 52,
+						"h": 55
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "audio_mid_hover.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 62,
+						"h": 62
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 6,
+						"w": 52,
+						"h": 51
+					},
+					"frame": {
+						"x": 488,
+						"y": 69,
+						"w": 52,
+						"h": 51
 					},
 					"anchor": {
 						"x": 0.5,
@@ -599,10 +399,160 @@
 						"h": 50
 					},
 					"frame": {
-						"x": 441,
-						"y": 137,
+						"x": 542,
+						"y": 69,
 						"w": 50,
 						"h": 50
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "question_btn_hover.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 62,
+						"h": 62
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 5,
+						"w": 42,
+						"h": 52
+					},
+					"frame": {
+						"x": 594,
+						"y": 69,
+						"w": 42,
+						"h": 52
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "check_box_hover2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 160,
+						"h": 50
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 5,
+						"w": 37,
+						"h": 36
+					},
+					"frame": {
+						"x": 910,
+						"y": 41,
+						"w": 37,
+						"h": 36
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "audio_off.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 52,
+						"h": 52
+					},
+					"spriteSourceSize": {
+						"x": 4,
+						"y": 8,
+						"w": 45,
+						"h": 36
+					},
+					"frame": {
+						"x": 638,
+						"y": 69,
+						"w": 45,
+						"h": 36
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "audio_on.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 62,
+						"h": 62
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 13,
+						"w": 44,
+						"h": 36
+					},
+					"frame": {
+						"x": 685,
+						"y": 69,
+						"w": 44,
+						"h": 36
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "audio_mid.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 52,
+						"h": 52
+					},
+					"spriteSourceSize": {
+						"x": 4,
+						"y": 8,
+						"w": 36,
+						"h": 36
+					},
+					"frame": {
+						"x": 731,
+						"y": 69,
+						"w": 36,
+						"h": 36
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "music_on.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 52,
+						"h": 52
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 7,
+						"w": 34,
+						"h": 37
+					},
+					"frame": {
+						"x": 769,
+						"y": 69,
+						"w": 34,
+						"h": 37
 					},
 					"anchor": {
 						"x": 0.5,
@@ -624,8 +574,8 @@
 						"h": 30
 					},
 					"frame": {
-						"x": 441,
-						"y": 189,
+						"x": 805,
+						"y": 67,
 						"w": 32,
 						"h": 30
 					},
@@ -649,10 +599,60 @@
 						"h": 30
 					},
 					"frame": {
-						"x": 441,
-						"y": 221,
+						"x": 839,
+						"y": 67,
 						"w": 32,
 						"h": 30
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "question_btn.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 52,
+						"h": 52
+					},
+					"spriteSourceSize": {
+						"x": 13,
+						"y": 9,
+						"w": 24,
+						"h": 35
+					},
+					"frame": {
+						"x": 873,
+						"y": 59,
+						"w": 24,
+						"h": 35
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "check_box_normal.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 160,
+						"h": 50
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 12,
+						"w": 26,
+						"h": 26
+					},
+					"frame": {
+						"x": 805,
+						"y": 99,
+						"w": 26,
+						"h": 26
 					},
 					"anchor": {
 						"x": 0.5,
@@ -674,8 +674,8 @@
 						"h": 24
 					},
 					"frame": {
-						"x": 479,
-						"y": 31,
+						"x": 833,
+						"y": 99,
 						"w": 24,
 						"h": 24
 					},
@@ -699,10 +699,35 @@
 						"h": 24
 					},
 					"frame": {
-						"x": 475,
-						"y": 189,
+						"x": 859,
+						"y": 99,
 						"w": 24,
 						"h": 24
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "select_btn_hover.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 114,
+						"h": 50
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 11,
+						"w": 28,
+						"h": 28
+					},
+					"frame": {
+						"x": 885,
+						"y": 96,
+						"w": 28,
+						"h": 28
 					},
 					"anchor": {
 						"x": 0.5,
@@ -724,8 +749,8 @@
 						"h": 24
 					},
 					"frame": {
-						"x": 475,
-						"y": 215,
+						"x": 915,
+						"y": 79,
 						"w": 24,
 						"h": 24
 					},
@@ -749,8 +774,8 @@
 						"h": 3
 					},
 					"frame": {
-						"x": 204,
-						"y": 205,
+						"x": 1,
+						"y": 112,
 						"w": 3,
 						"h": 3
 					},
@@ -765,6 +790,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:890e701728dc6683ea75f16556c21ec6:634214061eda6a9b275158e884d37a18:76d98c9e3f665caad5fa5a5151215d9e$"
+		"smartupdate": "$TexturePacker:SmartUpdate:8e68d84947cf6f8a697304e734086f05:19efaa7b9e374016863319ace83d2dcf:76d98c9e3f665caad5fa5a5151215d9e$"
 	}
 }

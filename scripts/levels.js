@@ -96,15 +96,16 @@ function gotoLevel(lvl, skipIntro = false) {
         targets: blackPixelTemp,
         alpha: 1,
         x: gameConsts.halfWidth,
-        duration: 140,
+        ease: 'Quad.easeOut',
+        duration: 200,
         onComplete: () => {
             hideGlobalClickBlocker();
             PhaserScene.tweens.add({
                 targets: blackPixelTemp,
-                x: "+=2400",
+                x: "+=2300",
                 ease: 'Cubic.easeIn',
-                duration: 270,
-                alpha: 0.1,
+                duration: 300,
+                alpha: 0,
                 onComplete: () => {
                     blackPixelTemp.destroy();
                 }

@@ -178,7 +178,6 @@
             <key type="filename">buttons/audio_on.png</key>
             <key type="filename">buttons/closebtn.png</key>
             <key type="filename">buttons/general_btn.png</key>
-            <key type="filename">buttons/general_btn_press - Copy.png</key>
             <key type="filename">buttons/general_btn_press.png</key>
             <key type="filename">buttons/music_off.png</key>
             <key type="filename">buttons/music_on.png</key>
@@ -281,6 +280,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">buttons/question_btn.png</key>
             <key type="filename">buttons/select_btn_disable.png</key>
             <key type="filename">buttons/select_btn_hover.png</key>
             <key type="filename">buttons/select_btn_normal.png</key>
@@ -296,6 +296,21 @@
                 <rect>13,13,26,26</rect>
                 <key>scale9Paddings</key>
                 <rect>13,13,26,26</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">buttons/question_btn_hover.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,16,31,31</rect>
+                <key>scale9Paddings</key>
+                <rect>16,16,31,31</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

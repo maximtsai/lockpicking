@@ -55,7 +55,8 @@ let cheats = {};
 let funnies = {};
 let gameOptions = {};
 let gameVars = {
-    hasPopup: true,
+    showNextButton: false,
+    hasPopup: false,
     currLevel: 0,
     soundStatus: 2,
     musicStatus: 1,
