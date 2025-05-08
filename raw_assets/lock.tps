@@ -173,6 +173,36 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">lock/flavorimage1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>60,60,119,119</rect>
+                <key>scale9Paddings</key>
+                <rect>60,60,119,119</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">lock/flavorimage2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>0.95</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>58,58,115,115</rect>
+                <key>scale9Paddings</key>
+                <rect>58,58,115,115</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">lock/goal.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -225,6 +255,9 @@
             <key type="filename">lock/lock.png</key>
             <key type="filename">lock/lockshadow.png</key>
             <key type="filename">lock/mechanism.png</key>
+            <key type="filename">lock/mechanism_bar.png</key>
+            <key type="filename">lock/padlock.png</key>
+            <key type="filename">lock/padlock_swivel.png</key>
             <key type="filename">lock/pick.png</key>
             <key type="filename">lock/pickbroke.png</key>
             <key type="filename">lock/pickshadow.png</key>

@@ -27,12 +27,25 @@ function setupLoadingBar(scene) {
     scene.load.on('complete', () => {
         loadObjects.loadingText.setVisible(false);
         onLoadComplete(scene);
-        // loadObjects.fadeBG = scene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'blackPixel').setScale(1000).setAlpha(0.5).setDepth(-5);
 
         for (let i in loadObjects) {
             loadObjects[i].destroy();
         }
     });
+}
+
+function getGlobalBlackout() {
+    if (globalObjects.blackout) {
+        globalObjects.blackout.setAlpha(1);
+        if (globalObjects.blackout.currAnim) {
+            globalObjects.blackout.currAnim.stop();
+        }
+        return globalObjects.blackout;
+    } else {
+        globalObjects.blackout = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'blackPixel').setScale(1000).setAlpha(1).setDepth(99);
+        return globalObjects.blackout;
+    }
+
 }
 
 function cleanupIntro() {
@@ -73,11 +86,13 @@ function setupGame() {
 
 
     globalObjects.extras = [];
-    globalObjects.roomTitle = PhaserScene.add.text(gameConsts.halfWidth, 50, 'TRAINING LOCK', {fontFamily: 'kingthings', fontSize: 40, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(99).setOrigin(0.5, 0.5);
+    globalObjects.roomTitle = PhaserScene.add.text(gameConsts.halfWidth, 42, 'TRAINING LOCK', {fontFamily: 'kingthings', fontSize: 36, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(99).setOrigin(0.5, 0.5);
+    globalObjects.picksleftText = PhaserScene.add.text(12, 60, 'PICKS LEFT: 99', {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'left'}).setStroke('#000000', 4).setDepth(1).setOrigin(0, 0.5);
+    gameVars.picksLeft = 99;
 
     // globalObjects.hoverTextManager = new InternalHoverTextManager(PhaserScene);
-    globalObjects.currBackground = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'backgrounds', 'door.png');
-    PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'lock.png');
+    globalObjects.currBackground = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'backgrounds', 'workbench2.png').setScale(2).setDepth(-10);
+    globalObjects.lock = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'lock.png');
     globalObjects.pickshadow = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'pickshadow.png').setAlpha(0.6);
     globalObjects.mechanism = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'mechanism.png');
     globalObjects.pick = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'pick.png');
@@ -86,12 +101,14 @@ function setupGame() {
     gameVars.currentPin = 0;
     for (let i = 0; i < 5; i++) {
         let xOffset = 0;
-        if (i == 1) {
+        if (i === 1) {
             xOffset = 1;
         }
-        globalObjects.indicators[i] = PhaserScene.add.image(gameConsts.halfWidth - 35 + i * 30.6 + xOffset, gameConsts.halfHeight - 88, 'lock', 'icon_black.png');
+        globalObjects.indicators[i] = PhaserScene.add.image(gameConsts.halfWidth - 35 + i * 30.6 + xOffset, gameConsts.halfHeight - 78, 'lock', 'icon_black.png');
     }
     PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'lockshadow.png').setDepth(1);
+
+    globalObjects.title = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.halfHeight - 36, 'SUCCESS!', {fontFamily: 'kingthings', fontSize: 72, color: '#FFFF00', align: 'center'}).setStroke('#000000', 10).setDepth(50).setOrigin(0.5, 0.5).setAlpha(0);
 
     setRoom('practice');
 
@@ -221,12 +238,12 @@ function toggleMute() {
         updateGlobalVolume(0.25);
         globalObjects.mutebtn.setNormalRef("audio_mid.png");
         globalObjects.mutebtn.setHoverRef("audio_mid_hover.png");
-        playSound('click', 1.5)
+        playSound('click', 1.9)
     } else {
         updateGlobalVolume(1)
         globalObjects.mutebtn.setNormalRef("audio_on.png");
         globalObjects.mutebtn.setHoverRef("audio_on_hover.png");
-        playSound('click', 1.5)
+        playSound('click', 1.9)
     }
 }
 
@@ -283,38 +300,6 @@ function setupQuestionButton() {
     questionButton.setDepth(1);
 }
 
-function setRoom(room) {
-    for (let i in globalObjects.extras) {
-        globalObjects.extras[i].destroy();
-    }
-    globalObjects.extras = [];
-    if (room == "practice") {
-        createPins(3);
-        let arrowLeft = PhaserScene.add.image(42, gameConsts.height - 112, 'ui', 'arrow.png').setRotation(Math.PI*-0.5).setScale(0.8);
-        let arrowRight = PhaserScene.add.image(77, gameConsts.height - 112, 'ui', 'arrow.png').setRotation(Math.PI*0.5).setScale(0.8);
-        let arrowUp = PhaserScene.add.image(42, gameConsts.height - 78, 'ui', 'arrow.png').setScale(0.8);
-        globalObjects.extras.push(arrowLeft);
-        globalObjects.extras.push(arrowRight);
-        globalObjects.extras.push(arrowUp);
-
-        globalObjects.roomTitle.setText('TRAINING LOCK')
-        let instructions = PhaserScene.add.text(25, gameConsts.height - 155, "CONTROLS:", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
-        globalObjects.extras.push(instructions);
-        let instructions2 = PhaserScene.add.text(97, gameConsts.height - 126, "Move pick", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
-        globalObjects.extras.push(instructions2);
-        let instructions3 = PhaserScene.add.text(64, gameConsts.height - 92, "Lift tumbler", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
-        globalObjects.extras.push(instructions3);
-        let instructions4 = PhaserScene.add.text(30, gameConsts.height - 62, "Space/Enter to set tumbler when\nit reaches the top of the lock", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
-        globalObjects.extras.push(instructions4);
-        let goalText = PhaserScene.add.text(570, gameConsts.height - 135, 'GOAL:\nSet all the\ntumblers\nin place ->', {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setOrigin(0, 0);
-        goalText.setStroke('#000000', 4)
-        globalObjects.extras.push(goalText);
-        let goalPic = PhaserScene.add.image(720, gameConsts.height - 72, 'lock', 'goal.png').setScale(0.8);
-        globalObjects.extras.push(goalPic);
-
-    }
-}
-
 function createPins(amt) {
     gameVars.maxPins = amt;
     for (let i in globalObjects.pins) {
@@ -332,8 +317,8 @@ function createPins(amt) {
         if (j == 1) {
             xOffset = 1;
         }
-        globalObjects.pins[j] = PhaserScene.add.image(gameConsts.halfWidth - 36 + j * 30.6 + xOffset, gameConsts.halfHeight - 8 - yOffset, 'lock', 'pin.png');
-        globalObjects.pins[j].startY = gameConsts.halfHeight - 8;
+        globalObjects.pins[j] = PhaserScene.add.image(gameConsts.halfWidth - 36 + j * 30.6 + xOffset, gameConsts.halfHeight + 2 - yOffset, 'lock', 'pin.png');
+        globalObjects.pins[j].startY = gameConsts.halfHeight + 2;
         globalObjects.pins[j].currAnim = PhaserScene.tweens.add({
             targets: globalObjects.pins[j],
             y: globalObjects.pins[j].startY,
@@ -352,7 +337,7 @@ function updatePickSpot() {
         globalObjects.pick.currAnim.stop();
     }
     if (Math.abs(goalX - globalObjects.pick.x) > 5) {
-        playSound('metalclink').detune = 200 - Math.random() * 400;
+        playSound('metalclink', 1.5).detune = 200 - Math.random() * 400;
     }
     globalObjects.pick.currAnim = PhaserScene.tweens.add({
         targets: [globalObjects.pick, globalObjects.pickshadow],
@@ -372,6 +357,9 @@ function pickMoveUp(canBuffer = true) {
                 pickMoveUp(false);
             }, 80)
         }
+        return;
+    }
+    if (gameVars.picksLeft <= 0) {
         return;
     }
 
@@ -428,6 +416,9 @@ function pinMoveUp(pinNum) {
     if (currPin.locked) {
         return;
     }
+    if (gameVars.picksLeft <= 0) {
+        return;
+    }
 
     if (currPin.currAnim) {
         currPin.currAnim.stop();
@@ -446,26 +437,29 @@ function pinMoveUp(pinNum) {
         dropDelay = 0;
     }
 
-    currPin.currDelay = PhaserScene.time.delayedCall(Math.max(currPin.randDur - 1, Math.floor(currPin.randDur * 0.55) + 6), () => {
+    currPin.currDelay = PhaserScene.time.delayedCall(Math.max(currPin.randDur - 1, Math.floor(currPin.randDur * 0.62) + 10), () => {
         if (!overrideCantOpen) {
             gameVars.canLock = true;
             gameVars.canShowGreen = true;
             setTimeout(() => {
                 if (gameVars.canShowGreen && !currPin.locked && !globalObjects.indicators[pinNum].stuck) {
                     globalObjects.indicators[pinNum].setFrame('icon_green.png');
-                    let flashObj = getTempPoolObject('lock', 'icon_green_flash.png', 'green_flash', 400).setDepth(10);
-                    flashObj.x = globalObjects.indicators[pinNum].x;
-                    flashObj.y = globalObjects.indicators[pinNum].y;
-                    flashObj.alpha = 0.25 + dropDelay * 0.006;
-                    PhaserScene.tweens.add({
-                        targets: flashObj,
-                        alpha: 0,
-                        ease: 'Quad.easeOut',
-                        duration: 100 + dropDelay * 4.5
-                    })
+                    if (globalObjects.indicators[pinNum].visible) {
+                        let flashObj = getTempPoolObject('lock', 'icon_green_flash.png', 'green_flash', 400).setDepth(10);
+                        flashObj.x = globalObjects.indicators[pinNum].x;
+                        flashObj.y = globalObjects.indicators[pinNum].y;
+                        flashObj.alpha = 0.25 + dropDelay * 0.006;
+                        PhaserScene.tweens.add({
+                            targets: flashObj,
+                            alpha: 0,
+                            ease: 'Quad.easeOut',
+                            duration: 100 + dropDelay * 4.5
+                        })
+                    }
+
                 }
             }, 10)
-            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3.3) + dropDelay * 1.75), () => {
+            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3) + dropDelay * 1.75), () => {
                 gameVars.canShowGreen = false;
                 setTimeout(() => {
                     gameVars.canLock = false;
@@ -487,15 +481,15 @@ function pinMoveUp(pinNum) {
     currPin.currAnim = PhaserScene.tweens.add({
         targets: currPin,
         delay: 10,
-        y: gameConsts.halfHeight - 47,
+        y: gameConsts.halfHeight - 37,
         ease: 'Quad.easeOut',
         duration: currPin.randDur,
         onStart: () => {
-            playSound('nudge').detune = 100 - Math.random() * 80 - currPin.randDur * 1.5;
+            playSound('nudge', 1.35).detune = 100 - Math.random() * 80 - currPin.randDur * 1.5;
 
         },
         onComplete: () => {
-            playSound('clicktop', 0.4 + currPin.randDur * 0.002 - Math.random() * 0.35).detune = 100 - Math.random() * 100 - currPin.randDur * 0.4;
+            playSound('clicktop', 0.5 + currPin.randDur * 0.002 - Math.random() * 0.35).detune = 100 - Math.random() * 100 - currPin.randDur * 0.4;
             currPin.currAnim = PhaserScene.tweens.add({
                 delay: dropDelay,
                 targets: currPin,
@@ -507,7 +501,7 @@ function pinMoveUp(pinNum) {
                         if (!currPin.locked) {
                             let randIdx = Math.floor(Math.random() * 2.5) + 1;
                             let soundToPlay = 'pinfall' + randIdx;
-                            currPin.currSound = playSound(soundToPlay, 2);
+                            currPin.currSound = playSound(soundToPlay, 2.4);
                             currPin.currSound.detune = 200 - Math.random() * 100 - dropDelay * 1;
                             let seekSpot = (245 - dropDelay * 0.75 + Math.random() * 50) * 0.0032;
                             currPin.currSound.seek = Math.max(0, Math.min(1, seekSpot));
@@ -541,6 +535,9 @@ function pinMoveUp(pinNum) {
 
 function tryLock() {
     let currPin = globalObjects.pins[gameVars.currentPin];
+    if (gameVars.picksLeft <= 0) {
+        return;
+    }
     if (!currPin) {
         return;
     } else if (!currPin.inMotion || currPin.locked) {
@@ -570,7 +567,7 @@ function tryLock() {
     } else if (gameVars.canLock) {
         let randSoundIdx = Math.floor(Math.random() * 4) + 1;
         let randSound = "scratch" + randSoundIdx;
-        playSound(randSound).detune = 100 - Math.random() * 200;
+        playSound(randSound, 1.3).detune = 100 - Math.random() * 200;
         // playSound(Math.random() < 0.5 ? 'lockin1' : 'lockin2').detune = 100 - Math.random() * 200;
         // Lock
         if (currPin.currAnim) {
@@ -583,7 +580,7 @@ function tryLock() {
         globalObjects.indicators[gameVars.currentPin].setFrame('icon_black.png');
         PhaserScene.tweens.add({
             targets: currPin,
-            y: gameConsts.halfHeight - 47,
+            y: gameConsts.halfHeight - 37,
             ease: 'Quad.easeOut',
             duration: 200,
         });
@@ -603,10 +600,11 @@ function tryLock() {
         }
 
     } else {
-        playSound('pickbreak');
+        playSound('pickbreak', 1);
         if (globalObjects.pick.currAnim) {
             globalObjects.pick.currAnim.stop();
         }
+        decrementPicksLeft();
         let redIndicator = globalObjects.indicators[gameVars.currentPin];
         redIndicator.setFrame('icon_red.png');
         redIndicator.stuck = true;
@@ -652,6 +650,9 @@ function resetPick(setToZero = true) {
         globalObjects.pick.currAnim.stop();
     }
 
+    if (gameVars.picksLeft <= 0) {
+        return;
+    }
 
     globalObjects.pick.alpha = 0.5;
     globalObjects.pickshadow.alpha = 0.5;
@@ -672,9 +673,106 @@ function resetPick(setToZero = true) {
     })
 }
 
+function showFail() {
+    PhaserScene.tweens.add({
+        delay: 450,
+        targets: globalObjects.extras,
+        alpha: 0,
+        duration: 700
+    })
+    globalObjects.defeat = {};
+
+    globalObjects.defeat.dark = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight - 11, 'lock', 'shadow.png').setScale(3).setDepth(50).setAlpha(0);
+    globalObjects.defeat.title = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.halfHeight - 36, 'FAILURE...', {fontFamily: 'kingthings', fontSize: 72, color: '#EE0011', align: 'center'}).setStroke('#000000', 10).setDepth(50).setOrigin(0.5, 0.5).setAlpha(0);
+    PhaserScene.tweens.add({
+        delay: 450,
+        targets: globalObjects.defeat.dark,
+        alpha: 0.88,
+        scaleX: 3.6,
+        scaleY: 3.6,
+        ease: 'Cubic.easeOut',
+        duration: 700,
+        onStart: () => {
+            setTimeout(() => {
+                playSound('fail');
+            }, 200)
+        }
+    });
+
+
+    let flavorText = [
+        "I have wasted my entire hoard\nof picks. Hope it was worth it.",
+        "My hasty fingers fumble the crude lock,\nleaving me chained and stalled.",
+        "The flimsy lock jams under my rushed picks,\nkeeping me caged behind bars.",
+        "The clothier’s sturdy lock catches my tools, leaving me in rags unfit for the castle.",
+        "A misstep alerts the guards, and the gate’s lock holds firm, blocking my path.",
+        "The enchanted lock resets at my slightest mistake, sealing the door tight.",
+        "The masterful lock defies my trembling hands, keeping the princess beyond reach.",
+        "A clumsy word locks Liora's heart tighter, her trust slipping away. I retreat, vowing to tread more carefully next time."
+    ]
+    globalObjects.defeat.extraText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, flavorText[gameVars.currLevel], {fontFamily: 'kingthings', fontSize: 26, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
+
+    globalObjects.defeat.title.setScale(1.3).setAlpha(0);
+    PhaserScene.tweens.add({
+        delay: 400,
+        targets: [globalObjects.defeat.title, globalObjects.defeat.extraText],
+        alpha: 1,
+        scaleX: 1,
+        scaleY: 1,
+        ease: 'Cubic.easeOut',
+        duration: 700,
+        completeDelay: 500,
+        onComplete: () => {
+            globalObjects.defeat.retry = new Button({
+                normal: {
+                    atlas: 'buttons',
+                    ref: "menu_btn_normal.png",
+                    x: gameConsts.halfWidth,
+                    y: gameConsts.halfHeight + 30,
+                    scaleX: 0.62,
+                    scaleY: 0.62
+                },
+                hover: {
+                    atlas: 'buttons',
+                    ref: "menu_btn_hover.png",
+                },
+                press: {
+                    atlas: 'buttons',
+                    ref: "menu_btn_press.png",
+                },
+                onHover: () => {
+                    if (canvas) {
+                        playSound('click').detune = -50;
+                        canvas.style.cursor = 'pointer';
+                    }
+                },
+                onHoverOut: () => {
+                    if (canvas) {
+                        canvas.style.cursor = 'default';
+                    }
+                },
+                onMouseUp: () => {
+                    for (let i in globalObjects.defeat) {
+                        globalObjects.defeat[i].destroy();
+                    }
+                    gotoLevel(gameVars.currLevel ? gameVars.currLevel : 0, true);
+                }
+            });
+            globalObjects.defeat.retry.addText("RETRY", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
+            globalObjects.defeat.retry.setTextOffset(0, 1);
+            globalObjects.defeat.retry.setDepth(51);
+        }
+    })
+
+}
 
 function slideOpenLock() {
-    playSound('success');
+    playSound('success', 1.1);
+    if (globalObjects.playUponUnlock) {
+        for (let i in globalObjects.playUponUnlock) {
+            globalObjects.playUponUnlock[i]();
+        }
+    }
     PhaserScene.tweens.add({
         targets: globalObjects.mechanism,
         x: gameConsts.halfWidth - 55,
@@ -682,33 +780,44 @@ function slideOpenLock() {
         ease: 'Back.easeOut',
         duration: 800,
         onComplete: () => {
-            globalObjects.victoryDark = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight - 14, 'lock', 'shadow.png').setScale(4).setDepth(50).setAlpha(0);
-            globalObjects.title = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.halfHeight - 36, 'SUCCESS!', {fontFamily: 'kingthings', fontSize: 72, color: '#FFFF00', align: 'center'}).setStroke('#000000', 14).setDepth(50).setOrigin(0.5, 0.5).setAlpha(0);
             PhaserScene.tweens.add({
-                targets: globalObjects.victoryDark,
+                targets: globalObjects.extras,
+                alpha: 0,
+                duration: 550
+            })
+            globalObjects.victory = {};
+
+            globalObjects.victory.victoryDark = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight - 11, 'lock', 'shadow.png').setScale(4.5).setDepth(50).setAlpha(0);
+            globalObjects.victory.title = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.halfHeight - 36, 'SUCCESS!', {fontFamily: 'kingthings', fontSize: 72, color: '#FFFF00', align: 'center'}).setStroke('#000000', 10).setDepth(50).setOrigin(0.5, 0.5).setAlpha(0);
+            PhaserScene.tweens.add({
+                targets: globalObjects.victory.victoryDark,
                 alpha: 0.88,
-                scaleX: 3.2,
-                scaleY: 3.2,
+                scaleX: 3.6,
+                scaleY: 3.6,
                 ease: 'Back.easeOut',
                 duration: 500
             });
 
-            globalObjects.title.setScale(1.3).setAlpha(0);
+
+            globalObjects.victory.title.setScale(1.3).setAlpha(0);
             PhaserScene.tweens.add({
-                targets: globalObjects.title,
+                targets: globalObjects.victory.title,
                 alpha: 1,
                 scaleX: 1,
                 scaleY: 1,
                 ease: 'Cubic.easeIn',
                 duration: 500,
                 completeDelay: 500,
+                onStart: () => {
+                  playSound('bardplay');
+                },
                 onComplete: () => {
-                    let nextLvl = new Button({
+                    globalObjects.victory.nextLvl = new Button({
                         normal: {
                             atlas: 'buttons',
                             ref: "menu_btn_normal.png",
                             x: gameConsts.halfWidth,
-                            y: gameConsts.halfHeight + 24,
+                            y: gameConsts.halfHeight + 30,
                             scaleX: 0.62,
                             scaleY: 0.62
                         },
@@ -732,12 +841,22 @@ function slideOpenLock() {
                             }
                         },
                         onMouseUp: () => {
-                            openLevelPopup();
+                            if (globalObjects.victory) {
+                                for (let i in globalObjects.victory) {
+                                    globalObjects.victory[i].destroy();
+                                }
+                            }
+                            if (globalObjects.defeat) {
+                                for (let i in globalObjects.defeat) {
+                                    globalObjects.defeat[i].destroy();
+                                }
+                            }
+                            gotoNextLevel();
                         }
                     });
-                    nextLvl.addText("NEXT LEVEL", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
-                    nextLvl.setTextOffset(0, 1);
-                    nextLvl.setDepth(51);
+                    globalObjects.victory.nextLvl.addText("NEXT LEVEL", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
+                    globalObjects.victory.nextLvl.setTextOffset(0, 1);
+                    globalObjects.victory.nextLvl.setDepth(51);
                 }
             })
 
@@ -750,7 +869,7 @@ function setupPlayer() {
 }
 
 function openPopup(contents) {
-    playSound("paperflip", 0.6);
+    playSound("paperflip", 0.7);
     if (!globalObjects.currPopup) {
         globalObjects.currPopup = {
             active: true
@@ -847,122 +966,84 @@ function openInstructPopup() {
     openPopup(instructContent)
 }
 
-function openLevelPopup() {
-    let lvlContents = {};
-    lvlContents.title = PhaserScene.add.text(gameConsts.halfWidth, 123, 'LEVEL SELECT', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
-    openPopup(lvlContents)
+function openFlavorPopup(title = " ", content = " ", image) {
+    let instructContent = {};
+    instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, title, {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+
+    if (image) {
+        instructContent.image = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + 77, 'lock', image).setDepth(102).setScale(0.94);
+    }
+    instructContent.controls = PhaserScene.add.text(gameConsts.halfWidth - 170, gameConsts.halfHeight - 150, content, {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
+
     let extraContents = {};
 
-    let levelNames = [
-        "Training Lock",
-        "Level 1: Chains",
-        "Level 2: Escape",
-        "Level 3: Dressing Up",
-        "Level 4: Palace Gate",
-        "Level 5: Tricky Door",
-        "Level 6: Bedroom",
-        "Level 7: Her Heart"];
-    let levelNamesAlt = [
-        "Training Lock",
-        "Level 1: Chains",
-        "Level 2",
-        "Level 3",
-        "Level 4",
-        "Level 5",
-        "Level 6",
-        "Level 7"];
-    for (let i = 0; i < levelNames.length; i++) {
-        let btnName = "level_"+i;
-        let levelButton = new Button({
-            normal: {
-                atlas: 'buttons',
-                ref: "menu_btn_normal.png",
-                    x: gameConsts.halfWidth,
-                    y: gameConsts.halfHeight - 140 + i * 41,
-                scaleX: 1,
-                scaleY: 0.65,
-                alpha: 1,
-            },
-            hover: {
-                atlas: 'buttons',
-                ref: "menu_btn_hover.png",
-                alpha: 1,
-            },
-            press: {
-                atlas: 'buttons',
-                ref: "menu_btn_press.png",
-                alpha: 1,
-            },
-            disable: {
-                atlas: 'buttons',
-                ref: "menu_btn_press.png",
-                alpha: 0.5,
-            },
-            onHover: () => {
-                if (canvas) {
-                    canvas.style.cursor = 'pointer';
-                }
-            },
-            onHoverOut: () => {
-                if (canvas) {
-                    canvas.style.cursor = 'default';
-                }
-            },
-            onMouseUp: () => {
-                gotoLevel(i);
-                for (let i in globalObjects.currPopup) {
-                    if (i !== 'active') {
-                        globalObjects.currPopup[i].destroy();
-                    }
-                }
-                globalObjects.currPopup.active = false;
+    openPopup(instructContent);
+    extraContents.continueButton = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "menu_btn_normal.png",
+            x: gameConsts.halfWidth,
+            y: gameConsts.height - 120,
+            scaleX: 0.57,
+            scaleY: 0.57
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "menu_btn_hover.png",
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "menu_btn_press.png",
+        },
+        onHover: () => {
+            if (canvas) {
+                playSound('click').detune = -50;
+                canvas.style.cursor = 'pointer';
             }
-        });
-        levelButton.addText(levelNames[i], {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'})
-
-        //closeButton.setTextOffset(1, 0)
-        levelButton.setDepth(102);
-        if (i > gameVars.latestLevel) {
-            levelButton.setState(DISABLE);
-            levelButton.setText(levelNamesAlt[i]);
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            for (let i in globalObjects.currPopup) {
+                if (i !== 'active') {
+                    globalObjects.currPopup[i].destroy();
+                }
+            }
+            globalObjects.currPopup.active = false;
         }
-
-
-        extraContents[btnName] = levelButton;
-    }
-
+    });
+    extraContents.continueButton.addText("CONTINUE", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
+    extraContents.continueButton.setTextOffset(0, -1);
+    extraContents.continueButton.setDepth(101);
     addPopupContents(extraContents);
 
 }
 
-function addPopupContents(contents) {
-    for (let i in contents) {
-        globalObjects.currPopup[i] = contents[i];
+
+function setPicksLeft(amt) {
+    gameVars.picksLeft = amt;
+    globalObjects.picksleftText.setText("PICKS LEFT: " + gameVars.picksLeft);
+}
+
+function decrementPicksLeft() {
+    gameVars.picksLeft--;
+    globalObjects.picksleftText.setText("PICKS LEFT: " + gameVars.picksLeft);
+    if (gameVars.picksLeft >= 0) {
+        globalObjects.picksleftText.setScale(1.1);
+        PhaserScene.tweens.add({
+            targets: globalObjects.picksleftText,
+            scaleX: 1,
+            scaleY: 1,
+            ease: 'Back.easeOut',
+            duration: 320
+        })
     }
-}
 
-function gotoLevel(lvl) {
-    console.log("going to level ", lvl);
-    let flavorStory = [
-        "I'm bound in chains for slipping into forbidden places and claiming forbidden treasures. The chains are strong, but the lock is crude, barely a challenge for my skills.",
-        "The shackles are off, but iron bars still cage me in this prison. The lock is flimsy, begging for a quick twist of my tools. A little finesse, and I’ll be out in no time.",
-        "I have escaped, but to reach the castle’s treasure, I need finer clothes to be presentable. The clothier’s lock is sturdy, a step above the prison’s, but I’m confident I can slip in and claim the attire I need.",
-        "The castle looms, its treasures calling, but sturdy outer gates bar my path. Their locks are well-crafted, yet familiar. I find a blind spot in the security patrols and begin.",
-        "An unassuming door blocks my way, its plain facade hiding a tricky lock enchanted to reset if I falter. One wrong move could undo my progress. I steady my hands and listen closely to crack its magic.",
-        "The princess's door stands before me, its locks a masterpiece of craft and enchantment. Every safeguard known protects this final barrier. Failure is not an option, but victory is within reach.",
-        "I’ve reached the true treasure: Princess Liora's guarded heart, protected by the most intricate lock of all. Each move must be deliberate, each word precise, to unlock her trust and love. I tread with utmost care, knowing this is my greatest challenge yet.",
-        "The final tumbler clicks, and Liora's heart opens, her warm smile inviting me to talk by the fire for hours, undisturbed by guards. As dawn approaches, I slip out the tower window, heart full, certain I’ll return to her another night."
-    ]
-}
+    if (gameVars.picksLeft <= 0) {
 
-function failLevel() {
-    let flavorText = [
-        "My hasty fingers fumble the crude lock, leaving me chained and stalled.",
-        "The flimsy lock jams under my rushed picks, keeping me caged behind bars.",
-        "The clothier’s sturdy lock catches my tools, leaving me in rags unfit for the castle.",
-        "A misstep alerts the guards, and the gate’s lock holds firm, blocking my path.",
-        "The enchanted lock resets at my slightest mistake, sealing the door tight.",
-        "The masterful lock defies my trembling hands, keeping the princess beyond reach.",
-        "A clumsy word locks Liora's heart tighter, her trust slipping away. I retreat, vowing to tread more carefully next time."
-    ]
+        showFail();
+    }
 }

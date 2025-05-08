@@ -55,6 +55,7 @@ let cheats = {};
 let funnies = {};
 let gameOptions = {};
 let gameVars = {
+    currLevel: 0,
     soundStatus: 2,
     musicStatus: 1,
     hideCheatVal: 0,
@@ -126,7 +127,7 @@ function create ()
 function onPreloadComplete (scene)
 {
     showHTMLBackground();
-    globalObjects.tempBG = scene.add.sprite(0, 0, 'blackPixel').setScale(1000, 1000).setDepth(-1);
+    globalObjects.tempBG = scene.add.sprite(0, 0, 'blackPixel').setScale(1000, 1000).setDepth(-99);
 
     setupMouseInteraction(scene);
     setupLoadingBar(scene);

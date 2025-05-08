@@ -4,30 +4,105 @@
 			"image": "sprites/backgrounds-0.webp",
 			"format": "RGBA8888",
 			"size": {
-				"w": 882,
-				"h": 662
+				"w": 884,
+				"h": 1266
 			},
 			"scale": 1,
 			"frames": [
+				{
+					"filename": "princess.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 800,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 800,
+						"h": 600
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 800,
+						"h": 600
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "bars.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 440,
+						"h": 330
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 440,
+						"h": 330
+					},
+					"frame": {
+						"x": 1,
+						"y": 603,
+						"w": 440,
+						"h": 330
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
 				{
 					"filename": "door.png",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 880,
-						"h": 660
+						"w": 440,
+						"h": 330
 					},
 					"spriteSourceSize": {
 						"x": 0,
 						"y": 0,
-						"w": 880,
-						"h": 660
+						"w": 440,
+						"h": 330
+					},
+					"frame": {
+						"x": 443,
+						"y": 603,
+						"w": 440,
+						"h": 330
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "workbench2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 440,
+						"h": 330
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 440,
+						"h": 330
 					},
 					"frame": {
 						"x": 1,
-						"y": 1,
-						"w": 880,
-						"h": 660
+						"y": 935,
+						"w": 440,
+						"h": 330
 					},
 					"anchor": {
 						"x": 0.5,
@@ -40,6 +115,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:8dce0d776dc1628556aad360287a86da:2c6ba071ff150361bf5065b17209c6fe:6ce2ab4a85f7daf91b8ccc33ab04fb60$"
+		"smartupdate": "$TexturePacker:SmartUpdate:172873462f24369cce19351fed6358b8:02509d8bb223c5d37d29197a79226e50:6ce2ab4a85f7daf91b8ccc33ab04fb60$"
 	}
 }
