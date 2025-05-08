@@ -85,6 +85,7 @@ function gotoNextLevel() {
 
 function gotoLevel(lvl, skipIntro = false) {
     console.log("going to level ", lvl);
+    gameVars.showNextButton = false;
     gameVars.currLevel = lvl;
     createGlobalClickBlocker(false)
 
@@ -111,11 +112,6 @@ function gotoLevel(lvl, skipIntro = false) {
             if (globalObjects.victory) {
                 for (let i in globalObjects.victory) {
                     globalObjects.victory[i].destroy();
-                }
-            }
-            if (globalObjects.defeat) {
-                for (let i in globalObjects.defeat) {
-                    globalObjects.defeat[i].destroy();
                 }
             }
 
@@ -220,12 +216,7 @@ function openLevelPopup() {
             },
             onMouseUp: () => {
                 gotoLevel(i);
-                for (let i in globalObjects.currPopup) {
-                    if (i !== 'active') {
-                        globalObjects.currPopup[i].destroy();
-                    }
-                }
-                globalObjects.currPopup.active = false;
+                closePopup();
             }
         });
         levelButton.addText(levelNames[i], {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'})

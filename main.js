@@ -55,6 +55,7 @@ let cheats = {};
 let funnies = {};
 let gameOptions = {};
 let gameVars = {
+    hasPopup: true,
     currLevel: 0,
     soundStatus: 2,
     musicStatus: 1,
@@ -215,7 +216,18 @@ function update(time, delta) {
             }
         }
         if (globalObjects.keyboardControls.getLockJustDown()) {
-            tryLock();
+            if (gameVars.hasPopup) {
+                closePopup();
+            } else if (gameVars.showNextButton !== false) {
+                gotoLevel(gameVars.showNextButton);
+                if (globalObjects.victory) {
+                    for (let i in globalObjects.victory) {
+                        globalObjects.victory[i].destroy();
+                    }
+                }
+            } else {
+                tryLock();
+            }
         }
         if (globalObjects.currBackground) {
             let goalXOffset = (gameConsts.halfWidth -gameVars.mouseposx) * 0.025;// + gameConsts.halfWidth;

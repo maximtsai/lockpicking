@@ -680,13 +680,13 @@ function showFail() {
         alpha: 0,
         duration: 700
     })
-    globalObjects.defeat = {};
+    globalObjects.victory = {};
 
-    globalObjects.defeat.dark = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight - 11, 'lock', 'shadow.png').setScale(3).setDepth(50).setAlpha(0);
-    globalObjects.defeat.title = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.halfHeight - 36, 'FAILURE...', {fontFamily: 'kingthings', fontSize: 72, color: '#EE0011', align: 'center'}).setStroke('#000000', 10).setDepth(50).setOrigin(0.5, 0.5).setAlpha(0);
+    globalObjects.victory.dark = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight - 11, 'lock', 'shadow.png').setScale(3).setDepth(50).setAlpha(0);
+    globalObjects.victory.title = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.halfHeight - 36, 'FAILURE...', {fontFamily: 'kingthings', fontSize: 72, color: '#EE0011', align: 'center'}).setStroke('#000000', 10).setDepth(50).setOrigin(0.5, 0.5).setAlpha(0);
     PhaserScene.tweens.add({
         delay: 450,
-        targets: globalObjects.defeat.dark,
+        targets: globalObjects.victory.dark,
         alpha: 0.88,
         scaleX: 3.6,
         scaleY: 3.6,
@@ -710,12 +710,12 @@ function showFail() {
         "The masterful lock defies my trembling hands, keeping the princess beyond reach.",
         "A clumsy word locks Liora's heart tighter, her trust slipping away. I retreat, vowing to tread more carefully next time."
     ]
-    globalObjects.defeat.extraText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, flavorText[gameVars.currLevel], {fontFamily: 'kingthings', fontSize: 26, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
+    globalObjects.victory.extraText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, flavorText[gameVars.currLevel], {fontFamily: 'kingthings', fontSize: 26, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
 
-    globalObjects.defeat.title.setScale(1.3).setAlpha(0);
+    globalObjects.victory.title.setScale(1.3).setAlpha(0);
     PhaserScene.tweens.add({
         delay: 400,
-        targets: [globalObjects.defeat.title, globalObjects.defeat.extraText],
+        targets: [globalObjects.victory.title, globalObjects.victory.extraText],
         alpha: 1,
         scaleX: 1,
         scaleY: 1,
@@ -723,7 +723,7 @@ function showFail() {
         duration: 700,
         completeDelay: 500,
         onComplete: () => {
-            globalObjects.defeat.retry = new Button({
+            globalObjects.victory.retry = new Button({
                 normal: {
                     atlas: 'buttons',
                     ref: "menu_btn_normal.png",
@@ -752,15 +752,16 @@ function showFail() {
                     }
                 },
                 onMouseUp: () => {
-                    for (let i in globalObjects.defeat) {
-                        globalObjects.defeat[i].destroy();
+                    for (let i in globalObjects.victory) {
+                        globalObjects.victory[i].destroy();
                     }
                     gotoLevel(gameVars.currLevel ? gameVars.currLevel : 0, true);
                 }
             });
-            globalObjects.defeat.retry.addText("RETRY", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
-            globalObjects.defeat.retry.setTextOffset(0, 1);
-            globalObjects.defeat.retry.setDepth(51);
+            gameVars.showNextButton = gameVars.currLevel ? gameVars.currLevel : 0;
+            globalObjects.victory.retry.addText("RETRY", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
+            globalObjects.victory.retry.setTextOffset(0, 1);
+            globalObjects.victory.retry.setDepth(51);
         }
     })
 
@@ -846,14 +847,11 @@ function slideOpenLock() {
                                     globalObjects.victory[i].destroy();
                                 }
                             }
-                            if (globalObjects.defeat) {
-                                for (let i in globalObjects.defeat) {
-                                    globalObjects.defeat[i].destroy();
-                                }
-                            }
                             gotoNextLevel();
                         }
                     });
+                    gameVars.showNextButton = gameVars.currLevel ? gameVars.currLevel + 1 : 1;
+
                     globalObjects.victory.nextLvl.addText("NEXT LEVEL", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
                     globalObjects.victory.nextLvl.setTextOffset(0, 1);
                     globalObjects.victory.nextLvl.setDepth(51);
@@ -869,6 +867,7 @@ function setupPlayer() {
 }
 
 function openPopup(contents) {
+    gameVars.hasPopup = true;
     playSound("paperflip", 0.7);
     if (!globalObjects.currPopup) {
         globalObjects.currPopup = {
@@ -926,12 +925,7 @@ function openPopup(contents) {
             }
         },
         onMouseUp: () => {
-            for (let i in globalObjects.currPopup) {
-                if (i !== 'active') {
-                    globalObjects.currPopup[i].destroy();
-                }
-            }
-            globalObjects.currPopup.active = false;
+            closePopup();
         }
     });
     closeButton.addText("X", {fontFamily: 'kingthings', fontSize: 28, color: '#000000', align: 'center'});
@@ -940,6 +934,15 @@ function openPopup(contents) {
     globalObjects.currPopup.closeButton = closeButton;
     for (let i in contents) {
         globalObjects.currPopup[i] = contents[i];
+    }
+}
+
+function closePopup() {
+    gameVars.hasPopup = false;
+    for (let i in globalObjects.currPopup) {
+        if (i !== 'active') {
+            globalObjects.currPopup[i].destroy();
+        }
     }
 }
 
@@ -1007,12 +1010,7 @@ function openFlavorPopup(title = " ", content = " ", image) {
             }
         },
         onMouseUp: () => {
-            for (let i in globalObjects.currPopup) {
-                if (i !== 'active') {
-                    globalObjects.currPopup[i].destroy();
-                }
-            }
-            globalObjects.currPopup.active = false;
+            closePopup()
         }
     });
     extraContents.continueButton.addText("CONTINUE", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
