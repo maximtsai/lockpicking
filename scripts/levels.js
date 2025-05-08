@@ -118,7 +118,7 @@ function gotoLevel(lvl, skipIntro = false) {
 
             let flavorStory = [
                 "",
-                "I've been imprisoned for slipping into\nforbidden places and claiming forbidden\ntreasures.\n\nThe bars of this cell are strong, but the lock\nis crude. It should be an easy thing to pick.",
+                "I've been imprisoned for slipping into\nrestricted places and claiming protected\ntreasures.\n\nThe bars of this cell are strong, but the lock\nis crude. It should be an easy thing to pick.",
                 "I have escaped, but to reach the castle’s treasure, I need finer clothes to be presentable. The clothier’s lock is sturdy, a step above the prison’s, but I’m confident I can slip in and claim the attire I need.",
                 "The castle looms, its treasures calling, but sturdy outer gates bar my path. Their locks are well-crafted, yet familiar. I find a blind spot in the security patrols and begin.",
                 "An unassuming door blocks my way, its plain facade hiding a tricky lock enchanted to reset if I falter. One wrong move could undo my progress. I steady my hands and listen closely to crack its magic.",
