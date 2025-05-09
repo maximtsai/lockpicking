@@ -93,10 +93,10 @@ function setupGame() {
 
     // globalObjects.hoverTextManager = new InternalHoverTextManager(PhaserScene);
     globalObjects.currBackground = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'backgrounds', 'workbench2.png').setScale(2).setDepth(-10);
-    globalObjects.lock = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'lock.png');
-    globalObjects.pickshadow = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'pickshadow.png').setAlpha(0.6);
-    globalObjects.mechanism = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'mechanism.png');
-    globalObjects.pick = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'pick.png');
+    globalObjects.lock = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'lock.png');
+    globalObjects.pickshadow = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'pickshadow.png').setAlpha(0.6);
+    globalObjects.mechanism = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'mechanism.png');
+    globalObjects.pick = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'pick.png');
     globalObjects.pins = [];
     globalObjects.indicators = [];
     gameVars.currentPin = 0;
@@ -105,9 +105,9 @@ function setupGame() {
         if (i === 1) {
             xOffset = 1;
         }
-        globalObjects.indicators[i] = PhaserScene.add.image(gameConsts.halfWidth - 35 + i * 30.6 + xOffset, gameConsts.halfHeight - 78, 'lock', 'icon_black.png');
+        globalObjects.indicators[i] = PhaserScene.add.image(gameConsts.halfWidth - 35 + i * 30.6 + xOffset, gameConsts.halfHeight - 78 + gameConsts.UIYOffset, 'lock', 'icon_black.png');
     }
-    PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'lockshadow.png').setDepth(1);
+    PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'lockshadow.png').setDepth(1);
 
     globalObjects.title = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.halfHeight - 36, 'SUCCESS!', {fontFamily: 'kingthings', fontSize: 72, color: '#FFFF00', align: 'center'}).setStroke('#000000', 10).setDepth(50).setOrigin(0.5, 0.5).setAlpha(0);
 
@@ -301,7 +301,9 @@ function setupQuestionButton() {
     questionButton.setDepth(1);
 }
 
-function createPins(amt) {
+function createPins(amt, dropOnFail = false, dropAllOnFail = false) {
+    gameVars.dropOnFail = dropOnFail;
+    gameVars.dropAllOnFail = dropAllOnFail;
     gameVars.maxPins = amt;
     for (let i in globalObjects.pins) {
         globalObjects.pins[i].destroy();
@@ -315,11 +317,11 @@ function createPins(amt) {
     for (let j = 0; j < amt; j++) {
         let yOffset = 1 + Math.floor(Math.random() * 15);
         let xOffset = 0;
-        if (j == 1) {
+        if (j === 1) {
             xOffset = 1;
         }
-        globalObjects.pins[j] = PhaserScene.add.image(gameConsts.halfWidth - 36 + j * 30.6 + xOffset, gameConsts.halfHeight + 2 - yOffset, 'lock', 'pin.png');
-        globalObjects.pins[j].startY = gameConsts.halfHeight + 2;
+        globalObjects.pins[j] = PhaserScene.add.image(gameConsts.halfWidth - 36 + j * 30.6 + xOffset, gameConsts.halfHeight + 2 - yOffset + gameConsts.UIYOffset, 'lock', 'pin.png');
+        globalObjects.pins[j].startY = gameConsts.halfHeight + 2 + gameConsts.UIYOffset;
         globalObjects.pins[j].currAnim = PhaserScene.tweens.add({
             targets: globalObjects.pins[j],
             y: globalObjects.pins[j].startY,
@@ -346,8 +348,8 @@ function updatePickSpot() {
         duration: 140,
         ease: 'Quart.easeOut',
     })
-    globalObjects.pick.y = gameConsts.halfHeight;
-    globalObjects.pickshadow.y = gameConsts.halfHeight;
+    globalObjects.pick.y = gameConsts.halfHeight + gameConsts.UIYOffset;
+    globalObjects.pickshadow.y = gameConsts.halfHeight + gameConsts.UIYOffset;
 }
 
 function pickMoveUp(canBuffer = true) {
@@ -378,7 +380,7 @@ function pickMoveUp(canBuffer = true) {
     pinMoveUp(gameVars.currentPin);
     gameVars.pickStuck = true;
     let goalX = gameConsts.halfWidth + gameVars.currentPin * 30.3;
-    let goalY = gameConsts.halfHeight - 16;
+    let goalY = gameConsts.halfHeight - 16 + gameConsts.UIYOffset;
     if (globalObjects.pick.currAnim) {
         globalObjects.pick.currAnim.stop();
     }
@@ -397,7 +399,7 @@ function pickMoveUp(canBuffer = true) {
                 delay: 50,
                 targets: [globalObjects.pick, globalObjects.pickshadow],
                 rotation: 0,
-                y: gameConsts.halfHeight,
+                y: gameConsts.halfHeight + gameConsts.UIYOffset,
                 duration: 240,
                 ease: 'Back.easeOut',
                 onStart: () => {
@@ -482,7 +484,7 @@ function pinMoveUp(pinNum) {
     currPin.currAnim = PhaserScene.tweens.add({
         targets: currPin,
         delay: 10,
-        y: gameConsts.halfHeight - 37,
+        y: gameConsts.halfHeight - 37 + gameConsts.UIYOffset,
         ease: 'Quad.easeOut',
         duration: currPin.randDur,
         onStart: () => {
@@ -581,7 +583,7 @@ function tryLock() {
         globalObjects.indicators[gameVars.currentPin].setFrame('icon_black.png');
         PhaserScene.tweens.add({
             targets: currPin,
-            y: gameConsts.halfHeight - 37,
+            y: gameConsts.halfHeight - 37 + gameConsts.UIYOffset,
             ease: 'Quad.easeOut',
             duration: 200,
         });
@@ -629,7 +631,7 @@ function tryLock() {
         PhaserScene.tweens.add({
             targets: [globalObjects.pick, globalObjects.pickshadow],
             rotation: 0.35,
-            y: gameConsts.halfHeight + 130,
+            y: gameConsts.halfHeight + 130 + gameConsts.UIYOffset,
             x: "+=25",
             duration: 290,
             alpha: 0,
@@ -661,8 +663,8 @@ function resetPick(setToZero = true) {
     globalObjects.pickshadow.rotation = 0;
     globalObjects.pick.x = goalX - 35;
     globalObjects.pickshadow.x = goalX - 35;
-    globalObjects.pick.y = gameConsts.halfHeight;
-    globalObjects.pickshadow.y = gameConsts.halfHeight;
+    globalObjects.pick.y = gameConsts.halfHeight + gameConsts.UIYOffset;
+    globalObjects.pickshadow.y = gameConsts.halfHeight + gameConsts.UIYOffset;
     gameVars.pickStuck = false;
 
     globalObjects.pick.currAnim = PhaserScene.tweens.add({
@@ -708,7 +710,7 @@ function showFail() {
         "A misstep alerts the guards, and the gate’s\nlock holds firm, blocking my path.",
         "The enchanted lock resets at my slightest\nmistake, sealing the door tight.",
         "The masterful lock defies my trembling hands,\nkeeping the princess beyond reach.",
-        "A clumsy word locks Liora's heart tighter, her trust slipping away.\nI retreat, vowing to tread more carefully next time."
+        "A clumsy word locks the Princess's heart tighter and her trust slips away.\nI retreat, vowing to tread more carefully next time."
     ]
     globalObjects.victory.extraText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, flavorText[gameVars.currLevel], {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
 
@@ -969,12 +971,12 @@ function openInstructPopup() {
     openPopup(instructContent)
 }
 
-function openFlavorPopup(title = " ", content = " ", image) {
+function openFlavorPopup(title = " ", content = " ", image, scale = 0.95) {
     let instructContent = {};
     instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, title, {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
 
     if (image) {
-        instructContent.image = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + 77, 'lock', image).setDepth(102).setScale(0.94);
+        instructContent.image = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + 73, 'lock', image).setDepth(102).setScale(scale);
     }
     instructContent.controls = PhaserScene.add.text(gameConsts.halfWidth - 170, gameConsts.halfHeight - 150, content, {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
 

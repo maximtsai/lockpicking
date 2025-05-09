@@ -47,6 +47,7 @@ let gameConsts = {
     halfWidth: config.scale.width * 0.5,
     height: config.scale.height,
     halfHeight: config.scale.height * 0.5,
+    UIYOffset: 12,
     SDK: null
 };
 

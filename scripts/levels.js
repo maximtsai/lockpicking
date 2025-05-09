@@ -13,6 +13,20 @@ function setRoom(room) {
         loadPracticeRoom();
     } else if (room === "escape") {
         loadEscapeRoom();
+    } else if (room === "clothes") {
+        loadClothesRoom();
+    } else if (room === "gate") {
+        loadGateRoom();
+    } else if (room === "enchanted") {
+        loadEnchantedRoom();
+    } else if (room === "bedroom") {
+        loadBedRoom();
+    } else if (room === "princess") {
+        loadPrincessRoom();
+
+    } else if (room === "challenge") {
+        loadChallengeRoom();
+
     }
     resetPick()
 }
@@ -63,7 +77,7 @@ function loadEscapeRoom() {
     globalObjects.lock.setFrame('padlock.png');
 
 
-    let lockswivel = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'lock', 'padlock_swivel.png').setDepth(-1);
+    let lockswivel = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'padlock_swivel.png').setDepth(-1);
     globalObjects.extras.push(lockswivel);
     globalObjects.playUponUnlock = [() => {
         PhaserScene.tweens.add({
@@ -77,6 +91,121 @@ function loadEscapeRoom() {
     setPicksLeft(3);
     globalObjects.roomTitle.setText('ESCAPE')
 }
+
+function loadClothesRoom() {
+    globalObjects.currBackground.setFrame('clothes.png').setScale(2);
+    globalObjects.mechanism.setFrame('mechanism_bar.png');
+    globalObjects.lock.setFrame('padlock.png');
+
+
+    let lockswivel = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'padlock_swivel.png').setDepth(-1);
+    globalObjects.extras.push(lockswivel);
+    globalObjects.playUponUnlock = [() => {
+        PhaserScene.tweens.add({
+            targets: lockswivel,
+            y: "-=22",
+            ease: 'Quart.easeOut',
+            duration: 400
+        })
+    }]
+    createPins(3);
+    setPicksLeft(3);
+    globalObjects.roomTitle.setText('CLOTHIER')
+}
+
+function loadGateRoom() {
+    globalObjects.currBackground.setFrame('gate.png').setScale(2);
+    globalObjects.mechanism.setFrame('mechanism_bar.png');
+    globalObjects.lock.setFrame('padlock.png');
+
+    let lockswivel = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'padlock_swivel.png').setDepth(-1);
+    globalObjects.extras.push(lockswivel);
+    globalObjects.playUponUnlock = [() => {
+        PhaserScene.tweens.add({
+            targets: lockswivel,
+            y: "-=22",
+            ease: 'Quart.easeOut',
+            duration: 400
+        })
+    }]
+    createPins(4);
+    setPicksLeft(3);
+    globalObjects.roomTitle.setText('ESCAPE')
+}
+
+function loadEnchantedRoom() {
+    globalObjects.currBackground.setFrame('door.png').setScale(2);
+    globalObjects.mechanism.setFrame('mechanismgold.png');
+    globalObjects.lock.setFrame('goldenlock.png');
+
+    createPins(3, true);
+    setPicksLeft(3);
+    globalObjects.roomTitle.setText('ESCAPE')
+}
+
+function loadBedRoom() {
+    globalObjects.currBackground.setFrame('bedroom.png').setScale(2);
+    globalObjects.mechanism.setFrame('mechanismgold.png');
+    globalObjects.lock.setFrame('goldenlock.png');
+
+
+    let lockswivel = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'padlock_swivel.png').setDepth(-1);
+    globalObjects.extras.push(lockswivel);
+    globalObjects.playUponUnlock = [() => {
+        PhaserScene.tweens.add({
+            targets: lockswivel,
+            y: "-=22",
+            ease: 'Quart.easeOut',
+            duration: 400
+        })
+    }]
+    createPins(4, true);
+    setPicksLeft(3);
+    globalObjects.roomTitle.setText('ESCAPE')
+}
+
+function loadPrincessRoom() {
+    globalObjects.currBackground.setFrame('princess.png').setScale(1);
+    globalObjects.mechanism.setFrame('mechanism_bar.png');
+    globalObjects.lock.setFrame('padlock.png');
+
+
+    let lockswivel = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'padlock_swivel.png').setDepth(-1);
+    globalObjects.extras.push(lockswivel);
+    globalObjects.playUponUnlock = [() => {
+        PhaserScene.tweens.add({
+            targets: lockswivel,
+            y: "-=22",
+            ease: 'Quart.easeOut',
+            duration: 400
+        })
+    }]
+    createPins(5, true);
+    setPicksLeft(4);
+    globalObjects.roomTitle.setText('ESCAPE')
+}
+
+function loadChallengeRoom() {
+    globalObjects.currBackground.setFrame('workbench2.png').setScale(2);
+    globalObjects.mechanism.setFrame('mechanism_bar.png');
+    globalObjects.lock.setFrame('padlock.png');
+
+    let lockswivel = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'padlock_swivel.png').setDepth(-1);
+    globalObjects.extras.push(lockswivel);
+    globalObjects.playUponUnlock = [() => {
+        PhaserScene.tweens.add({
+            targets: lockswivel,
+            y: "-=22",
+            ease: 'Quart.easeOut',
+            duration: 400
+        })
+    }]
+    createPins(5, true, true);
+    setPicksLeft(4);
+    globalObjects.roomTitle.setText('ESCAPE')
+}
+
+
 
 function gotoNextLevel() {
     let levelToGo = (gameVars.currLevel !== undefined) ? gameVars.currLevel + 1 : 0;
@@ -119,12 +248,13 @@ function gotoLevel(lvl, skipIntro = false) {
             let flavorStory = [
                 "",
                 "I've been imprisoned for slipping into\nrestricted places and claiming protected\ntreasures.\n\nThe bars of this cell are strong, but the lock\nis crude. It should be an easy thing to pick.",
-                "I have escaped, but to reach the castle’s treasure, I need finer clothes to be presentable. The clothier’s lock is sturdy, a step above the prison’s, but I’m confident I can slip in and claim the attire I need.",
-                "The castle looms, its treasures calling, but sturdy outer gates bar my path. Their locks are well-crafted, yet familiar. I find a blind spot in the security patrols and begin.",
-                "An unassuming door blocks my way, its plain facade hiding a tricky lock enchanted to reset if I falter. One wrong move could undo my progress. I steady my hands and listen closely to crack its magic.",
-                "The princess's door stands before me, its locks a masterpiece of craft and enchantment. Every safeguard known protects this final barrier. Failure is not an option, but victory is within reach.",
-                "I’ve reached the true treasure: Princess Liora's guarded heart, protected by the most intricate lock of all. Each move must be deliberate, each word precise, to unlock her trust and love. I tread with utmost care, knowing this is my greatest challenge yet.",
-                "The final tumbler clicks, and Liora's heart opens, her warm smile inviting me to talk by the fire for hours, undisturbed by guards. As dawn approaches, I slip out the tower window, heart full, certain I’ll return to her another night."
+                "I have escaped, but to reach the castle’s\ntreasure, I must first make myself presentable.\n\nThe clothier store is closed, but I’m confident\nI can slip in and acquire the attire I need.",
+                "The castle looms ahead, but sturdy outer gates\nbar the path. Their locks are well crafted,\nbut familiar.\n\nI find a blind spot in the security patrols\nand begin.",
+                "Inside the castle, an unassuming door blocks\nmy way, but I know it hides a tricky lock\nenchanted to reset if I falter.\n\nOne wrong move could undo my progress. I\nsteady my hands and get ready to crack its\nmagic.",
+                "The princess's door stands before me, its locks\na masterpiece of craft and enchantment.\n\nEvery safeguard known protects this final barrier.\nFailure is not an option, but victory is within\nreach.",
+                "I’ve reached the true treasure: The princess's\nguarded heart, protected by the most intricate\nlock of all, her trust.\n\nEach word I speak must be deliberate, and each action\nI make precise.\n\nI talk to her with utmost care, knowing this is\nmy greatest challenge yet.",
+                "We talk by the fire for hours, undisturbed by\nguards, her heart gradually softening as our\nconversation grows closer.\n\nAs dawn approaches, I slip out the tower window,\nheart full, certain I’ll return to her another night.",
+                "I, Grizlok the Magnificent, sneer at your petty\nskills, lockpicker. Your past victories mean\nnothing against my genius! Behold my masterpiece,\na lock so intricate not even your tools can\nbreak open! Dare to try, and watch my brilliance humble you!\""
             ]
 
             switch(lvl) {
@@ -134,18 +264,41 @@ function gotoLevel(lvl, skipIntro = false) {
                 case 1:
                     setRoom("escape");
                     break;
+                case 2:
+                    setRoom("clothes");
+                    break;
+                case 3:
+                    setRoom("gate");
+                    break;
+                case 4:
+                    setRoom("enchanted");
+                    break;
+                case 5:
+                    setRoom("bedroom");
+                    break;
+                case 6:
+                    setRoom("princess");
+                    break;
+                case 7:
+                    setRoom("challenge");
+                    break;
             }
             let levelNames = [
                 "Training Lock",
                 "Level 1: Escape",
                 "Level 2: Dressing Up",
                 "Level 3: Palace Gate",
-                "Level 4: Tricky Door",
+                "Level 4: Enchanted Door",
                 "Level 5: Bedroom",
-                "Level 6: Her Heart"];
+                "Level 6: Her Heart",
+                "Level 7: Challenge"];
             if (lvl > 0 && !skipIntro) {
                 setTimeout(() => {
-                    openFlavorPopup(levelNames[lvl], flavorStory[lvl], 'flavorimage' + lvl + '.png')
+                    let imageScale = 1;
+                    if (lvl === 3) {
+                        imageScale = 0.9;
+                    }
+                    openFlavorPopup(levelNames[lvl], flavorStory[lvl], 'flavorimage' + lvl + '.png',imageScale)
 
                 }, 0)
             }
@@ -166,12 +319,13 @@ function openLevelPopup() {
         "Level 1: Escape",
         "Level 2: Dressing Up",
         "Level 3: Palace Gate",
-        "Level 4: Tricky Door",
+        "Level 4: Enchanted Door",
         "Level 5: Bedroom",
-        "Level 6: Her Heart"];
+        "Level 6: Her Heart",
+        "Level 7: Challenge"];
     let levelNamesAlt = [
         "Training Lock",
-        "Level 1: Chains",
+        "Level 1: Escape",
         "Level 2",
         "Level 3",
         "Level 4",
@@ -180,57 +334,59 @@ function openLevelPopup() {
         "Level 7"];
     for (let i = 0; i < levelNames.length; i++) {
         let btnName = "level_"+i;
-        let levelButton = new Button({
-            normal: {
-                atlas: 'buttons',
-                ref: "menu_btn_normal.png",
-                x: gameConsts.halfWidth,
-                y: gameConsts.halfHeight - 140 + i * 41,
-                scaleX: 1,
-                scaleY: 0.65,
-                alpha: 1,
-            },
-            hover: {
-                atlas: 'buttons',
-                ref: "menu_btn_hover.png",
-                alpha: 1,
-            },
-            press: {
-                atlas: 'buttons',
-                ref: "menu_btn_press.png",
-                alpha: 1,
-            },
-            disable: {
-                atlas: 'buttons',
-                ref: "menu_btn_press.png",
-                alpha: 0.5,
-            },
-            onHover: () => {
-                if (canvas) {
-                    canvas.style.cursor = 'pointer';
+        if (i < levelNames.length - 1 || gameVars.latestLevel >= levelNames.length - 1) {
+            let levelButton = new Button({
+                normal: {
+                    atlas: 'buttons',
+                    ref: "menu_btn_normal.png",
+                    x: gameConsts.halfWidth,
+                    y: gameConsts.halfHeight - 140 + i * 41,
+                    scaleX: 1,
+                    scaleY: 0.65,
+                    alpha: 1,
+                },
+                hover: {
+                    atlas: 'buttons',
+                    ref: "menu_btn_hover.png",
+                    alpha: 1,
+                },
+                press: {
+                    atlas: 'buttons',
+                    ref: "menu_btn_press.png",
+                    alpha: 1,
+                },
+                disable: {
+                    atlas: 'buttons',
+                    ref: "menu_btn_press.png",
+                    alpha: 0.5,
+                },
+                onHover: () => {
+                    if (canvas) {
+                        canvas.style.cursor = 'pointer';
+                    }
+                },
+                onHoverOut: () => {
+                    if (canvas) {
+                        canvas.style.cursor = 'default';
+                    }
+                },
+                onMouseUp: () => {
+                    gotoLevel(i);
+                    closePopup();
                 }
-            },
-            onHoverOut: () => {
-                if (canvas) {
-                    canvas.style.cursor = 'default';
-                }
-            },
-            onMouseUp: () => {
-                gotoLevel(i);
-                closePopup();
-            }
-        });
-        levelButton.addText(levelNames[i], {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'})
+            });
+            levelButton.addText(levelNames[i], {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'})
 
-        //closeButton.setTextOffset(1, 0)
-        levelButton.setDepth(102);
-        if (i > gameVars.latestLevel) {
-            levelButton.setState(DISABLE);
-            levelButton.setText(levelNamesAlt[i]);
+            //closeButton.setTextOffset(1, 0)
+            levelButton.setDepth(102);
+            if (i > gameVars.latestLevel) {
+                levelButton.setState(DISABLE);
+                levelButton.setText(levelNamesAlt[i]);
+            }
+
+            extraContents[btnName] = levelButton;
         }
 
-
-        extraContents[btnName] = levelButton;
     }
 
     addPopupContents(extraContents);

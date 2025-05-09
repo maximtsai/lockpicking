@@ -193,13 +193,46 @@
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>spriteScale</key>
-                <double>0.95</double>
+                <double>1</double>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
                 <rect>58,58,115,115</rect>
                 <key>scale9Paddings</key>
                 <rect>58,58,115,115</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">lock/flavorimage3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>56,55,113,110</rect>
+                <key>scale9Paddings</key>
+                <rect>56,55,113,110</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">lock/flavorimage4.png</key>
+            <key type="filename">lock/flavorimage5.png</key>
+            <key type="filename">lock/flavorimage6.png</key>
+            <key type="filename">lock/flavorimage7.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>50,50,100,100</rect>
+                <key>scale9Paddings</key>
+                <rect>50,50,100,100</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -215,6 +248,32 @@
                 <rect>35,35,70,70</rect>
                 <key>scale9Paddings</key>
                 <rect>35,35,70,70</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">lock/goldenlock.png</key>
+            <key type="filename">lock/lock.png</key>
+            <key type="filename">lock/lockshadow.png</key>
+            <key type="filename">lock/mechanism.png</key>
+            <key type="filename">lock/mechanism_bar.png</key>
+            <key type="filename">lock/mechanism_bar_many.png</key>
+            <key type="filename">lock/mechanismgold.png</key>
+            <key type="filename">lock/padlock.png</key>
+            <key type="filename">lock/padlock_swivel.png</key>
+            <key type="filename">lock/pick.png</key>
+            <key type="filename">lock/pickbroke.png</key>
+            <key type="filename">lock/pickshadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>200,150,400,300</rect>
+                <key>scale9Paddings</key>
+                <rect>200,150,400,300</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -249,29 +308,6 @@
                 <rect>8,8,15,15</rect>
                 <key>scale9Paddings</key>
                 <rect>8,8,15,15</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">lock/lock.png</key>
-            <key type="filename">lock/lockshadow.png</key>
-            <key type="filename">lock/mechanism.png</key>
-            <key type="filename">lock/mechanism_bar.png</key>
-            <key type="filename">lock/padlock.png</key>
-            <key type="filename">lock/padlock_swivel.png</key>
-            <key type="filename">lock/pick.png</key>
-            <key type="filename">lock/pickbroke.png</key>
-            <key type="filename">lock/pickshadow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>200,150,400,300</rect>
-                <key>scale9Paddings</key>
-                <rect>200,150,400,300</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

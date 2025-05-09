@@ -174,7 +174,10 @@
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
             <key type="filename">backgrounds/bars.png</key>
+            <key type="filename">backgrounds/bedroom.png</key>
+            <key type="filename">backgrounds/clothes.png</key>
             <key type="filename">backgrounds/door.png</key>
+            <key type="filename">backgrounds/gate.png</key>
             <key type="filename">backgrounds/workbench2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
