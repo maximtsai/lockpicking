@@ -236,6 +236,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">lock/flavorimage9.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>48,48,95,95</rect>
+                <key>scale9Paddings</key>
+                <rect>48,48,95,95</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">lock/goal.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -252,6 +267,7 @@
                 <false/>
             </struct>
             <key type="filename">lock/goldenlock.png</key>
+            <key type="filename">lock/heartlock.png</key>
             <key type="filename">lock/lock.png</key>
             <key type="filename">lock/lockshadow.png</key>
             <key type="filename">lock/mechanism.png</key>
@@ -263,6 +279,8 @@
             <key type="filename">lock/pick.png</key>
             <key type="filename">lock/pickbroke.png</key>
             <key type="filename">lock/pickshadow.png</key>
+            <key type="filename">lock/security_lock.png</key>
+            <key type="filename">lock/security_pin.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -274,6 +292,21 @@
                 <rect>200,150,400,300</rect>
                 <key>scale9Paddings</key>
                 <rect>200,150,400,300</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">lock/heart.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>107,99,214,197</rect>
+                <key>scale9Paddings</key>
+                <rect>107,99,214,197</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -323,6 +356,21 @@
                 <rect>5,15,11,30</rect>
                 <key>scale9Paddings</key>
                 <rect>5,15,11,30</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">lock/pin_heart.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,16,11,31</rect>
+                <key>scale9Paddings</key>
+                <rect>5,16,11,31</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

@@ -102,10 +102,10 @@ function setupGame() {
     gameVars.currentPin = 0;
     for (let i = 0; i < 5; i++) {
         let xOffset = 0;
-        if (i === 1) {
-            xOffset = 1;
+        if (i >= 1) {
+            xOffset = 0.5;
         }
-        globalObjects.indicators[i] = PhaserScene.add.image(gameConsts.halfWidth - 35 + i * 30.6 + xOffset, gameConsts.halfHeight - 78 + gameConsts.UIYOffset, 'lock', 'icon_black.png');
+        globalObjects.indicators[i] = PhaserScene.add.image(gameConsts.halfWidth - 36 + i * 31 + xOffset, gameConsts.halfHeight - 78 + gameConsts.UIYOffset, 'lock', 'icon_black.png');
     }
     PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'lockshadow.png').setDepth(1);
 
@@ -113,7 +113,6 @@ function setupGame() {
 
     setRoom('practice');
 
-    playMusic('quietshadows', 1, true);
 }
 
 function setupLevelButton() {
@@ -317,10 +316,10 @@ function createPins(amt, dropOnFail = false, dropAllOnFail = false) {
     for (let j = 0; j < amt; j++) {
         let yOffset = 1 + Math.floor(Math.random() * 15);
         let xOffset = 0;
-        if (j === 1) {
-            xOffset = 1;
+        if (j >= 1) {
+            xOffset = 0.5;
         }
-        globalObjects.pins[j] = PhaserScene.add.image(gameConsts.halfWidth - 36 + j * 30.6 + xOffset, gameConsts.halfHeight + 2 - yOffset + gameConsts.UIYOffset, 'lock', 'pin.png');
+        globalObjects.pins[j] = PhaserScene.add.image(gameConsts.halfWidth - 36 + j * 31 + xOffset, gameConsts.halfHeight + 2 - yOffset + gameConsts.UIYOffset, 'lock', 'pin.png');
         globalObjects.pins[j].startY = gameConsts.halfHeight + 2 + gameConsts.UIYOffset;
         globalObjects.pins[j].currAnim = PhaserScene.tweens.add({
             targets: globalObjects.pins[j],
@@ -335,7 +334,7 @@ function createPins(amt, dropOnFail = false, dropAllOnFail = false) {
 }
 
 function updatePickSpot() {
-    let goalX = gameConsts.halfWidth + gameVars.currentPin * 30.3;
+    let goalX = gameConsts.halfWidth + gameVars.currentPin * 31;
     if (globalObjects.pick.currAnim) {
         globalObjects.pick.currAnim.stop();
     }
@@ -379,7 +378,7 @@ function pickMoveUp(canBuffer = true) {
     }, 540)
     pinMoveUp(gameVars.currentPin);
     gameVars.pickStuck = true;
-    let goalX = gameConsts.halfWidth + gameVars.currentPin * 30.3;
+    let goalX = gameConsts.halfWidth + gameVars.currentPin * 31;
     let goalY = gameConsts.halfHeight - 16 + gameConsts.UIYOffset;
     if (globalObjects.pick.currAnim) {
         globalObjects.pick.currAnim.stop();
@@ -489,7 +488,6 @@ function pinMoveUp(pinNum) {
         duration: currPin.randDur,
         onStart: () => {
             playSound('nudge', 1.35).detune = 100 - Math.random() * 80 - currPin.randDur * 1.5;
-
         },
         onComplete: () => {
             playSound('clicktop', 0.5 + currPin.randDur * 0.002 - Math.random() * 0.35).detune = 100 - Math.random() * 100 - currPin.randDur * 0.4;
@@ -580,6 +578,7 @@ function tryLock() {
             currPin.currSound.stop();
         }
         currPin.locked = true;
+        gameVars.pinsFixed = Math.max(gameVars.pinsFixed, getNumPinsLocked());
         globalObjects.indicators[gameVars.currentPin].setFrame('icon_black.png');
         PhaserScene.tweens.add({
             targets: currPin,
@@ -606,6 +605,11 @@ function tryLock() {
         playSound('pickbreak', 1);
         if (globalObjects.pick.currAnim) {
             globalObjects.pick.currAnim.stop();
+        }
+        if (gameVars.dropAllOnFail) {
+            decrementAllPins();
+        } else if (gameVars.dropOnFail) {
+            decrementPins();
         }
         decrementPicksLeft();
         let redIndicator = globalObjects.indicators[gameVars.currentPin];
@@ -644,11 +648,66 @@ function tryLock() {
     }
 }
 
+function getNumPinsLocked() {
+    let pinsLocked = 0;
+    for (let i = 0; i < globalObjects.pins.length; i++) {
+        let currPin = globalObjects.pins[i];
+        if (currPin && currPin.locked) {
+            pinsLocked++;
+        }
+    }
+    return pinsLocked;
+}
+
+function decrementPins() {
+    let pinsLocked = 0;
+
+    for (let i = 0; i < globalObjects.pins.length; i++) {
+        let currPin = globalObjects.pins[i];
+        if (currPin && currPin.locked) {
+            pinsLocked++;
+            if (pinsLocked === gameVars.pinsFixed) {
+                currPin.alpha = 1;
+                currPin.locked = false;
+                currPin.currAnim = PhaserScene.tweens.add({
+                    targets: currPin,
+                    y: currPin.startY,
+                    ease: 'Cubic.easeIn',
+                    duration: 280,
+                    onComplete: () => {
+                        playSound('pindrop');
+                    }
+                });
+                break;
+            }
+        }
+    }
+}
+
+function decrementAllPins() {
+    for (let i = globalObjects.pins.length; i >= 0; i--) {
+        let currPin = globalObjects.pins[i];
+        if (currPin && currPin.locked) {
+            currPin.alpha = 1;
+            currPin.locked = false;
+            currPin.currAnim = PhaserScene.tweens.add({
+                targets: currPin,
+                y: currPin.startY,
+                ease: 'Cubic.easeIn',
+                duration: 280,
+                onComplete: () => {
+                    playSound('pindrop');
+                }
+            });
+        }
+    }
+}
+
 function resetPick(setToZero = true) {
     if (setToZero) {
         gameVars.currentPin = 0;
     }
-    let goalX = gameConsts.halfWidth + gameVars.currentPin * 30.3;
+    let goalX = gameConsts.halfWidth + gameVars.currentPin * 31;
     if (globalObjects.pick.currAnim) {
         globalObjects.pick.currAnim.stop();
     }
@@ -680,8 +739,9 @@ function showFail() {
     PhaserScene.tweens.add({
         delay: 450,
         targets: globalObjects.extras,
+        ease: 'Quad.easeIn',
         alpha: 0,
-        duration: 700
+        duration: 800
     })
     globalObjects.victory = {};
 
@@ -705,9 +765,9 @@ function showFail() {
 
     let flavorText = [
         "I have wasted my entire hoard\nof picks. Hope it was worth it.",
-        "I fumble the lock in my haste,\nand remain stuck behind bars.",
-        "The clothier’s sturdy lock catches my tools,\nleaving me in rags unfit for the castle.",
-        "A misstep alerts the guards, and the gate’s\nlock holds firm, blocking my path.",
+        "I fumble the lock in my haste,\nand now remain stuck behind bars.",
+        "The clothier’s sturdy lock catches my tools,\nand I am left in rags unfit for the castle.",
+        "My missteps alerts the guards, and the gate’s\nlock holds firm, blocking my path.",
         "The enchanted lock resets at my slightest\nmistake, sealing the door tight.",
         "The masterful lock defies my trembling hands,\nkeeping the princess beyond reach.",
         "A clumsy word locks the Princess's heart tighter and her trust slips away.\nI retreat, vowing to tread more carefully next time."

@@ -47,7 +47,7 @@ let gameConsts = {
     halfWidth: config.scale.width * 0.5,
     height: config.scale.height,
     halfHeight: config.scale.height * 0.5,
-    UIYOffset: 12,
+    UIYOffset: 8,
     SDK: null
 };
 
@@ -62,6 +62,7 @@ let gameVars = {
     soundStatus: 2,
     musicStatus: 1,
     hideCheatVal: 0,
+    pinsFixed: 0,
     latestLevel: 1,
     isHardMode: false,
     gameConstructed: false,
@@ -94,7 +95,7 @@ let url4 = 'maximtsai';// '';
 function preload ()
 {
     handleBorders();
-    gameVars.latestLevel = parseInt(localStorage.getItem("latestLevel"));
+    gameVars.latestLevel = 5;//parseInt(localStorage.getItem("latestLevel"));
     if (!gameVars.latestLevel) {
         gameVars.latestLevel = 1;
     }

@@ -3,6 +3,7 @@ function setRoom(room) {
     for (let i in globalObjects.extras) {
         globalObjects.extras[i].destroy();
     }
+    gameVars.pinsFixed = 0;
     globalObjects.extras = [];
     globalObjects.playUponUnlock = [];
     updatePickSpot();
@@ -32,7 +33,8 @@ function setRoom(room) {
 }
 
 function loadPracticeRoom() {
-    createPins(3);
+    swapMusic('quietshadows');
+    createPins(5);
     setPicksLeft(99);
     for (let i in globalObjects.indicators) {
         globalObjects.indicators[i].visible = true;
@@ -72,6 +74,7 @@ function loadPracticeRoom() {
 }
 
 function loadEscapeRoom() {
+    swapMusic('lili');
     globalObjects.currBackground.setFrame('bars.png').setScale(2);
     globalObjects.mechanism.setFrame('mechanism_bar.png');
     globalObjects.lock.setFrame('padlock.png');
@@ -93,6 +96,7 @@ function loadEscapeRoom() {
 }
 
 function loadClothesRoom() {
+    swapMusic('lili');
     globalObjects.currBackground.setFrame('clothes.png').setScale(2);
     globalObjects.mechanism.setFrame('mechanism_bar.png');
     globalObjects.lock.setFrame('padlock.png');
@@ -114,36 +118,59 @@ function loadClothesRoom() {
 }
 
 function loadGateRoom() {
+    swapMusic('indeep');
     globalObjects.currBackground.setFrame('gate.png').setScale(2);
     globalObjects.mechanism.setFrame('mechanism_bar.png');
-    globalObjects.lock.setFrame('padlock.png');
+    globalObjects.lock.setFrame('security_lock.png');
 
-    let lockswivel = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'padlock_swivel.png').setDepth(-1);
-    globalObjects.extras.push(lockswivel);
+    let lockPin1 = PhaserScene.add.image(gameConsts.halfWidth + 5, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'security_pin.png').setDepth(-2);
+    globalObjects.extras.push(lockPin1);
+    let lockPin2 = PhaserScene.add.image(gameConsts.halfWidth + 85, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'security_pin.png').setDepth(-2);
+    globalObjects.extras.push(lockPin2);
+    let lockPin3 = PhaserScene.add.image(gameConsts.halfWidth + 5, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'security_pin.png').setDepth(-2).setScale(1, -1);
+    globalObjects.extras.push(lockPin3);
+    let lockPin4 = PhaserScene.add.image(gameConsts.halfWidth + 85, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'security_pin.png').setDepth(-2).setScale(1, -1);
+    globalObjects.extras.push(lockPin4);
     globalObjects.playUponUnlock = [() => {
-        PhaserScene.tweens.add({
-            targets: lockswivel,
-            y: "-=22",
-            ease: 'Quart.easeOut',
-            duration: 400
-        })
+        PhaserScene.tweens.add({ targets: lockPin1, y: "-=45", ease: 'Quint.easeOut', duration: 100,
+            onComplete: () => {
+                PhaserScene.tweens.add({delay: 100, targets: lockPin1, y: "-=400", ease: 'Quad.easeInOut', duration: 1500,})
+            }
+        });
+        PhaserScene.tweens.add({targets: lockPin2, y: "-=45", ease: 'Quint.easeOut', duration: 100,
+            onComplete: () => {
+                PhaserScene.tweens.add({ delay: 250, targets: lockPin2, y: "-=400", ease: 'Quad.easeInOut', duration: 1200})
+            }
+        });
+        PhaserScene.tweens.add({targets: lockPin3, y: "+=70", ease: 'Quint.easeOut', duration: 100,
+            onComplete: () => {
+                PhaserScene.tweens.add({ delay: 200, targets: lockPin3, y: "+=400", ease: 'Quad.easeInOut', duration: 1200})
+            }
+        });
+        PhaserScene.tweens.add({targets: lockPin4, y: "+=70", ease: 'Quint.easeOut', duration: 100,
+            onComplete: () => {
+                PhaserScene.tweens.add({ delay: 350, targets: lockPin4, y: "+=400", ease: 'Quad.easeInOut', duration: 1200})
+            }
+        });
     }]
     createPins(4);
     setPicksLeft(3);
-    globalObjects.roomTitle.setText('ESCAPE')
+    globalObjects.roomTitle.setText('GATES')
 }
 
 function loadEnchantedRoom() {
+    swapMusic('indeep');
     globalObjects.currBackground.setFrame('door.png').setScale(2);
     globalObjects.mechanism.setFrame('mechanismgold.png');
     globalObjects.lock.setFrame('goldenlock.png');
 
     createPins(3, true);
     setPicksLeft(3);
-    globalObjects.roomTitle.setText('ESCAPE')
+    globalObjects.roomTitle.setText('ENCHANTED DOOR')
 }
 
 function loadBedRoom() {
+    swapMusic('indeep');
     globalObjects.currBackground.setFrame('bedroom.png').setScale(2);
     globalObjects.mechanism.setFrame('mechanismgold.png');
     globalObjects.lock.setFrame('goldenlock.png');
@@ -161,11 +188,11 @@ function loadBedRoom() {
     }]
     createPins(4, true);
     setPicksLeft(3);
-    globalObjects.roomTitle.setText('ESCAPE')
+    globalObjects.roomTitle.setText("PRINCESS DOOR")
 }
 
 function loadPrincessRoom() {
-    globalObjects.currBackground.setFrame('princess.png').setScale(1);
+    globalObjects.currBackground.setFrame('princess.png').setScale(1.3);
     globalObjects.mechanism.setFrame('mechanism_bar.png');
     globalObjects.lock.setFrame('padlock.png');
 
@@ -182,7 +209,7 @@ function loadPrincessRoom() {
     }]
     createPins(5, true);
     setPicksLeft(4);
-    globalObjects.roomTitle.setText('ESCAPE')
+    globalObjects.roomTitle.setText('PRINCESS')
 }
 
 function loadChallengeRoom() {
@@ -213,10 +240,10 @@ function gotoNextLevel() {
 }
 
 function gotoLevel(lvl, skipIntro = false) {
-    console.log("going to level ", lvl);
     gameVars.showNextButton = false;
     gameVars.currLevel = lvl;
     createGlobalClickBlocker(false)
+    gameVars.pinsFixed = 0;
 
     let blackPixelTemp = PhaserScene.add.image(-gameConsts.halfWidth - 300,gameConsts.halfHeight, 'blackPixel').setScale(500,600).setRotation(0.3).setDepth(999).setAlpha(0.1);
 
@@ -249,10 +276,10 @@ function gotoLevel(lvl, skipIntro = false) {
                 "",
                 "I've been imprisoned for slipping into\nrestricted places and claiming protected\ntreasures.\n\nThe bars of this cell are strong, but the lock\nis crude. It should be an easy thing to pick.",
                 "I have escaped, but to reach the castle’s\ntreasure, I must first make myself presentable.\n\nThe clothier store is closed, but I’m confident\nI can slip in and acquire the attire I need.",
-                "The castle looms ahead, but sturdy outer gates\nbar the path. Their locks are well crafted,\nbut familiar.\n\nI find a blind spot in the security patrols\nand begin.",
-                "Inside the castle, an unassuming door blocks\nmy way, but I know it hides a tricky lock\nenchanted to reset if I falter.\n\nOne wrong move could undo my progress. I\nsteady my hands and get ready to crack its\nmagic.",
-                "The princess's door stands before me, its locks\na masterpiece of craft and enchantment.\n\nEvery safeguard known protects this final barrier.\nFailure is not an option, but victory is within\nreach.",
-                "I’ve reached the true treasure: The princess's\nguarded heart, protected by the most intricate\nlock of all, her trust.\n\nEach word I speak must be deliberate, and each action\nI make precise.\n\nI talk to her with utmost care, knowing this is\nmy greatest challenge yet.",
+                "The castle looms ahead, but sturdy gates\nbar the path. Their locks are well crafted,\nbut familiar.\n\nI find a blind spot in the security patrols\nand begin.",
+                "Inside the castle, a simple wood door blocks\nmy way, but I know it hides a tricky lock\nenchanted to reset if I falter.\n\nOne wrong move could undo my progress. I\nsteady my hands and get ready to crack its\nmagic.",
+                "The princess's door stands before me, its locks\na masterpiece of craft and enchantment.\n\nEvery safeguard known protects this final\nbarrier. Failure is not an option, but victory\nis within reach.",
+                "The princess glances up from her book, amused\nbut eyeing me cautiously.\n\nI must now unlock the intricate lock of her trust.\n\nEach word I speak must be deliberate, and each\naction I make precise.\n\nI begin our conversation with utmost care, knowing this is\nmy greatest challenge yet.",
                 "We talk by the fire for hours, undisturbed by\nguards, her heart gradually softening as our\nconversation grows closer.\n\nAs dawn approaches, I slip out the tower window,\nheart full, certain I’ll return to her another night.",
                 "I, Grizlok the Magnificent, sneer at your petty\nskills, lockpicker. Your past victories mean\nnothing against my genius! Behold my masterpiece,\na lock so intricate not even your tools can\nbreak open! Dare to try, and watch my brilliance humble you!\""
             ]
