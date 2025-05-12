@@ -1,8 +1,13 @@
 
 function setRoom(room) {
+    if (globalObjects.infoText.currAnim) {
+        globalObjects.infoText.currAnim.stop();
+    }
+    globalObjects.infoText.alpha = 0;
     for (let i in globalObjects.extras) {
         globalObjects.extras[i].destroy();
     }
+    gameVars.currRoom = room;
     gameVars.pinsFixed = 0;
     globalObjects.extras = [];
     globalObjects.playUponUnlock = [];
@@ -192,9 +197,11 @@ function loadBedRoom() {
 }
 
 function loadPrincessRoom() {
+    swapMusic('princess');
+    gameVars.princessCounter = 1;
     globalObjects.currBackground.setFrame('princess.png').setScale(1.3);
-    globalObjects.mechanism.setFrame('mechanism_bar.png');
-    globalObjects.lock.setFrame('padlock.png');
+    globalObjects.mechanism.setFrame('blank.png');
+    globalObjects.lock.setFrame('heartlock.png');
 
 
     let lockswivel = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'padlock_swivel.png').setDepth(-1);
@@ -279,9 +286,8 @@ function gotoLevel(lvl, skipIntro = false) {
                 "The castle looms ahead, but sturdy gates\nbar the path. Their locks are well crafted,\nbut familiar.\n\nI find a blind spot in the security patrols\nand begin.",
                 "Inside the castle, a simple wood door blocks\nmy way, but I know it hides a tricky lock\nenchanted to reset if I falter.\n\nOne wrong move could undo my progress. I\nsteady my hands and get ready to crack its\nmagic.",
                 "The princess's door stands before me, its locks\na masterpiece of craft and enchantment.\n\nEvery safeguard known protects this final\nbarrier. Failure is not an option, but victory\nis within reach.",
-                "The princess glances up from her book, amused\nbut eyeing me cautiously.\n\nI must now unlock the intricate lock of her trust.\n\nEach word I speak must be deliberate, and each\naction I make precise.\n\nI begin our conversation with utmost care, knowing this is\nmy greatest challenge yet.",
-                "We talk by the fire for hours, undisturbed by\nguards, her heart gradually softening as our\nconversation grows closer.\n\nAs dawn approaches, I slip out the tower window,\nheart full, certain I’ll return to her another night.",
-                "I, Grizlok the Magnificent, sneer at your petty\nskills, lockpicker. Your past victories mean\nnothing against my genius! Behold my masterpiece,\na lock so intricate not even your tools can\nbreak open! Dare to try, and watch my brilliance humble you!\""
+                "Princess Liora looks up from her book,\namused but watching me carefully.\n\nBefore me is a lock more guarded than any\nvault, Liora's trust.\n\nI begin our conversation with care, each\nword and action as precise as a lockpick's\ndelicate turn.",
+                "A rival locksmith unveils a bizarre, maddeningly\nintricate device—so complex it barely\nqualifies as a lock.\n\nIts obscene design taunts me, but I’ve\nnever backed down from a challenge. I\nstep forward, ready to conquer it as I have\nall others.\n"
             ]
 
             switch(lvl) {
@@ -316,8 +322,8 @@ function gotoLevel(lvl, skipIntro = false) {
                 "Level 2: Dressing Up",
                 "Level 3: Palace Gate",
                 "Level 4: Enchanted Door",
-                "Level 5: Bedroom",
-                "Level 6: Her Heart",
+                "Level 5: Princess Door",
+                "Level 6: Her Trust",
                 "Level 7: Challenge"];
             if (lvl > 0 && !skipIntro) {
                 setTimeout(() => {
@@ -347,8 +353,8 @@ function openLevelPopup() {
         "Level 2: Dressing Up",
         "Level 3: Palace Gate",
         "Level 4: Enchanted Door",
-        "Level 5: Bedroom",
-        "Level 6: Her Heart",
+        "Level 5: Princess Door",
+        "Level 6: Her Trust",
         "Level 7: Challenge"];
     let levelNamesAlt = [
         "Training Lock",

@@ -95,7 +95,7 @@ let url4 = 'maximtsai';// '';
 function preload ()
 {
     handleBorders();
-    gameVars.latestLevel = 5;//parseInt(localStorage.getItem("latestLevel"));
+    gameVars.latestLevel = 6;//parseInt(localStorage.getItem("latestLevel"));
     if (!gameVars.latestLevel) {
         gameVars.latestLevel = 1;
     }
@@ -222,7 +222,11 @@ function update(time, delta) {
             if (gameVars.hasPopup) {
                 closePopup();
             } else if (gameVars.showNextButton !== false) {
-                gotoLevel(gameVars.showNextButton);
+                if (gameVars.currRoom === 'princess') {
+                    openEpiloguePopup();
+                } else {
+                    gotoLevel(gameVars.showNextButton);
+                }
                 if (globalObjects.victory) {
                     for (let i in globalObjects.victory) {
                         globalObjects.victory[i].destroy();

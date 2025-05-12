@@ -2,6 +2,7 @@ const audioFiles = [
     {name: 'quietshadows', src: 'audio/quietshadows.mp3'},
     {name: 'lili', src: 'audio/lili.mp3'},
     {name: 'indeep', src: 'audio/indeep.mp3'},
+    {name: 'princess', src: 'audio/princess.mp3'},
 
     {name: 'button_click', src: 'audio/button_click.mp3'},
     {name: 'button_hover', src: 'audio/button_hover.mp3'},

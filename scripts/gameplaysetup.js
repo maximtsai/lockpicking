@@ -100,6 +100,9 @@ function setupGame() {
     globalObjects.pins = [];
     globalObjects.indicators = [];
     gameVars.currentPin = 0;
+    globalObjects.infoText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, " ", {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
+
+
     for (let i = 0; i < 5; i++) {
         let xOffset = 0;
         if (i >= 1) {
@@ -591,11 +594,47 @@ function tryLock() {
             alpha: 0.6,
             duration: 600,
         });
+
         let hasUnlocked = false;
         for (let i in globalObjects.pins) {
             if (!globalObjects.pins[i].locked) {
                 hasUnlocked = true;
             }
+        }
+
+        if (gameVars.currRoom === 'princess') {
+            if (gameVars.princessCounter === gameVars.pinsFixed) {
+                gameVars.princessCounter++;
+                let pinText = [
+                    "I offer a polite bow, introducing myself with a warm smile.\nLiora's cautious gaze softens slightly.",
+                    "I share that I'm intrigued by the princess who values wit\nover gowns and galas, eager to know her mind.",
+                    "I ask about her book, revealing my own love for\ntales of adventure, and we exchange a smile.",
+                    "I lower my voice, describing how I’ve always found comfort\nin quiet nights under the stars, hoping she might too.",
+                    "The princess, once tense with caution, now eases\ninto a soft smile as she shares her own thoughts.",
+                    " "
+                ];
+                globalObjects.infoText.setAlpha(0);
+                globalObjects.infoText.setText(pinText[gameVars.pinsFixed - 1]);
+                if (globalObjects.infoText.currAnim) {
+                    globalObjects.infoText.currAnim.stop();
+                }
+                globalObjects.infoText.currAnim = PhaserScene.tweens.add({
+                    targets: globalObjects.infoText,
+                    alpha: 1,
+                    duration: 500,
+                    ease: 'Cubic.easeOut',
+                    completeDelay: 7000,
+                    onComplete: () => {
+                        globalObjects.infoText.currAnim = PhaserScene.tweens.add({
+                            targets: globalObjects.infoText,
+                            alpha: 0,
+                            duration: 500,
+                            ease: 'Cubic.easeOut',
+                        })
+                    }
+                })
+            }
+
         }
         if (!hasUnlocked) {
             slideOpenLock();
@@ -770,7 +809,7 @@ function showFail() {
         "My missteps alerts the guards, and the gate’s\nlock holds firm, blocking my path.",
         "The enchanted lock resets at my slightest\nmistake, sealing the door tight.",
         "The masterful lock defies my trembling hands,\nkeeping the princess beyond reach.",
-        "A clumsy word locks the Princess's heart tighter and her trust slips away.\nI retreat, vowing to tread more carefully next time."
+        "The princess calls her guards as I fumble our encounter.\nI retreat, vowing to tread more carefully next time."
     ]
     globalObjects.victory.extraText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, flavorText[gameVars.currLevel], {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
 
@@ -909,12 +948,17 @@ function slideOpenLock() {
                                     globalObjects.victory[i].destroy();
                                 }
                             }
-                            gotoNextLevel();
+                            if (gameVars.currRoom === 'princess') {
+                                openEpiloguePopup();
+                            } else {
+                                gotoNextLevel();
+                            }
                         }
                     });
                     gameVars.showNextButton = gameVars.currLevel ? gameVars.currLevel + 1 : 1;
 
-                    globalObjects.victory.nextLvl.addText("NEXT LEVEL", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
+                    let buttonText = gameVars.currRoom === 'princess' ? "CONTINUE" : "NEXT LEVEL";
+                    globalObjects.victory.nextLvl.addText(buttonText, {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
                     globalObjects.victory.nextLvl.setTextOffset(0, 1);
                     globalObjects.victory.nextLvl.setDepth(51);
                 }
@@ -1006,6 +1050,116 @@ function closePopup() {
             globalObjects.currPopup[i].destroy();
         }
     }
+    globalObjects.currPopup = {};
+
+}
+
+function openEpiloguePopup() {
+    gameVars.showNextButton = false;
+    let text1 = "We talk by the fire for hours, undisturbed by guards.";
+    let text2 = "The princess's heart gradually softens as our conversation grows closer.";
+    let text3 = "As dawn approaches, I bid her farewell and slip out the tower window,";
+    let text4 = "Certain I’ll return to see her another night.";
+
+    createGlobalClickBlocker(false);
+    let blackout = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'blackPixel').setScale(1000).setAlpha(0).setDepth(998);
+    PhaserScene.tweens.add({
+        targets: blackout,
+        alpha: 1,
+        duration: 2000,
+    });
+    let epilogue = {};
+
+    let textPrompt1 = PhaserScene.add.text(25, 100, text1, {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'left'}).setOrigin(0, 0).setDepth(999).setAlpha(0);
+    let textPrompt2 = PhaserScene.add.text(25, 140, text2, {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'left'}).setOrigin(0, 0).setDepth(999).setAlpha(0);
+    let textPrompt3 = PhaserScene.add.text(25, 180, text3, {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'left'}).setOrigin(0, 0).setDepth(999).setAlpha(0);
+    let textPrompt4 = PhaserScene.add.text(25, 220, text4, {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'left'}).setOrigin(0, 0).setDepth(999).setAlpha(0);
+    PhaserScene.tweens.add({
+        targets: textPrompt1,
+        alpha: 1,
+        delay: 800,
+        duration: 1400,
+        completeDelay: 5000,
+        onComplete: () => {
+            let fintext = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 130, "Thank you for playing!", {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF'}).setOrigin(0.5, 0).setDepth(999);
+            let fintext2 = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 100, "(Challenge level unlocked)", {fontFamily: 'kingthings', fontSize: 18, color: '#FFFFFF'}).setOrigin(0.5, 0).setDepth(999).setAlpha(0.75);
+            epilogue.fintext = fintext;
+            epilogue.fintext2 = fintext2;
+
+            let continueButton;
+            continueButton = new Button({
+                normal: {
+                    atlas: 'buttons',
+                    ref: "menu_btn_normal.png",
+                    x: gameConsts.halfWidth,
+                    y: gameConsts.height - 58,
+                    scaleX: 0.57,
+                    scaleY: 0.57
+                },
+                hover: {
+                    atlas: 'buttons',
+                    ref: "menu_btn_hover.png",
+                },
+                press: {
+                    atlas: 'buttons',
+                    ref: "menu_btn_press.png",
+                },
+                onHover: () => {
+                    if (canvas) {
+                        playSound('click').detune = -50;
+                        canvas.style.cursor = 'pointer';
+                    }
+                },
+                onHoverOut: () => {
+                    if (canvas) {
+                        canvas.style.cursor = 'default';
+                    }
+                },
+                onMouseUp: () => {
+                    continueButton.destroy();
+                    PhaserScene.tweens.add({
+                        targets: blackout,
+                        alpha: 0,
+                        duration: 800,
+                        ease: 'Quad.easeOut',
+                        onComplete: () => {
+                            blackout.destroy();
+                        }
+                    })
+                    for (let i in epilogue) {
+                        epilogue[i].destroy();
+                    }
+                    setRoom("practice");
+                    hideGlobalClickBlocker();
+                }
+            });
+            continueButton.addText("RETURN", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
+            continueButton.setTextOffset(0, -1);
+            continueButton.setDepth(999);
+        }
+    })
+    PhaserScene.tweens.add({
+        targets: textPrompt2,
+        alpha: 1,
+        delay: 2800,
+        duration: 1400,
+    })
+    PhaserScene.tweens.add({
+        targets: textPrompt3,
+        alpha: 1,
+        delay: 4600,
+        duration: 1400,
+    })
+    PhaserScene.tweens.add({
+        targets: textPrompt4,
+        alpha: 1,
+        delay: 6400,
+        duration: 1400,
+    })
+    epilogue.textPrompt = textPrompt1;
+    epilogue.textPrompt2 = textPrompt2;
+    epilogue.textPrompt3 = textPrompt3;
+    epilogue.textPrompt4 = textPrompt4;
 }
 
 function openInstructPopup() {
@@ -1038,7 +1192,7 @@ function openFlavorPopup(title = " ", content = " ", image, scale = 0.95) {
     if (image) {
         instructContent.image = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + 73, 'lock', image).setDepth(102).setScale(scale);
     }
-    instructContent.controls = PhaserScene.add.text(gameConsts.halfWidth - 170, gameConsts.halfHeight - 150, content, {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
+    instructContent.controls = PhaserScene.add.text(gameConsts.halfWidth - 170, gameConsts.halfHeight - 153, content, {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
 
     let extraContents = {};
 
@@ -1085,20 +1239,31 @@ function openFlavorPopup(title = " ", content = " ", image, scale = 0.95) {
 
 function setPicksLeft(amt) {
     gameVars.picksLeft = amt;
-    globalObjects.picksleftText.setText("PICKS LEFT: " + gameVars.picksLeft);
+    let text = gameVars.currRoom === "princess" ? "TRIES LEFT: " : "PICKS LEFT: "
+    globalObjects.picksleftText.setText(text + gameVars.picksLeft);
 }
 
 function decrementPicksLeft() {
     gameVars.picksLeft--;
-    globalObjects.picksleftText.setText("PICKS LEFT: " + gameVars.picksLeft);
+    let text = gameVars.currRoom === "princess" ? "TRIES LEFT: " : "PICKS LEFT: "
+    globalObjects.picksleftText.setText(text + gameVars.picksLeft);
     if (gameVars.picksLeft >= 0) {
-        globalObjects.picksleftText.setScale(1.1);
+        globalObjects.picksleftText.setScale(1.18);
         PhaserScene.tweens.add({
             targets: globalObjects.picksleftText,
-            scaleX: 1,
-            scaleY: 1,
-            ease: 'Back.easeOut',
-            duration: 320
+            scaleX: 0.95,
+            scaleY: 0.95,
+            ease: 'Quart.easeOut',
+            duration: 280,
+            onComplete: () => {
+                PhaserScene.tweens.add({
+                    targets: globalObjects.picksleftText,
+                    scaleX: 1,
+                    scaleY: 1,
+                    ease: 'Back.easeOut',
+                    duration: 280,
+                })
+            }
         })
     }
 
