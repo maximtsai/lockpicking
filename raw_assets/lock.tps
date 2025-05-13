@@ -157,7 +157,7 @@
             <key>extrude</key>
             <uint>1</uint>
             <key>trimThreshold</key>
-            <uint>3</uint>
+            <uint>1</uint>
             <key>trimMargin</key>
             <uint>1</uint>
             <key>trimMode</key>
@@ -339,6 +339,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">lock/heartlockshadow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>0.5</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>200,150,400,300</rect>
+                <key>scale9Paddings</key>
+                <rect>200,150,400,300</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">lock/icon_black.png</key>
             <key type="filename">lock/icon_blue.png</key>
             <key type="filename">lock/icon_green.png</key>
@@ -370,6 +385,21 @@
                 <rect>8,8,15,15</rect>
                 <key>scale9Paddings</key>
                 <rect>8,8,15,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">lock/lockbar.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>17,35,34,71</rect>
+                <key>scale9Paddings</key>
+                <rect>17,35,34,71</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

@@ -29,8 +29,8 @@ function setRoom(room) {
         loadGateRoom();
     } else if (room === "enchanted") {
         loadEnchantedRoom();
-    } else if (room === "bedroom") {
-        loadBedRoom();
+    } else if (room === "crown") {
+        loadCrownRoom();
     } else if (room === "princess") {
         loadPrincessRoom();
 
@@ -114,7 +114,7 @@ function loadPracticeRoom() {
     globalObjects.extras.push(arrowRight);
     globalObjects.extras.push(arrowUp);
 
-    globalObjects.roomTitle.setText('TRAINING LOCK')
+    globalObjects.roomTitle.setText('TRAINING')
     let instructions = PhaserScene.add.text(25, gameConsts.height - 155, "CONTROLS:", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
     globalObjects.extras.push(instructions);
     let instructions2 = PhaserScene.add.text(97, gameConsts.height - 126, "Move pick", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
@@ -229,31 +229,70 @@ function loadEnchantedRoom() {
     globalObjects.mechanism.setFrame('mechanismgold.png');
     globalObjects.lock.setFrame('goldenlock.png');
 
+    let bar1 = PhaserScene.add.image(gameConsts.halfWidth + 27, gameConsts.halfHeight + gameConsts.UIYOffset - 4, 'lock', 'lockbar.png').setDepth(-1).setOrigin(0.5, 1.06).setRotation(0.64);
+    let bar2 = PhaserScene.add.image(gameConsts.halfWidth + 27, gameConsts.halfHeight + gameConsts.UIYOffset - 4, 'lock', 'lockbar.png').setDepth(-1).setOrigin(0.5, 1.06).setRotation(1.05);
+    let bar3 = PhaserScene.add.image(gameConsts.halfWidth + 27, gameConsts.halfHeight + gameConsts.UIYOffset - 4, 'lock', 'lockbar.png').setDepth(-1).setOrigin(0.5, 1.06).setRotation(-0.64);
+    let bar4 = PhaserScene.add.image(gameConsts.halfWidth + 27, gameConsts.halfHeight + gameConsts.UIYOffset - 4, 'lock', 'lockbar.png').setDepth(-1).setOrigin(0.5, 1.06).setRotation(-1.05);
+    // let bars = [bar1, bar2, bar3, bar4];
+
+    globalObjects.extras.push(bar1);
+    globalObjects.extras.push(bar2);
+    globalObjects.extras.push(bar3);
+    globalObjects.extras.push(bar4);
+    globalObjects.playUponUnlock = [() => {
+        PhaserScene.tweens.add({
+            delay: 200, targets: bar1, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+        })
+        PhaserScene.tweens.add({
+            delay: 300, targets: bar2, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+        })
+        PhaserScene.tweens.add({
+            delay: 100, targets: bar3, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+        })
+        PhaserScene.tweens.add({
+            delay: 0, targets: bar4, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+        })
+    }]
+
     createPins(3, true);
     setPicksLeft(3);
     globalObjects.roomTitle.setText('ENCHANTED DOOR')
 }
 
-function loadBedRoom() {
+function loadCrownRoom() {
     swapMusic('indeep');
     globalObjects.currBackground.setFrame('bedroom.png').setScale(2);
     globalObjects.mechanism.setFrame('mechanismgold.png');
     globalObjects.lock.setFrame('goldenlock.png');
 
 
-    let lockswivel = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'padlock_swivel.png').setDepth(-1);
-    globalObjects.extras.push(lockswivel);
+    let bar1 = PhaserScene.add.image(gameConsts.halfWidth + 27, gameConsts.halfHeight + gameConsts.UIYOffset - 4, 'lock', 'lockbar.png').setDepth(-1).setOrigin(0.5, 1.06).setRotation(0.64);
+    let bar2 = PhaserScene.add.image(gameConsts.halfWidth + 27, gameConsts.halfHeight + gameConsts.UIYOffset - 4, 'lock', 'lockbar.png').setDepth(-1).setOrigin(0.5, 1.06).setRotation(1.05);
+    let bar3 = PhaserScene.add.image(gameConsts.halfWidth + 27, gameConsts.halfHeight + gameConsts.UIYOffset - 4, 'lock', 'lockbar.png').setDepth(-1).setOrigin(0.5, 1.06).setRotation(-0.64);
+    let bar4 = PhaserScene.add.image(gameConsts.halfWidth + 27, gameConsts.halfHeight + gameConsts.UIYOffset - 4, 'lock', 'lockbar.png').setDepth(-1).setOrigin(0.5, 1.06).setRotation(-1.05);
+    // let bars = [bar1, bar2, bar3, bar4];
+
+    globalObjects.extras.push(bar1);
+    globalObjects.extras.push(bar2);
+    globalObjects.extras.push(bar3);
+    globalObjects.extras.push(bar4);
     globalObjects.playUponUnlock = [() => {
         PhaserScene.tweens.add({
-            targets: lockswivel,
-            y: "-=22",
-            ease: 'Quart.easeOut',
-            duration: 400
+            delay: 200, targets: bar1, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+        })
+        PhaserScene.tweens.add({
+            delay: 300, targets: bar2, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+        })
+        PhaserScene.tweens.add({
+            delay: 100, targets: bar3, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+        })
+        PhaserScene.tweens.add({
+            delay: 0, targets: bar4, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
         })
     }]
     createPins(4, true);
     setPicksLeft(3);
-    globalObjects.roomTitle.setText("CROWN DOOR")
+    globalObjects.roomTitle.setText("THE CROWN")
 }
 
 function loadPrincessRoom() {
@@ -296,7 +335,7 @@ function loadPrincessRoom() {
     }]
     createPins(5, true);
     setPicksLeft(4);
-    globalObjects.roomTitle.setText('PRINCESS')
+    globalObjects.roomTitle.setText('THE PRINCESS?')
 }
 
 function loadChallengeRoom() {
@@ -363,9 +402,9 @@ function gotoLevel(lvl, skipIntro = false) {
                 "",
                 "I'm caught in chains after a botched theft,\na reminder of the risks I take for treasures\nlike the crown.\n\nFortunately the cell lock is of shoddy make.\nWith some finesse, I'll be able to get out.",
                 "To slip into the castle unnoticed, I need\nfiner clothes to blend in.\n\nThe clothier lock is sturdy, but I’m confident\nmy tools can handle it. I'll break in and claim\nthe attire I need.",
-                "The castle looms before me, but sturdy outer\ngates stand in my way. Their locks are well\ncrafted, but familiar.\n\nI find a blind spot in the guards' patrols\nand start my work.",
+                "The castle looms before me, but the outer\ngates stand in my way. Their locks are well\ncrafted, but familiar.\n\nI find a blind spot in the guards' patrols\nand start my work.",
                 "An unassuming door blocks my path to the\nupper floors. Its lock glows with tricky\nenchantments that reset at the slightest\nmistake.\n\nI steady my hands to unravel its magic.",
-                "The treasury door stands before me, the\ncrown just beyond.\n\nThe lock before me is a masterpiece of\ncraftsmanship and enchantment. Every\nknown safeguard protects this final barrier.",
+                "The treasury door stands before me, the\ncrown mere steps beyond.\n\nThe lock I face is a masterpiece of\ncraftsmanship and enchantment. Every\nknown safeguard fortifies this final barrier.",
                 "The crown is within my grasp, but I stumble\ninto a startled young princess who looks\nup from her toys.\n\nI must win her trust quickly to keep her from\ncalling the guards.\n\nThis is a challenge greater than any lock, so\nI approach with care, as one wrong move could\nend my heist.",
                 "A rival locksmith unveils a maddeningly\nintricate device so complex it barely\nqualifies as a lock anymore.\n\nThe obscene design taunts me, but I’ve\nnever backed down from a challenge.\n\nBut perhaps I should bring some extra picks."
             ]
@@ -387,7 +426,7 @@ function gotoLevel(lvl, skipIntro = false) {
                     setRoom("enchanted");
                     break;
                 case 5:
-                    setRoom("bedroom");
+                    setRoom("crown");
                     break;
                 case 6:
                     setRoom("princess");
@@ -397,13 +436,13 @@ function gotoLevel(lvl, skipIntro = false) {
                     break;
             }
             let levelNames = [
-                "Training Lock",
+                "Training",
                 "Level 1: Escape",
                 "Level 2: Suiting Up",
                 "Level 3: Palace Gate",
                 "Level 4: Enchanted Door",
-                "Level 5: Crown Door",
-                "Level 6: Princess",
+                "Level 5: The Crown",
+                "Level 6: The Princess?",
                 "Level 7: Challenge"];
             if (lvl > 0 && !skipIntro) {
                 setTimeout(() => {
@@ -428,16 +467,16 @@ function openLevelPopup() {
     let extraContents = {};
 
     let levelNames = [
-        "Training Lock",
+        "Training",
         "Level 1: Escape",
         "Level 2: Dressing Up",
         "Level 3: Palace Gate",
         "Level 4: Enchanted Door",
-        "Level 5: Crown Door",
-        "Level 6: Princess",
+        "Level 5: The Crown",
+        "Level 6: The Princess?",
         "Level 7: Challenge!"];
     let levelNamesAlt = [
-        "Training Lock",
+        "Training",
         "Level 1: Escape",
         "Level 2",
         "Level 3",

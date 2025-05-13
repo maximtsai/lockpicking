@@ -108,7 +108,7 @@ function setupGame() {
         if (i >= 1) {
             xOffset = 0.5;
         }
-        globalObjects.indicators[i] = PhaserScene.add.image(gameConsts.halfWidth - 36 + i * 31 + xOffset, gameConsts.halfHeight - 78 + gameConsts.UIYOffset, 'lock', 'icon_black.png');
+        globalObjects.indicators[i] = PhaserScene.add.image(gameConsts.halfWidth - 36 + i * 31 + xOffset, gameConsts.halfHeight - 79 + gameConsts.UIYOffset, 'lock', 'icon_black.png');
     }
     PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'lockshadow.png').setDepth(1);
 
@@ -322,7 +322,8 @@ function createPins(amt, dropOnFail = false, dropAllOnFail = false) {
         if (j >= 1) {
             xOffset = 0.5;
         }
-        globalObjects.pins[j] = PhaserScene.add.image(gameConsts.halfWidth - 36 + j * 31 + xOffset, gameConsts.halfHeight + 2 - yOffset + gameConsts.UIYOffset, 'lock', 'pin.png');
+        let pinName = gameVars.currRoom === 'princess' ? 'pin_heart.png' : 'pin.png';
+        globalObjects.pins[j] = PhaserScene.add.image(gameConsts.halfWidth - 36 + j * 31 + xOffset, gameConsts.halfHeight + 2 - yOffset + gameConsts.UIYOffset, 'lock', pinName);
         globalObjects.pins[j].startY = gameConsts.halfHeight + 2 + gameConsts.UIYOffset;
         globalObjects.pins[j].currAnim = PhaserScene.tweens.add({
             targets: globalObjects.pins[j],
@@ -608,7 +609,7 @@ function tryLock() {
                 let pinText = [
                     "I kneel, whispering that I'm a friend\nwho got lost, not a scary monster.",
                     "",
-                    "I show a shiny coin, saying I'm a treasure\nhunter for pretty things like her toys.",
+                    "I show the princess a shiny coin, saying I'm a treasure\nhunter for pretty things like her toys.",
                     "",
                     "I tell her we are secret friends now,\nand promise a new toy if she doesn't tell anyone about me.",
                     ""
@@ -814,7 +815,7 @@ function showFail() {
         "The clothier’s sturdy lock catches my tools,\nleaving me in rags unfit for the castle.",
         "My missteps alert the guards, and the gate’s\nlock holds firm, blocking my path.",
         "The enchanted lock resets at my slightest\nmistake, sealing the door tight.",
-        "The masterful lock defies my trembling hands,\nkeeping the crown beyond reach.",
+        "The masterful lock defies my trembling hands,\nand the crown remains beyond reach.",
         "A clumsy word frightens the young princess,\nand she cries for the guards."
     ]
     globalObjects.victory.extraText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, flavorText[gameVars.currLevel], {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
@@ -1150,19 +1151,19 @@ function openEpiloguePopup() {
     PhaserScene.tweens.add({
         targets: textPrompt2,
         alpha: 1,
-        delay: 3200,
+        delay: 3500,
         duration: 1400,
     })
     PhaserScene.tweens.add({
         targets: textPrompt3,
         alpha: 1,
-        delay: 5000,
+        delay: 5700,
         duration: 1400,
     })
     PhaserScene.tweens.add({
         targets: textPrompt4,
         alpha: 1,
-        delay: 6800,
+        delay: 7500,
         duration: 1400,
     })
     epilogue.textPrompt = textPrompt1;
@@ -1180,7 +1181,7 @@ function openInstructPopup() {
     instructContent.image = PhaserScene.add.image(gameConsts.halfWidth + 20, gameConsts.halfHeight - 150, 'lock', 'goal.png').setDepth(102).setScale(0.8).setOrigin(0 ,0);
 
     let xOffset = 214;
-    let yOffset = -92;
+    let yOffset = -112;
     instructContent.arrowLeft = PhaserScene.add.image(xOffset+42, yOffset+gameConsts.height - 112, 'ui', 'arrow.png').setRotation(Math.PI*-0.5).setScale(0.8).setDepth(102).setTint(0x000000);
     instructContent.arrowRight = PhaserScene.add.image(xOffset+76, yOffset+gameConsts.height - 112, 'ui', 'arrow.png').setRotation(Math.PI*0.5).setScale(0.8).setDepth(102).setTint(0x000000);
     instructContent.arrowUp = PhaserScene.add.image(xOffset+42, yOffset+gameConsts.height - 78, 'ui', 'arrow.png').setScale(0.8).setDepth(102).setTint(0x000000);
@@ -1190,10 +1191,57 @@ function openInstructPopup() {
     instructContent.spaceenter = PhaserScene.add.text(xOffset+30, yOffset+gameConsts.height - 62, "Space/Enter to set tumbler", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
     // instructContent.tips2 = PhaserScene.add.text(gameConsts.halfWidth, 472, "Tip: Listen and observe carefully\nhow the tumblers move", {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
 
-
     openPopup(instructContent)
+    let creditsButton = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "menu_btn_normal.png",
+            x: gameConsts.halfWidth,
+            y: gameConsts.halfHeight + 179,
+            scaleX: 0.52,
+            scaleY: 0.54,
+            alpha: 0.92
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "menu_btn_hover.png",
+            alpha: 1
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "menu_btn_press.png",
+            alpha: 0.8
+        },
+        onHover: () => {
+            if (canvas) {
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            closePopup();
+            openCreditsPopup();
+        }
+    });
+    creditsButton.addText("CREDITS", {fontFamily: 'kingthings', fontSize: 22, color: '#000000', align: 'center'});
+    creditsButton.setTextOffset(1, 0)
+    creditsButton.setDepth(101);
+    let extraContents = {creditsButton: creditsButton};
+    addPopupContents(extraContents);
+
 }
 
+
+function openCreditsPopup() {
+    let instructContent = {};
+    instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, 'Credits', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+    instructContent.goal = PhaserScene.add.text(gameConsts.halfWidth - 158, 228, 'Game by Maxim Tsai\nSFX from Soundimage.org and Freesound.org\nMusic from Suno\nHeavily inspired by Elder Scrolls IV: Oblivion\n\nSprite Count: ~70\nAudio Count: 28\nDev Time: 2.5 Weeks', {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0, 0.5);
+    openPopup(instructContent)
+}
 function openFlavorPopup(title = " ", content = " ", image, scale = 0.95) {
     let instructContent = {};
     instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, title, {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
