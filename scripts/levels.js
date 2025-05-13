@@ -253,7 +253,7 @@ function loadBedRoom() {
     }]
     createPins(4, true);
     setPicksLeft(3);
-    globalObjects.roomTitle.setText("PRINCESS DOOR")
+    globalObjects.roomTitle.setText("CROWN DOOR")
 }
 
 function loadPrincessRoom() {
@@ -365,7 +365,7 @@ function gotoLevel(lvl, skipIntro = false) {
                 "To slip into the castle unnoticed, I need\nfiner clothes to blend in.\n\nThe clothier lock is sturdy, but I’m confident\nmy tools can handle it. I'll break in and claim\nthe attire I need.",
                 "The castle looms before me, but sturdy outer\ngates stand in my way. Their locks are well\ncrafted, but familiar.\n\nI find a blind spot in the guards' patrols\nand start my work.",
                 "An unassuming door blocks my path to the\nupper floors. Its lock glows with tricky\nenchantments that reset at the slightest\nmistake.\n\nI steady my hands to unravel its magic.",
-                "The treasury door stands before me, the\ncrown just beyond.\n\nThe lock is a masterpiece of craftsmanship\nand enchantment. Every known safeguard\nprotects this final barrier.",
+                "The treasury door stands before me, the\ncrown just beyond.\n\nThe lock before me is a masterpiece of\ncraftsmanship and enchantment. Every\nknown safeguard protects this final barrier.",
                 "The crown is within my grasp, but I stumble\ninto a startled young princess who looks\nup from her toys.\n\nI must win her trust quickly to keep her from\ncalling the guards.\n\nThis is a challenge greater than any lock, so\nI approach with care, as one wrong move could\nend my heist.",
                 "A rival locksmith unveils a maddeningly\nintricate device so complex it barely\nqualifies as a lock anymore.\n\nThe obscene design taunts me, but I’ve\nnever backed down from a challenge.\n\nBut perhaps I should bring some extra picks."
             ]

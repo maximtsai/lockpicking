@@ -610,7 +610,7 @@ function tryLock() {
                     "",
                     "I show a shiny coin, saying I'm a treasure\nhunter for pretty things like her toys.",
                     "",
-                    "I tell her we are secret friends now,\npromising a new toy if she doesn't tell anyone about me.",
+                    "I tell her we are secret friends now,\nand promise a new toy if she doesn't tell anyone about me.",
                     ""
                 ];
                 if (pinText[gameVars.pinsFixed - 1] !== "") {
