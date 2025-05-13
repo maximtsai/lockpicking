@@ -157,7 +157,7 @@ function setVolume(sound, volume = 0, duration) {
 function swapMusic(newMusic, volume = 1, loop = true) {
     let name = getGlobalMusicName();
     if (newMusic !== name) {
-        playMusic(newMusic, volume, loop)
+        globalMusic = playMusic(newMusic, volume, loop)
     }
     // else do nothing
 }
@@ -189,8 +189,7 @@ function fadeAwaySound(sound, duration = 650, ease, onComplete) {
 
 function fadeInSound(sound, volume = 1, duration = 1000) {
     let globalToUse = sound.isMusic ? globalMusicVol : globalVolume;
-    sound.fullVolume = volume;
-    let goalVol = sound.fullVolume * globalToUse;
+    let goalVol = volume * globalToUse;
     return PhaserScene.tweens.add({
         delay: 100,
         targets: sound,

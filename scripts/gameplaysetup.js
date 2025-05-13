@@ -606,33 +606,35 @@ function tryLock() {
             if (gameVars.princessCounter === gameVars.pinsFixed) {
                 gameVars.princessCounter++;
                 let pinText = [
-                    "I offer a polite bow and introduce myself with a warm smile.\nLiora's cautious gaze softens slightly.",
-                    "I share that I'm intrigued by the princess who values wit\nover gowns and galas, eager to know her mind.",
-                    "I ask about her book, revealing my own\nlove for tales of adventure.",
-                    "I lower my voice, describing how I’ve always found comfort\nin quiet nights under the stars, hoping she might too.",
-                    "The princess, once tense with caution, now eases\nas she begins sharing her own thoughts.",
-                    " "
+                    "I kneel, whispering that I'm a friend\nwho got lost, not a scary monster.",
+                    "",
+                    "I show a shiny coin, saying I'm a treasure\nhunter for pretty things like her toys.",
+                    "",
+                    "I tell her we are secret friends now,\npromising a new toy if she doesn't tell anyone about me.",
+                    ""
                 ];
-                globalObjects.infoText.setAlpha(0);
-                globalObjects.infoText.setText(pinText[gameVars.pinsFixed - 1]);
-                if (globalObjects.infoText.currAnim) {
-                    globalObjects.infoText.currAnim.stop();
-                }
-                globalObjects.infoText.currAnim = PhaserScene.tweens.add({
-                    targets: globalObjects.infoText,
-                    alpha: 1,
-                    duration: 500,
-                    ease: 'Cubic.easeOut',
-                    completeDelay: 7000,
-                    onComplete: () => {
-                        globalObjects.infoText.currAnim = PhaserScene.tweens.add({
-                            targets: globalObjects.infoText,
-                            alpha: 0,
-                            duration: 500,
-                            ease: 'Cubic.easeOut',
-                        })
+                if (pinText[gameVars.pinsFixed - 1] !== "") {
+                    globalObjects.infoText.setAlpha(0);
+                    globalObjects.infoText.setText(pinText[gameVars.pinsFixed - 1]);
+                    if (globalObjects.infoText.currAnim) {
+                        globalObjects.infoText.currAnim.stop();
                     }
-                })
+                    globalObjects.infoText.currAnim = PhaserScene.tweens.add({
+                        targets: globalObjects.infoText,
+                        alpha: 1,
+                        duration: 500,
+                        ease: 'Cubic.easeOut',
+                        completeDelay: 7000,
+                        onComplete: () => {
+                            globalObjects.infoText.currAnim = PhaserScene.tweens.add({
+                                targets: globalObjects.infoText,
+                                alpha: 0,
+                                duration: 500,
+                                ease: 'Cubic.easeOut',
+                            })
+                        }
+                    })
+                }
             }
 
         }
@@ -807,13 +809,13 @@ function showFail() {
 
 
     let flavorText = [
-        "I have wasted my entire hoard\nof picks. Hope it was worth it.",
-        "I fumble the lock in my haste,\nand now remain stuck behind bars.",
-        "The clothier’s sturdy lock catches my tools,\nand I am left in rags unfit for the castle.",
-        "My missteps alerts the guards, and the gate’s\nlock holds firm, blocking my path.",
+        "I somehow botch the easiest lock with\na mountain of lockpicks. Great start.",
+        "My hasty fingers fumble the crude lock,\nand now I remain stuck behind bars.",
+        "The clothier’s sturdy lock catches my tools,\nleaving me in rags unfit for the castle.",
+        "My missteps alert the guards, and the gate’s\nlock holds firm, blocking my path.",
         "The enchanted lock resets at my slightest\nmistake, sealing the door tight.",
-        "The masterful lock defies my trembling hands,\nkeeping the princess beyond reach.",
-        "The princess calls her guards as I fumble our encounter.\nI retreat, vowing to tread more carefully next time."
+        "The masterful lock defies my trembling hands,\nkeeping the crown beyond reach.",
+        "A clumsy word frightens the young princess,\nand she cries for the guards."
     ]
     globalObjects.victory.extraText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, flavorText[gameVars.currLevel], {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
 
@@ -1063,10 +1065,10 @@ function openEpiloguePopup() {
     localStorage.setItem("latestLevel", "7");
     gameVars.latestLevel = 7;
     gameVars.showNextButton = false;
-    let text1 = "We talk by the fire for hours, undisturbed by guards.";
-    let text2 = "The princess's heart gradually softens as our conversation grows closer.";
-    let text3 = "As dawn approaches, I bid her farewell and slip out the tower window,";
-    let text4 = "Certain I’ll return to see her another night.";
+    let text1 = "The princess calms down and waves before returning to her toys.";
+    let text2 = "I grab the crown and escape with it hidden under my cloak."
+    let text3 = "Though my hands are full of treasure, my mind is occupied by the child's smile.";
+    let text4 = "I wonder if I'll come back again for more stories with my new friend.";
 
     createGlobalClickBlocker(false);
     let blackout = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'blackPixel').setScale(1000).setAlpha(0).setDepth(998);
@@ -1084,7 +1086,7 @@ function openEpiloguePopup() {
     PhaserScene.tweens.add({
         targets: textPrompt1,
         alpha: 1,
-        delay: 800,
+        delay: 1200,
         duration: 1400,
         completeDelay: 5000,
         onComplete: () => {
@@ -1148,19 +1150,19 @@ function openEpiloguePopup() {
     PhaserScene.tweens.add({
         targets: textPrompt2,
         alpha: 1,
-        delay: 2800,
+        delay: 3200,
         duration: 1400,
     })
     PhaserScene.tweens.add({
         targets: textPrompt3,
         alpha: 1,
-        delay: 4600,
+        delay: 5000,
         duration: 1400,
     })
     PhaserScene.tweens.add({
         targets: textPrompt4,
         alpha: 1,
-        delay: 6400,
+        delay: 6800,
         duration: 1400,
     })
     epilogue.textPrompt = textPrompt1;
@@ -1199,7 +1201,7 @@ function openFlavorPopup(title = " ", content = " ", image, scale = 0.95) {
     if (image) {
         instructContent.image = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + 73, 'lock', image).setDepth(102).setScale(scale);
     }
-    instructContent.controls = PhaserScene.add.text(gameConsts.halfWidth - 170, gameConsts.halfHeight - 153, content, {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
+    instructContent.controls = PhaserScene.add.text(gameConsts.halfWidth - 170, gameConsts.halfHeight - 153, content, {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setScale(1, 0.98).setDepth(102);
 
     let extraContents = {};
 

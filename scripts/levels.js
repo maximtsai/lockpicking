@@ -7,6 +7,10 @@ function setRoom(room) {
     for (let i in globalObjects.extras) {
         globalObjects.extras[i].destroy();
     }
+    if (globalObjects.extrasCleanup) {
+        globalObjects.extrasCleanup();
+        globalObjects.extrasCleanup = null;
+    }
     gameVars.currRoom = room;
     gameVars.pinsFixed = 0;
     globalObjects.extras = [];
@@ -64,7 +68,7 @@ function loadPracticeRoom() {
                         PhaserScene.tweens.add({
                             targets: newitem,
                             duration: 650,
-                            y: 100,
+                            y: 106,
                             ease: 'Cubic.easeIn',
                             onComplete: () => {
                                 newitem.setScale(1.03);
@@ -259,15 +263,35 @@ function loadPrincessRoom() {
     globalObjects.mechanism.setFrame('blank.png');
     globalObjects.lock.setFrame('heartlock.png');
 
+    let heartPulse = PhaserScene.add.image(gameConsts.halfWidth + 28, gameConsts.halfHeight + gameConsts.UIYOffset - 2, 'lock', 'heart.png').setDepth(-9).setScale(0.92).setAlpha(1.15);
+    heartPulse.anim1 = PhaserScene.tweens.add({
+        targets: heartPulse,
+        delay: 1500,
+        alpha: 0,
+        ease: 'Quad.easeOut',
+        duration: 3500,
+        repeat: -1
+    })
+    heartPulse.anim2 = PhaserScene.tweens.add({
+        targets: heartPulse,
+        delay: 1500,
+        scaleX: 1.55,
+        scaleY: 1.55,
+        ease: 'Quad.easeOut',
+        duration: 3500,
+        repeat: -1
+    })
+    globalObjects.extras.push(heartPulse);
 
-    let lockswivel = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'padlock_swivel.png').setDepth(-1);
-    globalObjects.extras.push(lockswivel);
+
+    let shadow = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'heartlockshadow.png').setDepth(-9).setScale(2);
+    globalObjects.extras.push(shadow);
     globalObjects.playUponUnlock = [() => {
+        heartPulse.anim1.stop();
         PhaserScene.tweens.add({
-            targets: lockswivel,
-            y: "-=22",
-            ease: 'Quart.easeOut',
-            duration: 400
+            targets: heartPulse,
+            alpha: 0,
+            duration: 500,
         })
     }]
     createPins(5, true);
@@ -291,8 +315,8 @@ function loadChallengeRoom() {
         })
     }]
     createPins(5, true, true);
-    setPicksLeft(4);
-    globalObjects.roomTitle.setText('ESCAPE')
+    setPicksLeft(9);
+    globalObjects.roomTitle.setText('CHALLENGE')
 }
 
 
@@ -337,13 +361,13 @@ function gotoLevel(lvl, skipIntro = false) {
 
             let flavorStory = [
                 "",
-                "I've been imprisoned for slipping into\nrestricted places and claiming protected\ntreasures.\n\nThe bars of this cell are strong, but the lock\nis crude. It should be an easy thing to pick.",
-                "I have escaped, but to reach the castle’s\ntreasure, I must first make myself presentable.\n\nThe clothier store is closed, but I’m confident\nI can slip in and acquire the attire I need.",
-                "The castle looms ahead, but sturdy gates\nbar the path. Their locks are well crafted,\nbut familiar.\n\nI find a blind spot in the security patrols\nand begin.",
-                "Inside the castle, a simple wood door blocks\nmy way, but I know it hides a tricky lock\nenchanted to reset if I falter.\n\nOne wrong move could undo my progress. I\nsteady my hands and get ready to crack its\nmagic.",
-                "The princess's door stands before me, its locks\na masterpiece of craft and enchantment.\n\nEvery safeguard known protects this final\nbarrier. Failure is not an option, but victory\nis within reach.",
-                "Princess Liora looks up from her book,\namused but watching me carefully.\n\nBefore me is a lock more guarded than any\nvault, Liora's trust.\n\nI begin our conversation with care, each\nword and action as precise as a lockpick's\ndelicate turn.",
-                "A rival locksmith unveils a bizarre,\nmaddeningly intricate device so complex it\nbarely qualifies as a lock anymore.\n\nThe obscene design taunts me, but I’ve\nnever backed down from a challenge.\n\nBut perhaps I should bring some extra picks."
+                "I'm caught in chains after a botched theft,\na reminder of the risks I take for treasures\nlike the crown.\n\nFortunately the cell lock is of shoddy make.\nWith some finesse, I'll be able to get out.",
+                "To slip into the castle unnoticed, I need\nfiner clothes to blend in.\n\nThe clothier lock is sturdy, but I’m confident\nmy tools can handle it. I'll break in and claim\nthe attire I need.",
+                "The castle looms before me, but sturdy outer\ngates stand in my way. Their locks are well\ncrafted, but familiar.\n\nI find a blind spot in the guards' patrols\nand start my work.",
+                "An unassuming door blocks my path to the\nupper floors. Its lock glows with tricky\nenchantments that reset at the slightest\nmistake.\n\nI steady my hands to unravel its magic.",
+                "The treasury door stands before me, the\ncrown just beyond.\n\nThe lock is a masterpiece of craftsmanship\nand enchantment. Every known safeguard\nprotects this final barrier.",
+                "The crown is within my grasp, but I stumble\ninto a startled young princess who looks\nup from her toys.\n\nI must win her trust quickly to keep her from\ncalling the guards.\n\nThis is a challenge greater than any lock, so\nI approach with care, as one wrong move could\nend my heist.",
+                "A rival locksmith unveils a maddeningly\nintricate device so complex it barely\nqualifies as a lock anymore.\n\nThe obscene design taunts me, but I’ve\nnever backed down from a challenge.\n\nBut perhaps I should bring some extra picks."
             ]
 
             switch(lvl) {
@@ -375,11 +399,11 @@ function gotoLevel(lvl, skipIntro = false) {
             let levelNames = [
                 "Training Lock",
                 "Level 1: Escape",
-                "Level 2: Dressing Up",
+                "Level 2: Suiting Up",
                 "Level 3: Palace Gate",
                 "Level 4: Enchanted Door",
-                "Level 5: Princess Door",
-                "Level 6: Her Trust",
+                "Level 5: Crown Door",
+                "Level 6: Princess",
                 "Level 7: Challenge"];
             if (lvl > 0 && !skipIntro) {
                 setTimeout(() => {
@@ -409,8 +433,8 @@ function openLevelPopup() {
         "Level 2: Dressing Up",
         "Level 3: Palace Gate",
         "Level 4: Enchanted Door",
-        "Level 5: Princess Door",
-        "Level 6: Her Trust",
+        "Level 5: Crown Door",
+        "Level 6: Princess",
         "Level 7: Challenge!"];
     let levelNamesAlt = [
         "Training Lock",
