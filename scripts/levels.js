@@ -38,6 +38,62 @@ function setRoom(room) {
 }
 
 function loadPracticeRoom() {
+    if (gameVars.bonusUnlocked) {
+        let newitem = PhaserScene.add.text(60, 120, "+CHALLENGE\nADDED", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'center'}).setScale(0.8).setAlpha(0.5).setDepth(99).setStroke('#000000', 4).setOrigin(0.5, 0.5);
+        globalObjects.extras.push(newitem);
+        PhaserScene.tweens.add({
+            targets: newitem,
+            alpha: 1,
+            duration: 800,
+            ease: 'Quad.easeOut'
+        })
+        PhaserScene.tweens.add({
+            targets: newitem,
+            duration: 900,
+            y: 100,
+            ease: 'Cubic.easeIn',
+            onComplete: () => {
+                PhaserScene.tweens.add({
+                    targets: newitem,
+                    duration: 800,
+                    scaleX: 1,
+                    scaleY: 1,
+                    y: 115,
+                    ease: 'Cubic.easeOut',
+                    onComplete: () => {
+                        PhaserScene.tweens.add({
+                            targets: newitem,
+                            duration: 650,
+                            y: 100,
+                            ease: 'Cubic.easeIn',
+                            onComplete: () => {
+                                newitem.setScale(1.03);
+                                PhaserScene.tweens.add({
+                                    targets: newitem,
+                                    duration: 500,
+                                    scaleX: 1,
+                                    scaleY: 1,
+                                    ease: 'Back.easeOut',
+                                    completeDelay: 3000,
+                                    onComplete: () => {
+                                        PhaserScene.tweens.add({
+                                            targets: newitem,
+                                            duration: 500,
+                                            alpha: 0,
+                                            onComplete: () => {
+                                                newitem.destroy();
+                                            }
+                                        })
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+        })
+
+    }
     swapMusic('quietshadows');
     createPins(5);
     setPicksLeft(99);
@@ -287,7 +343,7 @@ function gotoLevel(lvl, skipIntro = false) {
                 "Inside the castle, a simple wood door blocks\nmy way, but I know it hides a tricky lock\nenchanted to reset if I falter.\n\nOne wrong move could undo my progress. I\nsteady my hands and get ready to crack its\nmagic.",
                 "The princess's door stands before me, its locks\na masterpiece of craft and enchantment.\n\nEvery safeguard known protects this final\nbarrier. Failure is not an option, but victory\nis within reach.",
                 "Princess Liora looks up from her book,\namused but watching me carefully.\n\nBefore me is a lock more guarded than any\nvault, Liora's trust.\n\nI begin our conversation with care, each\nword and action as precise as a lockpick's\ndelicate turn.",
-                "A rival locksmith unveils a bizarre, maddeningly\nintricate device—so complex it barely\nqualifies as a lock.\n\nIts obscene design taunts me, but I’ve\nnever backed down from a challenge. I\nstep forward, ready to conquer it as I have\nall others.\n"
+                "A rival locksmith unveils a bizarre,\nmaddeningly intricate device so complex it\nbarely qualifies as a lock anymore.\n\nThe obscene design taunts me, but I’ve\nnever backed down from a challenge.\n\nBut perhaps I should bring some extra picks."
             ]
 
             switch(lvl) {
@@ -355,7 +411,7 @@ function openLevelPopup() {
         "Level 4: Enchanted Door",
         "Level 5: Princess Door",
         "Level 6: Her Trust",
-        "Level 7: Challenge"];
+        "Level 7: Challenge!"];
     let levelNamesAlt = [
         "Training Lock",
         "Level 1: Escape",

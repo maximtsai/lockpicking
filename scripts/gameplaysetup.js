@@ -606,11 +606,11 @@ function tryLock() {
             if (gameVars.princessCounter === gameVars.pinsFixed) {
                 gameVars.princessCounter++;
                 let pinText = [
-                    "I offer a polite bow, introducing myself with a warm smile.\nLiora's cautious gaze softens slightly.",
+                    "I offer a polite bow and introduce myself with a warm smile.\nLiora's cautious gaze softens slightly.",
                     "I share that I'm intrigued by the princess who values wit\nover gowns and galas, eager to know her mind.",
-                    "I ask about her book, revealing my own love for\ntales of adventure, and we exchange a smile.",
+                    "I ask about her book, revealing my own\nlove for tales of adventure.",
                     "I lower my voice, describing how I’ve always found comfort\nin quiet nights under the stars, hoping she might too.",
-                    "The princess, once tense with caution, now eases\ninto a soft smile as she shares her own thoughts.",
+                    "The princess, once tense with caution, now eases\nas she begins sharing her own thoughts.",
                     " "
                 ];
                 globalObjects.infoText.setAlpha(0);
@@ -775,6 +775,10 @@ function resetPick(setToZero = true) {
 }
 
 function showFail() {
+    if (globalObjects.infoText.currAnim) {
+        globalObjects.infoText.currAnim.stop();
+        globalObjects.infoText.alpha = 0;
+    }
     PhaserScene.tweens.add({
         delay: 450,
         targets: globalObjects.extras,
@@ -1055,6 +1059,9 @@ function closePopup() {
 }
 
 function openEpiloguePopup() {
+    gameVars.bonusUnlocked = true;
+    localStorage.setItem("latestLevel", "7");
+    gameVars.latestLevel = 7;
     gameVars.showNextButton = false;
     let text1 = "We talk by the fire for hours, undisturbed by guards.";
     let text2 = "The princess's heart gradually softens as our conversation grows closer.";
