@@ -1,5 +1,8 @@
 
 function setRoom(room) {
+    globalObjects.pick.setFrame('pick.png');
+    globalObjects.pickshadow.setVisible(true);
+
     if (globalObjects.infoText.currAnim) {
         globalObjects.infoText.currAnim.stop();
     }
@@ -366,6 +369,7 @@ function gotoNextLevel() {
 }
 
 function gotoLevel(lvl, skipIntro = false) {
+
     gameVars.showNextButton = false;
     gameVars.currLevel = lvl;
     createGlobalClickBlocker(false)
@@ -382,6 +386,8 @@ function gotoLevel(lvl, skipIntro = false) {
         duration: 200,
         onComplete: () => {
             hideGlobalClickBlocker();
+            globalObjects.pick.setFrame('pick.png');
+            globalObjects.pickshadow.setVisible(true);
             PhaserScene.tweens.add({
                 targets: blackPixelTemp,
                 x: "+=2300",
@@ -430,6 +436,8 @@ function gotoLevel(lvl, skipIntro = false) {
                     break;
                 case 6:
                     setRoom("princess");
+                    globalObjects.pickshadow.setVisible(false);
+                    globalObjects.pick.setFrame('pick_heart.png');
                     break;
                 case 7:
                     setRoom("challenge");

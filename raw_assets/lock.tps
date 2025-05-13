@@ -306,6 +306,7 @@
             <key type="filename">lock/padlock.png</key>
             <key type="filename">lock/padlock_swivel.png</key>
             <key type="filename">lock/pick.png</key>
+            <key type="filename">lock/pick_heart.png</key>
             <key type="filename">lock/pickbroke.png</key>
             <key type="filename">lock/pickshadow.png</key>
             <key type="filename">lock/security_lock.png</key>
