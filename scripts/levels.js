@@ -95,7 +95,7 @@ function loadPracticeRoom() {
 
     }
     swapMusic('quietshadows');
-    createPins(5);
+    createPins(3);
     setPicksLeft(99);
     for (let i in globalObjects.indicators) {
         globalObjects.indicators[i].visible = true;

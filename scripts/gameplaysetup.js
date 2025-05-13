@@ -442,7 +442,7 @@ function pinMoveUp(pinNum) {
         dropDelay = 0;
     }
 
-    currPin.currDelay = PhaserScene.time.delayedCall(Math.max(currPin.randDur - 1, Math.floor(currPin.randDur * 0.62) + 10), () => {
+    currPin.currDelay = PhaserScene.time.delayedCall(Math.min(currPin.randDur - 1, Math.floor(currPin.randDur * 0.8) + 10), () => {
         if (!overrideCantOpen) {
             gameVars.canLock = true;
             gameVars.canShowGreen = true;
@@ -464,7 +464,7 @@ function pinMoveUp(pinNum) {
 
                 }
             }, 10)
-            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3) + dropDelay * 1.75), () => {
+            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3) + dropDelay * 1.55), () => {
                 gameVars.canShowGreen = false;
                 setTimeout(() => {
                     gameVars.canLock = false;
@@ -499,7 +499,7 @@ function pinMoveUp(pinNum) {
                 targets: currPin,
                 y: currPin.startY,
                 ease: 'Quad.easeIn',
-                duration: Math.max(420, currPin.randDur * 6.85 - 210),
+                duration: Math.max(420, currPin.randDur * 6.75 - 210),
                 onStart: () => {
                     currPin.fallSoundTimeout = setTimeout(() => {
                         if (!currPin.locked) {
