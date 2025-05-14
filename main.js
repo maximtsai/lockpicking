@@ -95,7 +95,7 @@ let url4 = 'maximtsai';// '';
 function preload ()
 {
     handleBorders();
-    gameVars.latestLevel = 6;//parseInt(localStorage.getItem("latestLevel"));
+    gameVars.latestLevel = parseInt(localStorage.getItem("latestLevel"));
     if (!gameVars.latestLevel) {
         gameVars.latestLevel = 1;
     }
@@ -212,7 +212,8 @@ function update(time, delta) {
                 gameVars.currentPin = Math.max(0, gameVars.currentPin - 1);
                 updatePickSpot();
             } else if (globalObjects.keyboardControls.getRightJustDown()) {
-                gameVars.currentPin = Math.min(4, gameVars.currentPin + 1);
+                let maxAmt = gameVars.currLevel === 7 ? 5 : 4;
+                gameVars.currentPin = Math.min(maxAmt, gameVars.currentPin + 1);
                 updatePickSpot();
             } else if (globalObjects.keyboardControls.getUpJustDown()) {
                 pickMoveUp();
@@ -224,6 +225,8 @@ function update(time, delta) {
             } else if (gameVars.showNextButton !== false) {
                 if (gameVars.currRoom === 'princess') {
                     openEpiloguePopup();
+                } else if (gameVars.currRoom === 'challenge') {
+                    gotoLevel(0);
                 } else {
                     gotoLevel(gameVars.showNextButton);
                 }

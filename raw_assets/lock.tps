@@ -234,13 +234,26 @@
                 <false/>
             </struct>
             <key type="filename">lock/flavorimage4.png</key>
-            <key type="filename">lock/flavorimage5.png</key>
-            <key type="filename">lock/flavorimage7.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>spriteScale</key>
                 <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>50,50,100,100</rect>
+                <key>scale9Paddings</key>
+                <rect>50,50,100,100</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">lock/flavorimage5.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>0.925</double>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
@@ -256,6 +269,21 @@
                 <point_f>0.5,0.5</point_f>
                 <key>spriteScale</key>
                 <double>0.9</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>50,50,100,100</rect>
+                <key>scale9Paddings</key>
+                <rect>50,50,100,100</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">lock/flavorimage7.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>0.97</double>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
@@ -299,6 +327,9 @@
             <key type="filename">lock/heartlock.png</key>
             <key type="filename">lock/lock.png</key>
             <key type="filename">lock/lockshadow.png</key>
+            <key type="filename">lock/lockshadowextra.png</key>
+            <key type="filename">lock/masterlock.png</key>
+            <key type="filename">lock/masterlockrunes.png</key>
             <key type="filename">lock/mechanism.png</key>
             <key type="filename">lock/mechanism_bar.png</key>
             <key type="filename">lock/mechanism_bar_many.png</key>
@@ -341,6 +372,7 @@
                 <false/>
             </struct>
             <key type="filename">lock/heartlockshadow.png</key>
+            <key type="filename">lock/masterlockback.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

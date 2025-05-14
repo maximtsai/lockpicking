@@ -110,21 +110,24 @@ function loadPracticeRoom() {
     globalObjects.currBackground.setFrame('door.png').setScale(2);
     globalObjects.mechanism.setFrame('mechanism.png');
     globalObjects.lock.setFrame('lock.png');
-    let arrowLeft = PhaserScene.add.image(42, gameConsts.height - 112, 'ui', 'arrow.png').setRotation(Math.PI*-0.5).setScale(0.8);
-    let arrowRight = PhaserScene.add.image(77, gameConsts.height - 112, 'ui', 'arrow.png').setRotation(Math.PI*0.5).setScale(0.8);
-    let arrowUp = PhaserScene.add.image(42, gameConsts.height - 78, 'ui', 'arrow.png').setScale(0.8);
+    let arrowLeft = PhaserScene.add.image(42, gameConsts.height - 116, 'ui', 'arrow.png').setRotation(Math.PI*-0.5).setScale(0.8);
+    let arrowRight = PhaserScene.add.image(77, gameConsts.height - 116, 'ui', 'arrow.png').setRotation(Math.PI*0.5).setScale(0.8);
+    let arrowUp = PhaserScene.add.image(42, gameConsts.height - 82, 'ui', 'arrow.png').setScale(0.8);
+    let space = PhaserScene.add.image(58, gameConsts.height - 48, 'ui', 'space.png').setScale(0.8);
     globalObjects.extras.push(arrowLeft);
     globalObjects.extras.push(arrowRight);
     globalObjects.extras.push(arrowUp);
+    globalObjects.extras.push(space);
 
     globalObjects.roomTitle.setText('TRAINING')
-    let instructions = PhaserScene.add.text(25, gameConsts.height - 155, "CONTROLS:", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
+    let instructions = PhaserScene.add.text(25, gameConsts.height - 157, "CONTROLS:", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
     globalObjects.extras.push(instructions);
-    let instructions2 = PhaserScene.add.text(97, gameConsts.height - 126, "Move pick", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
+    let instructions2 = PhaserScene.add.text(97, gameConsts.height - 130, "Move pick", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
     globalObjects.extras.push(instructions2);
-    let instructions3 = PhaserScene.add.text(64, gameConsts.height - 92, "Lift tumbler", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
+    let instructions3 = PhaserScene.add.text(64, gameConsts.height - 96, "Lift tumbler", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
     globalObjects.extras.push(instructions3);
-    let instructions4 = PhaserScene.add.text(30, gameConsts.height - 62, "Space/Enter to set tumbler when\nit reaches the top of the lock", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
+
+    let instructions4 = PhaserScene.add.text(28, gameConsts.height - 62, "                 / Enter to set tumbler\nwhen at top of lock", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
     globalObjects.extras.push(instructions4);
     // let goalText = PhaserScene.add.text(570, gameConsts.height - 135, 'GOAL:\nSet all the\ntumblers\nin place ->', {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setOrigin(0, 0);
     // goalText.setStroke('#000000', 4)
@@ -338,26 +341,62 @@ function loadPrincessRoom() {
     }]
     createPins(5, true);
     setPicksLeft(4);
-    globalObjects.roomTitle.setText('THE PRINCESS?')
+    globalObjects.roomTitle.setText('THE PRINCESS')
 }
 
 function loadChallengeRoom() {
     globalObjects.currBackground.setFrame('workbench2.png').setScale(2);
-    globalObjects.mechanism.setFrame('mechanism_bar.png');
-    globalObjects.lock.setFrame('padlock.png');
+    globalObjects.mechanism.setFrame('mechanism_bar_many.png');
+    globalObjects.lock.setFrame('masterlock.png');
 
-    let lockswivel = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'padlock_swivel.png').setDepth(-1);
-    globalObjects.extras.push(lockswivel);
+    let lockback = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'masterlockback.png').setDepth(-1).setScale(2);
+    globalObjects.extras.push(lockback);
+    let lockShadowExtra = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'lockshadowextra.png').setDepth(5);
+    globalObjects.extras.push(lockShadowExtra);
+
+    let lockrunes = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'masterlockrunes.png').setDepth(-1);
+    globalObjects.extras.push(lockrunes);
+    lockrunes.anim = PhaserScene.tweens.add({
+        targets: lockrunes,
+        alpha: 0.25,
+        ease: 'Cubic.easeInOut',
+        duration: 3000,
+        yoyo: true,
+        repeat: -1,
+    })
     globalObjects.playUponUnlock = [() => {
+        lockrunes.anim.stop();
         PhaserScene.tweens.add({
-            targets: lockswivel,
-            y: "-=22",
-            ease: 'Quart.easeOut',
-            duration: 400
+            targets: lockrunes,
+            alpha: 0,
+            scaleX: 1.2,
+            scaleY: 1.2,
+            ease: 'Cubic.Out',
+            duration: 500,
+        })
+        globalObjects.infoText.setAlpha(0);
+        globalObjects.infoText.setText("The lock practically falls apart once I crack it open.\nMy rival weeps while I stand victorious.")
+        if (globalObjects.infoText.currAnim) {
+            globalObjects.infoText.currAnim.stop();
+        }
+        globalObjects.infoText.currAnim = PhaserScene.tweens.add({
+            targets: globalObjects.infoText,
+            alpha: 1,
+            duration: 500,
+            ease: 'Cubic.easeOut',
+            completeDelay: 10000,
+            onComplete: () => {
+                globalObjects.infoText.currAnim = PhaserScene.tweens.add({
+                    targets: globalObjects.infoText,
+                    alpha: 0,
+                    duration: 500,
+                    ease: 'Cubic.easeOut',
+                })
+            }
         })
     }]
-    createPins(5, true, true);
-    setPicksLeft(9);
+    createPins(6, true, true);
+    setPicksLeft(6);
     globalObjects.roomTitle.setText('CHALLENGE')
 }
 
@@ -411,8 +450,8 @@ function gotoLevel(lvl, skipIntro = false) {
                 "The castle looms before me, but the outer\ngates stand in my way. Their locks are well\ncrafted, but familiar.\n\nI find a blind spot in the guards' patrols\nand start my work.",
                 "An unassuming door blocks my path to the\nupper floors. Its lock glows with tricky\nenchantments that reset at the slightest\nmistake.\n\nI steady my hands to unravel its magic.",
                 "The treasury door stands before me, the\ncrown mere steps beyond.\n\nThe lock I face is a masterpiece of\ncraftsmanship and enchantment. Every\nknown safeguard fortifies this final barrier.",
-                "The crown is within my grasp, but I stumble\ninto a startled young princess who looks\nup from her toys.\n\nI must win her trust quickly to keep her from\ncalling the guards.\n\nThis is a challenge greater than any lock, so\nI approach with care, as one wrong move could\nend my heist.",
-                "A rival locksmith unveils a maddeningly\nintricate device so complex it barely\nqualifies as a lock anymore.\n\nThe obscene design taunts me, but I’ve\nnever backed down from a challenge.\n\nBut perhaps I should bring some extra picks."
+                "The crown is within my grasp, but I stumble\ninto a startled young princess who looks\nup from her stuffed toy.\n\nI must win her trust quickly to keep her from\ncalling the guards.\n\nThis is a challenge greater than any lock, so\nI approach with care, as one wrong move could\nend my heist.",
+                "A rival locksmith unveils a contraption\nso complex it could barely be called a lock\nanymore. There's something devious about\nthis device but I’ve never backed down from\na challenge.\n\nI'll bring extra picks just in case."
             ]
 
             switch(lvl) {

@@ -103,10 +103,13 @@ function setupGame() {
     globalObjects.infoText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, " ", {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
 
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 6; i++) {
         let xOffset = 0;
         if (i >= 1) {
             xOffset = 0.5;
+        }
+        if (i === 5) {
+            xOffset = 999;
         }
         globalObjects.indicators[i] = PhaserScene.add.image(gameConsts.halfWidth - 36 + i * 31 + xOffset, gameConsts.halfHeight - 79 + gameConsts.UIYOffset, 'lock', 'icon_black.png');
     }
@@ -331,7 +334,9 @@ function createPins(amt, dropOnFail = false, dropAllOnFail = false) {
             ease: 'Cubic.easeIn',
             duration: 20 + yOffset * 15,
             onComplete: () => {
-                globalObjects.indicators[j].setFrame('icon_yellow.png');
+                if (globalObjects.indicators[j]) {
+                    globalObjects.indicators[j].setFrame('icon_yellow.png');
+                }
             }
         });
     }
@@ -637,7 +642,30 @@ function tryLock() {
                     })
                 }
             }
-
+        } else if (gameVars.currRoom === 'challenge') {
+            if (gameVars.pinsFixed === 5 && !gameVars.curses99) {
+                gameVars.curses99 = true;
+                globalObjects.infoText.setAlpha(0);
+                globalObjects.infoText.setText("Almost there...")
+                if (globalObjects.infoText.currAnim) {
+                    globalObjects.infoText.currAnim.stop();
+                }
+                globalObjects.infoText.currAnim = PhaserScene.tweens.add({
+                    targets: globalObjects.infoText,
+                    alpha: 1,
+                    duration: 500,
+                    ease: 'Cubic.easeOut',
+                    completeDelay: 4500,
+                    onComplete: () => {
+                        globalObjects.infoText.currAnim = PhaserScene.tweens.add({
+                            targets: globalObjects.infoText,
+                            alpha: 0,
+                            duration: 500,
+                            ease: 'Cubic.easeOut',
+                        })
+                    }
+                })
+            }
         }
         if (!hasUnlocked) {
             slideOpenLock();
@@ -727,9 +755,11 @@ function decrementPins() {
 }
 
 function decrementAllPins() {
+    let pinFallCount = 0;
     for (let i = globalObjects.pins.length; i >= 0; i--) {
         let currPin = globalObjects.pins[i];
         if (currPin && currPin.locked) {
+            pinFallCount++;
             currPin.alpha = 1;
             currPin.locked = false;
             currPin.currAnim = PhaserScene.tweens.add({
@@ -741,7 +771,44 @@ function decrementAllPins() {
                     playSound('pindrop');
                 }
             });
+            if (pinFallCount > 3) {
+                break;
+            }
         }
+    }
+    if (pinFallCount >= 2) {
+        globalObjects.infoText.setAlpha(0);
+        if (pinFallCount <= 3) {
+            if (!gameVars.curse1) {
+                gameVars.curse1 = true;
+                globalObjects.infoText.setText("This is a devious lock indeed");
+            }
+        } else {
+            if (!gameVars.curse2) {
+                gameVars.curse2 = true;
+                globalObjects.infoText.setText("Curses, almost had it");
+            } else {
+
+            }
+        }
+        if (globalObjects.infoText.currAnim) {
+            globalObjects.infoText.currAnim.stop();
+        }
+        globalObjects.infoText.currAnim = PhaserScene.tweens.add({
+            targets: globalObjects.infoText,
+            alpha: 1,
+            duration: 500,
+            ease: 'Cubic.easeOut',
+            completeDelay: 4500,
+            onComplete: () => {
+                globalObjects.infoText.currAnim = PhaserScene.tweens.add({
+                    targets: globalObjects.infoText,
+                    alpha: 0,
+                    duration: 500,
+                    ease: 'Cubic.easeOut',
+                })
+            }
+        })
     }
 }
 
@@ -882,6 +949,10 @@ function slideOpenLock() {
             globalObjects.playUponUnlock[i]();
         }
     }
+    if (gameVars.currLevel >= gameVars.latestLevel) {
+        gameVars.latestLevel = gameVars.currLevel + 1;
+        localStorage.setItem("latestLevel", gameVars.latestLevel.toString())
+    }
     PhaserScene.tweens.add({
         targets: globalObjects.mechanism,
         x: gameConsts.halfWidth - 55,
@@ -957,7 +1028,9 @@ function slideOpenLock() {
                             }
                             if (gameVars.currRoom === 'princess') {
                                 openEpiloguePopup();
-                            } else {
+                            } else if (gameVars.currRoom === 'challenge') {
+                                gotoLevel(0);
+                            }  else {
                                 gotoNextLevel();
                             }
                         }
@@ -965,6 +1038,9 @@ function slideOpenLock() {
                     gameVars.showNextButton = gameVars.currLevel ? gameVars.currLevel + 1 : 1;
 
                     let buttonText = gameVars.currRoom === 'princess' ? "CONTINUE" : "NEXT LEVEL";
+                    if (gameVars.currRoom === 'challenge') {
+                        buttonText = "RETURN";
+                    }
                     globalObjects.victory.nextLvl.addText(buttonText, {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
                     globalObjects.victory.nextLvl.setTextOffset(0, 1);
                     globalObjects.victory.nextLvl.setDepth(51);
@@ -1066,7 +1142,7 @@ function openEpiloguePopup() {
     localStorage.setItem("latestLevel", "7");
     gameVars.latestLevel = 7;
     gameVars.showNextButton = false;
-    let text1 = "The princess calms down and waves before returning to her toys.";
+    let text1 = "The princess calms down and waves goodbye before returning to her toys.";
     let text2 = "I grab the crown and escape with it hidden under my cloak."
     let text3 = "Though my hands are full of treasure, my mind is occupied by the child's smile.";
     let text4 = "I wonder if I'll come back again for more stories with my new friend.";
