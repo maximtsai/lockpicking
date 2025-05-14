@@ -10,31 +10,6 @@
 			"scale": 1,
 			"frames": [
 				{
-					"filename": "popup.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 450,
-						"h": 495
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 450,
-						"h": 495
-					},
-					"frame": {
-						"x": 1,
-						"y": 1,
-						"w": 450,
-						"h": 495
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
 					"filename": "top.png",
 					"rotated": false,
 					"trimmed": true,
@@ -50,9 +25,59 @@
 					},
 					"frame": {
 						"x": 1,
-						"y": 498,
+						"y": 1,
 						"w": 802,
 						"h": 92
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "popup.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 450,
+						"h": 495
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 450,
+						"h": 495
+					},
+					"frame": {
+						"x": 1,
+						"y": 95,
+						"w": 450,
+						"h": 495
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "exhibit.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 200,
+						"h": 174
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 200,
+						"h": 174
+					},
+					"frame": {
+						"x": 453,
+						"y": 95,
+						"w": 200,
+						"h": 174
 					},
 					"anchor": {
 						"x": 0.5,
@@ -74,8 +99,8 @@
 						"h": 34
 					},
 					"frame": {
-						"x": 453,
-						"y": 1,
+						"x": 655,
+						"y": 95,
 						"w": 75,
 						"h": 34
 					},
@@ -99,10 +124,35 @@
 						"h": 34
 					},
 					"frame": {
-						"x": 530,
-						"y": 1,
+						"x": 732,
+						"y": 95,
 						"w": 34,
 						"h": 34
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "diner.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 200,
+						"h": 159
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 200,
+						"h": 159
+					},
+					"frame": {
+						"x": 453,
+						"y": 271,
+						"w": 200,
+						"h": 159
 					},
 					"anchor": {
 						"x": 0.5,
@@ -115,6 +165,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:d4cec5b0837dee689c47425f14514e42:084aeddf87867b9bac4c90991b2d1371:6af6d199855d1c5980a61db04791f8fb$"
+		"smartupdate": "$TexturePacker:SmartUpdate:8e2702671499fda18557bc6a29ee99bb:0be3d40c0732891820dd87a704d300df:6af6d199855d1c5980a61db04791f8fb$"
 	}
 }

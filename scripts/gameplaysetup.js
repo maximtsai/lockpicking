@@ -1252,12 +1252,12 @@ function openInstructPopup() {
     let instructContent = {};
     instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, 'INSTRUCTIONS', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
     instructContent.goal = PhaserScene.add.text(gameConsts.halfWidth - 158, 200, 'GOAL: Set all\ntumblers in place\nto unlock the lock', {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0, 0.5);
-    instructContent.tips = PhaserScene.add.text(gameConsts.halfWidth, 295, "Tumblers can only be set at the top\nof the lock, or else the lockpick breaks.", {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+    instructContent.tips = PhaserScene.add.text(gameConsts.halfWidth, 293, "Tumblers can only be set at the top\nof the lock, or else the lockpick breaks.", {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
 
     instructContent.image = PhaserScene.add.image(gameConsts.halfWidth + 20, gameConsts.halfHeight - 150, 'lock', 'goal.png').setDepth(102).setScale(0.8).setOrigin(0 ,0);
 
     let xOffset = 214;
-    let yOffset = -112;
+    let yOffset = -115;
     instructContent.arrowLeft = PhaserScene.add.image(xOffset+42, yOffset+gameConsts.height - 112, 'ui', 'arrow.png').setRotation(Math.PI*-0.5).setScale(0.8).setDepth(102).setTint(0x000000);
     instructContent.arrowRight = PhaserScene.add.image(xOffset+76, yOffset+gameConsts.height - 112, 'ui', 'arrow.png').setRotation(Math.PI*0.5).setScale(0.8).setDepth(102).setTint(0x000000);
     instructContent.arrowUp = PhaserScene.add.image(xOffset+42, yOffset+gameConsts.height - 78, 'ui', 'arrow.png').setScale(0.8).setDepth(102).setTint(0x000000);
@@ -1273,7 +1273,7 @@ function openInstructPopup() {
             atlas: 'buttons',
             ref: "menu_btn_normal.png",
             x: gameConsts.halfWidth,
-            y: gameConsts.halfHeight + 179,
+            y: gameConsts.halfHeight + 175,
             scaleX: 0.52,
             scaleY: 0.54,
             alpha: 0.92
@@ -1315,8 +1315,91 @@ function openInstructPopup() {
 function openCreditsPopup() {
     let instructContent = {};
     instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, 'Credits', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
-    instructContent.goal = PhaserScene.add.text(gameConsts.halfWidth - 158, 228, 'Game by Maxim Tsai\nSFX from Soundimage.org and Freesound.org\nMusic from Suno\nHeavily inspired by Elder Scrolls IV: Oblivion\n\nSprite Count: ~70\nAudio Count: 28\nDev Time: 2.5 Weeks', {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0, 0.5);
-    openPopup(instructContent)
+    instructContent.goal = PhaserScene.add.text(gameConsts.halfWidth - 158, 228, 'Game by Maxim Tsai\nSFX from Soundimage.org and Freesound.org\nMusic from Suno\nHeavily inspired by Elder Scrolls IV: Oblivion\n\nSprite Count: ~75\nAudio Count: 28\nDev Time: 2.5 Weeks', {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0, 0.5);
+    instructContent.other = PhaserScene.add.text(gameConsts.halfWidth, 334, 'Check out my other games!', {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0.5, 0.5).setScale(0.9);
+
+    openPopup(instructContent);
+
+    let exhibitButton = new Button({
+        normal: {
+            atlas: 'ui',
+            ref: "exhibit.png",
+            x: gameConsts.halfWidth - 80,
+            scaleX: 0.65,
+            scaleY: 0.65,
+            y: gameConsts.halfHeight + 109,
+            alpha: 0.9
+        },
+        hover: {
+            atlas: 'ui',
+            ref: "exhibit.png",
+            alpha: 1
+        },
+        press: {
+            atlas: 'ui',
+            ref: "exhibit.png",
+            alpha: 0.8
+        },
+        onHover: () => {
+            if (canvas) {
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            window.open("https://www.crazygames.com/game/exhibit-of-sorrows")
+        }
+    });
+    exhibitButton.addText("Exhibit of Sorrows\n(Horror, Clowns)", {fontFamily: 'Times New Roman', fontSize: 14, color: '#000000', align: 'center'})
+    exhibitButton.setTextOffset(0, 72);
+    exhibitButton.setDepth(101);
+
+    let dinerButton = new Button({
+        normal: {
+            atlas: 'ui',
+            ref: "diner.png",
+            x: gameConsts.halfWidth + 80,
+            scaleX: 0.64,
+            scaleY: 0.64,
+            y: gameConsts.halfHeight + 109,
+            alpha: 0.9
+        },
+        hover: {
+            atlas: 'ui',
+            ref: "diner.png",
+            alpha: 1
+        },
+        press: {
+            atlas: 'ui',
+            ref: "diner.png",
+            alpha: 0.8
+        },
+        onHover: () => {
+            if (canvas) {
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            window.open("https://www.crazygames.com/game/diner-in-the-storm")
+
+        }
+    });
+    dinerButton.addText("Diner in the Storm\n(Mystery, Escape)", {fontFamily: 'Times New Roman', fontSize: 14, color: '#000000', align: 'center'})
+    dinerButton.setTextOffset(0, 71);
+    dinerButton.setDepth(101);
+
+    let extraContents = {exhibitButton: exhibitButton, dinerButton: dinerButton};
+    addPopupContents(extraContents);
+
 }
 function openFlavorPopup(title = " ", content = " ", image, scale = 0.95) {
     let instructContent = {};

@@ -70,7 +70,7 @@
         <key>pngOptimizationLevel</key>
         <uint>1</uint>
         <key>webpQualityLevel</key>
-        <uint>72</uint>
+        <uint>81</uint>
         <key>textureSubPath</key>
         <string></string>
         <key>textureFormat</key>
@@ -185,6 +185,36 @@
                 <rect>11,11,23,23</rect>
                 <key>scale9Paddings</key>
                 <rect>11,11,23,23</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ui/diner.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>50,40,100,79</rect>
+                <key>scale9Paddings</key>
+                <rect>50,40,100,79</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ui/exhibit.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>50,44,100,87</rect>
+                <key>scale9Paddings</key>
+                <rect>50,44,100,87</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
