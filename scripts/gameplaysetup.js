@@ -26,12 +26,9 @@ function setupLoadingBar(scene) {
         loadObjects.loadingBarMain.scaleX = 200 * value;
     });
     scene.load.on('complete', () => {
-        loadObjects.loadingText.setVisible(false);
-        onLoadComplete(scene);
+        onLoadComplete();
 
-        for (let i in loadObjects) {
-            loadObjects[i].destroy();
-        }
+
     });
 }
 
@@ -968,7 +965,9 @@ function slideOpenLock() {
                 duration: 550
             })
 
-            sdkShowHappyTime();
+            if (gameVars.currRoom === "princess") {
+                sdkShowHappyTime();
+            }
 
             globalObjects.victory = {};
 
@@ -1132,7 +1131,7 @@ function openPopup(contents) {
     }
 }
 
-function closePopup() {
+function closePopup(startGameplay = true) {
     playSound("paperclose", 0.6);
     gameVars.hasPopup = false;
     for (let i in globalObjects.currPopup) {
@@ -1141,7 +1140,9 @@ function closePopup() {
         }
     }
     globalObjects.currPopup = {};
-    sdkGameplayStart();
+    if (startGameplay) {
+        sdkGameplayStart();
+    }
 }
 
 function openEpiloguePopup() {
@@ -1306,7 +1307,7 @@ function openInstructPopup() {
             }
         },
         onMouseUp: () => {
-            closePopup();
+            closePopup(false);
             openCreditsPopup();
         }
     });

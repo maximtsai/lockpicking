@@ -22,6 +22,7 @@ async function loadSDK() {
                 sdkGameplayStart();
             }
         }
+        onLoadCompleteAndSDKComplete();
     });
 }
 
@@ -75,6 +76,7 @@ function crazyGamesMidgameAd(onFinish) {
     let hasFinished = false;
 
     sdkShowMidgameAd(() => {
+        muteAll();
         clickBlocker = createGlobalClickBlocker(false);
         setTimeout(() => {
             if (!hasFinished) {
@@ -85,12 +87,14 @@ function crazyGamesMidgameAd(onFinish) {
         }, 20000)
     }, () => {
         if (!hasFinished) {
+            unmuteAll();
             hasFinished = true;
             hideGlobalClickBlocker();
             onFinish()
         }
     }, () => {
         if (!hasFinished) {
+            unmuteAll();
             hasFinished = true;
             hideGlobalClickBlocker();
             onFinish()

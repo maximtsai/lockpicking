@@ -88,18 +88,12 @@ let deltaScale = 1;
 let timeUpdateCounter = 0;
 let timeUpdateCounterMax = 3;
 let url1 = 'localhost';// 'crazygames';
-let url2 = 'adayofjoy';// 'localhost';
-let url3 = 'classic.itch';// '1001juegos';
-let url4 = 'maximtsai';// '';
+let url2 = 'crazygames';// 'localhost';
+let url3 = '1001juegos';// '1001juegos';
 
 function preload ()
 {
     handleBorders();
-    gameVars.latestLevel = parseInt(sdkGetItem("latestLevel"));
-    if (!gameVars.latestLevel) {
-        gameVars.latestLevel = 1;
-    }
-
     // if (isMobile && screen && screen.orientation && screen.orientation.lock) {
     //     var myScreenOrientation = window.screen.orientation;
     //     myScreenOrientation.lock('portrait')
@@ -116,7 +110,7 @@ function preload ()
 
 function create ()
 {
-    if (!document.location.href.includes(url1) && !document.location.href.includes(url2) && !document.location.href.includes(url3) && !document.location.href.includes(url4)) {
+    if (!document.location.href.includes(url1) && !document.location.href.includes(url2) && !document.location.href.includes(url3)) {
         // Stops execution of rest of game
         let gameDiv = document.getElementById('preload-notice');
         let invalidSite = document.location.href.substring(0, 25);
@@ -149,11 +143,38 @@ function onPreloadComplete (scene)
     scene.load.start();
 }
 
-function onLoadComplete(scene) {
-    sdkLoadingStop();
-    initializeSounds(scene);
-    setupGame(scene);
-    sdkGameplayStart();
+function onLoadComplete() {
+    onLoadCompleteAndSDKComplete();
+}
+
+function onLoadCompleteAndSDKComplete() {
+    if (!sdkIsLoaded) {
+        if (loadObjects.loadingText) {
+            loadObjects.loadingText.setText("waiting for SDK...")
+        }
+        return;
+    }
+    if (!gameVars.loadComplete) {
+        if (loadObjects) {
+            loadObjects.loadingText.setVisible(false);
+            for (let i in loadObjects) {
+                loadObjects[i].destroy();
+            }
+            loadObjects = {};
+        }
+
+
+        gameVars.loadComplete = true;
+        sdkLoadingStop();
+        gameVars.latestLevel = parseInt(sdkGetItem("latestLevel"));
+        if (!gameVars.latestLevel) {
+            gameVars.latestLevel = 1;//parseInt(localStorage.getItem("latestLevel")) || 1;
+        }
+
+        initializeSounds(PhaserScene);
+        setupGame(PhaserScene);
+        sdkGameplayStart();
+    }
 }
 
 document.addEventListener('fullscreenchange', (event) => {

@@ -375,7 +375,7 @@ function loadChallengeRoom() {
             duration: 500,
         })
         globalObjects.infoText.setAlpha(0);
-        globalObjects.infoText.setText("The lock practically falls apart once I crack it open.\nMy rival weeps while I stand victorious.")
+        globalObjects.infoText.setText("The over-engineered lock comes undone and\nmy rival stands with his mouth agape.")
         if (globalObjects.infoText.currAnim) {
             globalObjects.infoText.currAnim.stop();
         }
@@ -432,6 +432,9 @@ function gotoLevel(lvl, skipIntro = false) {
             globalObjects.pickshadow.setVisible(true);
             crazyGamesMidgameAd(() => {
                 hideGlobalClickBlocker();
+                if (gameVars.currLevel === 0) {
+                    sdkGameplayStart();
+                }
                 PhaserScene.tweens.add({
                     targets: blackPixelTemp,
                     x: "+=2300",
@@ -572,7 +575,7 @@ function openLevelPopup() {
                 },
                 onMouseUp: () => {
                     gotoLevel(i);
-                    closePopup();
+                    closePopup(false);
                 }
             });
             levelButton.addText(levelNames[i], {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'})
