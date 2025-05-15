@@ -1315,7 +1315,7 @@ function openInstructPopup() {
 function openCreditsPopup() {
     let instructContent = {};
     instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, 'Credits', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
-    instructContent.goal = PhaserScene.add.text(gameConsts.halfWidth - 158, 228, 'Game by Maxim Tsai\nSFX from Soundimage.org and Freesound.org\nMusic from Suno\nHeavily inspired by Elder Scrolls IV: Oblivion\n\nSprite Count: ~75\nAudio Count: 28\nDev Time: 2.5 Weeks', {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0, 0.5);
+    instructContent.goal = PhaserScene.add.text(gameConsts.halfWidth - 158, 228, 'Game by Maxim Tsai\nSFX from Soundimage.org and Freesound.org\nMusic from Suno\nHeavily inspired by Elder Scrolls IV: Oblivion\n\nSprite Count: ~75\nAudio Count: 28\nDev Time: ~3 Weeks', {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0, 0.5);
     instructContent.other = PhaserScene.add.text(gameConsts.halfWidth, 334, 'Check out my other games!', {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0.5, 0.5).setScale(0.9);
 
     openPopup(instructContent);
