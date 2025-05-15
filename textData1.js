@@ -19,51 +19,6 @@ let textData = {
         "es": "",
         "jp": "。"
     },
-    "wishlist": {
-        "en_us": "WISHLIST!",
-        "fr": "Liste de\nSouhaits!",
-        "zh_tw": "心願單",
-        "zh_cn": "心愿单!",
-        "ru": "",
-        "es": "",
-        "jp": "。"
-    },
-    "post_fight_noupgrade": {
-        "en_us": "No Upgrade",
-        "fr": "Pas de mise à niveau",
-        "zh_tw": "無需升級",
-        "zh_cn": "无需升级",
-        "ru": "Без апгрейда",
-        "es": "Sin actualización",
-        "jp": "アップグレードなし"
-    },
-    "post_fight_upgrade": {
-        "en_us": "Upgraded!",
-        "fr": "Amélioré!",
-        "zh_tw": "升級！",
-        "zh_cn": "升级！",
-        "ru": "Обновлены!",
-        "es": "¡Actualizado!",
-        "jp": "アップグレード！"
-    },
-    "post_fight_day": {
-        "en_us": "DAY ",
-        "fr": "JOUR ",
-        "zh_tw": "第",
-        "zh_cn": "第",
-        "ru": "День",
-        "es": "DIA",
-        "jp": ""
-    },
-    "post_fight_day2": {
-        "en_us": "",
-        "fr": "",
-        "zh_tw": "天",
-        "zh_cn": "天",
-        "ru": "",
-        "es": "",
-        "jp": "日目"
-    },
     "new_game": {
         "en_us": "NEW GAME",
         "fr": "NOUVEAU JEU",
@@ -127,23 +82,8 @@ let textData = {
         "es": "MENÚ PRINCIPAL?",
         "jp": "メインメニュー？"
     },
-    "skip_long": {
-        "en_us": "Skip to the next level?",
-        "fr": "Passer au niveau suivant ?",
-        "zh_tw": "跳到下一級？",
-        "zh_cn": "跳到下一级？",
-        "ru": "Выйти из боя и вернуться\nв главное меню?",
-        "es": "¿Salir de la pelea y\nvolver al menú principal?",
-        "jp": "戦闘を終了してメイン\nメニューに戻りますか?"
-    },
 }
 
-function setLanguage(lang) {
-    language = lang;
-    localStorage.setItem("language", lang);
-
-    messageBus.publish('language_switch', lang)
-}
 
 function getLangText(textName) {
     if (!textData[textName]) {

@@ -1,6 +1,6 @@
 let isMobile = testMobile();
-let pixelWidth = 800
-let pixelHeight = 600
+let pixelWidth = 800;
+let pixelHeight = 600;
 handleBorders();
 let gameVersion = "v.1.0";
 let config = {
@@ -95,7 +95,7 @@ let url4 = 'maximtsai';// '';
 function preload ()
 {
     handleBorders();
-    gameVars.latestLevel = parseInt(localStorage.getItem("latestLevel"));
+    gameVars.latestLevel = parseInt(sdkGetItem("latestLevel"));
     if (!gameVars.latestLevel) {
         gameVars.latestLevel = 1;
     }
@@ -120,7 +120,11 @@ function create ()
         // Stops execution of rest of game
         let gameDiv = document.getElementById('preload-notice');
         let invalidSite = document.location.href.substring(0, 25);
-        gameDiv.innerHTML = invalidSite + "...\nis an invalid site.\n\n\n" + "Try the game on itch.io!";
+        gameDiv.innerHTML = invalidSite + "...\nis an invalid site.\n\n\n" + "Try the game on Crazygames.com!";
+        gameDiv.onclick = () => {
+            window.location.href = 'https://www.crazygames.com/game/diner-in-the-storm';
+        }
+        gameDiv.style.cursor = 'pointer';
         return;
     }
     oldTime = Date.now();
@@ -146,9 +150,10 @@ function onPreloadComplete (scene)
 }
 
 function onLoadComplete(scene) {
+    sdkLoadingStop();
     initializeSounds(scene);
-    initializeMiscLocalstorage();
     setupGame(scene);
+    sdkGameplayStart();
 }
 
 document.addEventListener('fullscreenchange', (event) => {
@@ -160,18 +165,6 @@ document.addEventListener('fullscreenchange', (event) => {
     globalObjects.options.fullscreenToggleVisual.setFrame(gameOptions.fullscreen ? 'check_box_on.png' : 'check_box_normal.png');
 });
 
-function initializeMiscLocalstorage() {
-    language = localStorage.getItem("language") || 'en_us';
-    gameOptions.infoBoxAlign = localStorage.getItem("info_align") || 'center';
-
-    let storedSkipIntro = localStorage.getItem("skip_intro");
-    if (storedSkipIntro) {
-        gameOptions.skipIntro = storedSkipIntro === 'true';
-    } else {
-        gameOptions.isFirstTime = true;
-        localStorage.setItem("skip_intro", 'true');
-    }
-}
 
 let lastUpdateValues = [1, 1, 1, 1, 1];
 let lastUpdateValuesIdx = 0;

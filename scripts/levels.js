@@ -408,7 +408,6 @@ function gotoNextLevel() {
 }
 
 function gotoLevel(lvl, skipIntro = false) {
-
     gameVars.showNextButton = false;
     gameVars.currLevel = lvl;
     createGlobalClickBlocker(false)
@@ -424,83 +423,85 @@ function gotoLevel(lvl, skipIntro = false) {
         ease: 'Quad.easeOut',
         duration: 200,
         onComplete: () => {
-            hideGlobalClickBlocker();
-            globalObjects.pick.setFrame('pick.png');
-            globalObjects.pickshadow.setVisible(true);
-            PhaserScene.tweens.add({
-                targets: blackPixelTemp,
-                x: "+=2300",
-                ease: 'Cubic.easeIn',
-                duration: 300,
-                alpha: 0,
-                onComplete: () => {
-                    blackPixelTemp.destroy();
-                }
-            })
             if (globalObjects.victory) {
                 for (let i in globalObjects.victory) {
                     globalObjects.victory[i].destroy();
                 }
             }
-
-            let flavorStory = [
-                "",
-                "I'm caught in chains after a botched theft,\na reminder of the risks I take for treasures\nlike the crown.\n\nFortunately the cell lock is of shoddy make.\nWith some finesse, I'll be able to get out.",
-                "To slip into the castle unnoticed, I need\nfiner clothes to blend in.\n\nThe clothier lock is sturdy, but I’m confident\nmy tools can handle it. I'll break in and claim\nthe attire I need.",
-                "The castle looms before me, but the outer\ngates stand in my way. Their locks are well\ncrafted, but familiar.\n\nI find a blind spot in the guards' patrols\nand start my work.",
-                "An unassuming door blocks my path to the\nupper floors. Its lock glows with tricky\nenchantments that reset at the slightest\nmistake.\n\nI steady my hands to unravel its magic.",
-                "The treasury door stands before me, the\ncrown mere steps beyond.\n\nThe lock I face is a masterpiece of\ncraftsmanship and enchantment. Every\nknown safeguard fortifies this final barrier.",
-                "The crown is within my grasp, but I stumble\ninto a startled young princess who looks\nup from her stuffed toy.\n\nI must win her trust quickly to keep her from\ncalling the guards.\n\nThis is a challenge greater than any lock, so\nI approach with care, as one wrong move could\nend my heist.",
-                "A rival locksmith unveils a contraption\nso complex it could barely be called a lock\nanymore. There's something devious about\nthis device but I’ve never backed down from\na challenge.\n\nI'll bring extra picks just in case."
-            ]
-
-            switch(lvl) {
-                case 0:
-                    setRoom("practice");
-                    break;
-                case 1:
-                    setRoom("escape");
-                    break;
-                case 2:
-                    setRoom("clothes");
-                    break;
-                case 3:
-                    setRoom("gate");
-                    break;
-                case 4:
-                    setRoom("enchanted");
-                    break;
-                case 5:
-                    setRoom("crown");
-                    break;
-                case 6:
-                    setRoom("princess");
-                    globalObjects.pickshadow.setVisible(false);
-                    globalObjects.pick.setFrame('pick_heart.png');
-                    break;
-                case 7:
-                    setRoom("challenge");
-                    break;
-            }
-            let levelNames = [
-                "Training",
-                "Level 1: Escape",
-                "Level 2: Suiting Up",
-                "Level 3: Palace Gate",
-                "Level 4: Enchanted Door",
-                "Level 5: The Crown",
-                "Level 6: The Princess?",
-                "Level 7: Challenge"];
-            if (lvl > 0 && !skipIntro) {
-                setTimeout(() => {
-                    let imageScale = 1;
-                    if (lvl === 3) {
-                        imageScale = 0.9;
+            globalObjects.pick.setFrame('pick.png');
+            globalObjects.pickshadow.setVisible(true);
+            crazyGamesMidgameAd(() => {
+                hideGlobalClickBlocker();
+                PhaserScene.tweens.add({
+                    targets: blackPixelTemp,
+                    x: "+=2300",
+                    ease: 'Cubic.easeIn',
+                    duration: 300,
+                    alpha: 0,
+                    onComplete: () => {
+                        blackPixelTemp.destroy();
                     }
-                    openFlavorPopup(levelNames[lvl], flavorStory[lvl], 'flavorimage' + lvl + '.png',imageScale)
+                })
 
-                }, 0)
-            }
+                let flavorStory = [
+                    "",
+                    "I'm caught in chains after a botched theft,\na reminder of the risks I take for treasures\nlike the crown.\n\nFortunately the cell lock is of shoddy make.\nWith some finesse, I'll be able to get out.",
+                    "To slip into the castle unnoticed, I need\nfiner clothes to blend in.\n\nThe clothier lock is sturdy, but I’m confident\nmy tools can handle it. I'll break in and claim\nthe attire I need.",
+                    "The castle looms before me, but the outer\ngates stand in my way. Their locks are well\ncrafted, but familiar.\n\nI find a blind spot in the guards' patrols\nand start my work.",
+                    "An unassuming door blocks my path to the\nupper floors. Its lock glows with tricky\nenchantments that reset at the slightest\nmistake.\n\nI steady my hands to unravel its magic.",
+                    "The treasury door stands before me, the\ncrown mere steps beyond.\n\nThe lock I face is a masterpiece of\ncraftsmanship and enchantment. Every\nknown safeguard fortifies this final barrier.",
+                    "The crown is within my grasp, but I stumble\ninto a startled young princess who looks\nup from her stuffed toy.\n\nI must win her trust quickly to keep her from\ncalling the guards.\n\nThis is a challenge greater than any lock, so\nI approach with care, as one wrong move could\nend my heist.",
+                    "A rival locksmith unveils a contraption\nso complex it could barely be called a lock\nanymore. There's something devious about\nthis device but I’ve never backed down from\na challenge.\n\nI'll bring extra picks just in case."
+                ]
+
+                switch(lvl) {
+                    case 0:
+                        setRoom("practice");
+                        break;
+                    case 1:
+                        setRoom("escape");
+                        break;
+                    case 2:
+                        setRoom("clothes");
+                        break;
+                    case 3:
+                        setRoom("gate");
+                        break;
+                    case 4:
+                        setRoom("enchanted");
+                        break;
+                    case 5:
+                        setRoom("crown");
+                        break;
+                    case 6:
+                        setRoom("princess");
+                        globalObjects.pickshadow.setVisible(false);
+                        globalObjects.pick.setFrame('pick_heart.png');
+                        break;
+                    case 7:
+                        setRoom("challenge");
+                        break;
+                }
+                let levelNames = [
+                    "Training",
+                    "Level 1: Escape",
+                    "Level 2: Suiting Up",
+                    "Level 3: Palace Gate",
+                    "Level 4: Enchanted Door",
+                    "Level 5: The Crown",
+                    "Level 6: The Princess?",
+                    "Level 7: Challenge"];
+                if (lvl > 0 && !skipIntro) {
+                    setTimeout(() => {
+                        let imageScale = 1;
+                        if (lvl === 3) {
+                            imageScale = 0.9;
+                        }
+                        openFlavorPopup(levelNames[lvl], flavorStory[lvl], 'flavorimage' + lvl + '.png',imageScale)
+
+                    }, 0)
+                }
+            });
         }
     })
     // globalObjects.extras.flavorText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 50, flavorStory[lvl], {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setOrigin(0.5, 0.5)

@@ -9,6 +9,7 @@ const audioFiles = [
     {name: 'locket', src: 'audio/locket.mp3'},
     {name: 'click', src: 'audio/click.mp3'},
     {name: 'paperflip', src: 'audio/paperflip.mp3'},
+    {name: 'paperclose', src: 'audio/paperclose.mp3'},
     {name: 'focus', src: 'audio/focus.mp3'},
     {name: 'pickbreak', src: 'audio/pickbreak.mp3'},
     {name: 'scratch1', src: 'audio/scratch1.mp3'},

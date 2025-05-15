@@ -1,7 +1,8 @@
-
+let sdkIsLoaded = false;
 let bufferGameplayStart = false;
 let bufferLoadingStart = false;
 let bufferLoadingEnd = false;
+let gameplayIsStart = false;
 async function loadSDK() {
     await window.CrazyGames.SDK.init().then(() => {
         sdkIsLoaded = true;
@@ -23,6 +24,8 @@ async function loadSDK() {
         }
     });
 }
+
+loadSDK();
 
 function sdkShowRewardAd(onStart, onFinish, onError) {
     if (!sdkIsLoaded) {
@@ -62,9 +65,9 @@ function sdkLoadingStop() {
     }
 }
 
-function crazyGamesMidgameAd(func) {
+function crazyGamesMidgameAd(onFinish) {
     if (!sdkIsLoaded) {
-        func();
+        onFinish();
         return;
     }
 
@@ -77,20 +80,20 @@ function crazyGamesMidgameAd(func) {
             if (!hasFinished) {
                 // hasFinished = true;
                 hideGlobalClickBlocker();
-                // func()
+                // onFinish()
             }
         }, 20000)
     }, () => {
         if (!hasFinished) {
             hasFinished = true;
             hideGlobalClickBlocker();
-            func()
+            onFinish()
         }
     }, () => {
         if (!hasFinished) {
             hasFinished = true;
             hideGlobalClickBlocker();
-            func()
+            onFinish()
         }
     })
 }
@@ -186,26 +189,27 @@ function sdkHasAdBlock() {
 }
 
 function sdkGameplayStart() {
+    if (gameplayIsStart) {
+        return;
+    }
     if (sdkIsLoaded) {
         window.CrazyGames.SDK.game.gameplayStart();
+        gameplayIsStart = true;
     } else {
         bufferGameplayStart = true;
     }
 }
 
 function sdkGameplayStop() {
+    if (!gameplayIsStart) {
+        return;
+    }
     if (sdkIsLoaded) {
         window.CrazyGames.SDK.game.gameplayStop();
+        gameplayIsStart = false;
     }
 }
 
-function sdkGameStart() {
-
-}
-
-function sdkGameEnd() {
-
-}
 
 function sdkGetAchievement(id) {
 

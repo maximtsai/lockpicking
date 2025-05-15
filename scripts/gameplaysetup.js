@@ -4,6 +4,7 @@ let canvas;
 function setupLoadingBar(scene) {
     // PhaserScene.cameras.main.setZoom(0.98);
     // fadeInBackground('backgroundPreload', 5000, 3.28);
+    sdkLoadingStart();
 
     // Basic loading bar visual
     loadObjects.version = scene.add.text(4, gameConsts.height - 4, gameVersion).setOrigin(0, 1).setAlpha(0.7);
@@ -943,6 +944,7 @@ function showFail() {
 }
 
 function slideOpenLock() {
+    sdkGameplayStop();
     playSound('success', 1.1);
     if (globalObjects.playUponUnlock) {
         for (let i in globalObjects.playUponUnlock) {
@@ -951,7 +953,7 @@ function slideOpenLock() {
     }
     if (gameVars.currLevel >= gameVars.latestLevel) {
         gameVars.latestLevel = gameVars.currLevel + 1;
-        localStorage.setItem("latestLevel", gameVars.latestLevel.toString())
+        sdkSetItem("latestLevel", gameVars.latestLevel.toString())
     }
     PhaserScene.tweens.add({
         targets: globalObjects.mechanism,
@@ -965,6 +967,9 @@ function slideOpenLock() {
                 alpha: 0,
                 duration: 550
             })
+
+            sdkShowHappyTime();
+
             globalObjects.victory = {};
 
             globalObjects.victory.victoryDark = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight - 11, 'lock', 'shadow.png').setScale(4.5).setDepth(50).setAlpha(0);
@@ -1056,6 +1061,7 @@ function setupPlayer() {
 }
 
 function openPopup(contents) {
+    sdkGameplayStop();
     gameVars.hasPopup = true;
     playSound("paperflip", 0.7);
     if (!globalObjects.currPopup) {
@@ -1127,6 +1133,7 @@ function openPopup(contents) {
 }
 
 function closePopup() {
+    playSound("paperclose", 0.6);
     gameVars.hasPopup = false;
     for (let i in globalObjects.currPopup) {
         if (i !== 'active') {
@@ -1134,12 +1141,12 @@ function closePopup() {
         }
     }
     globalObjects.currPopup = {};
-
+    sdkGameplayStart();
 }
 
 function openEpiloguePopup() {
     gameVars.bonusUnlocked = true;
-    localStorage.setItem("latestLevel", "7");
+    sdkSetItem("latestLevel", "7");
     gameVars.latestLevel = 7;
     gameVars.showNextButton = false;
     let text1 = "The princess calms down and waves goodbye before returning to her toys.";
