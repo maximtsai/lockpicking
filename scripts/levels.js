@@ -423,14 +423,24 @@ function gotoLevel(lvl, skipIntro = false) {
         ease: 'Quad.easeOut',
         duration: 200,
         onComplete: () => {
+            let loadingText = PhaserScene.add.text(gameConsts.halfWidth,gameConsts.halfHeight, 'LOADING...', {fontFamily: 'kingthings', fontSize: 32, color: '#FFFFFF', align: 'center'}).setDepth(1999).setOrigin(0.5, 0.5).setAlpha(0);
             if (globalObjects.victory) {
                 for (let i in globalObjects.victory) {
                     globalObjects.victory[i].destroy();
                 }
             }
+            loadingText.anim = PhaserScene.tweens.add({
+                targets: loadingText,
+                alpha: 1,
+                duration: 1000,
+                delay: 2000,
+            })
+
             globalObjects.pick.setFrame('pick.png');
             globalObjects.pickshadow.setVisible(true);
             crazyGamesMidgameAd(() => {
+                loadingText.anim.stop();
+                loadingText.destroy();
                 hideGlobalClickBlocker();
                 if (gameVars.currLevel === 0) {
                     sdkGameplayStart();
