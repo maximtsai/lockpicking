@@ -91,7 +91,7 @@ function playSound(name, volume = 1, loop = false, isMusic = false) {
     return soundList[name];
 }
 
-function playMusic(name, volume = 1, loop = false) {
+function playMusic(name, volume = 0.85, loop = false) {
     return this.playSound(name, volume, loop, true);
 }
 
@@ -154,7 +154,7 @@ function setVolume(sound, volume = 0, duration) {
     }
 }
 
-function swapMusic(newMusic, volume = 1, loop = true) {
+function swapMusic(newMusic, volume = 0.85, loop = true) {
     let name = getGlobalMusicName();
     if (newMusic !== name) {
         globalMusic = playMusic(newMusic, volume, loop)
