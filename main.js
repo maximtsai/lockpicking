@@ -226,7 +226,7 @@ function update(time, delta) {
                 if (gameVars.currRoom === 'princess') {
                     openEpiloguePopup();
                 } else if (gameVars.currRoom === 'challenge') {
-                    gotoLevel(0);
+                    gotoLevel(7);
                 } else {
                     gotoLevel(gameVars.showNextButton);
                 }

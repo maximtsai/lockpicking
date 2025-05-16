@@ -778,37 +778,45 @@ function decrementAllPins() {
     }
     if (pinFallCount >= 2) {
         globalObjects.infoText.setAlpha(0);
+        let showMessage = false;
         if (pinFallCount <= 3) {
             if (!gameVars.curse1) {
                 gameVars.curse1 = true;
-                globalObjects.infoText.setText("This is a devious lock indeed");
+                globalObjects.infoText.setText("A mistake causes the lock's magic\nto jumble all the tumblers.");
+                showMessage = true;
+            } else if (!gameVars.curse3) {
+                gameVars.curse3 = true;
+                globalObjects.infoText.setText("This is a devious lock indeed.");
+                showMessage = true;
             }
         } else {
             if (!gameVars.curse2) {
                 gameVars.curse2 = true;
-                globalObjects.infoText.setText("Curses, almost had it");
-            } else {
-
+                globalObjects.infoText.setText("Curses, almost had it.");
+                showMessage = true;
             }
         }
         if (globalObjects.infoText.currAnim) {
             globalObjects.infoText.currAnim.stop();
         }
-        globalObjects.infoText.currAnim = PhaserScene.tweens.add({
-            targets: globalObjects.infoText,
-            alpha: 1,
-            duration: 500,
-            ease: 'Cubic.easeOut',
-            completeDelay: 4500,
-            onComplete: () => {
-                globalObjects.infoText.currAnim = PhaserScene.tweens.add({
-                    targets: globalObjects.infoText,
-                    alpha: 0,
-                    duration: 500,
-                    ease: 'Cubic.easeOut',
-                })
-            }
-        })
+        if (showMessage) {
+            globalObjects.infoText.currAnim = PhaserScene.tweens.add({
+                targets: globalObjects.infoText,
+                alpha: 1,
+                duration: 500,
+                ease: 'Cubic.easeOut',
+                completeDelay: 4500,
+                onComplete: () => {
+                    globalObjects.infoText.currAnim = PhaserScene.tweens.add({
+                        targets: globalObjects.infoText,
+                        alpha: 0,
+                        duration: 500,
+                        ease: 'Cubic.easeOut',
+                    })
+                }
+            })
+        }
+
     }
 }
 
@@ -877,13 +885,14 @@ function showFail() {
 
 
     let flavorText = [
-        "I somehow botch the easiest lock with\na mountain of lockpicks. Great start.",
+        "I somehow botch my practice lock with\na mountain of lockpicks. Great start.",
         "My hasty fingers fumble the crude lock,\nand now I remain stuck behind bars.",
         "The clothier’s sturdy lock catches my tools,\nleaving me in rags unfit for the castle.",
         "My missteps alert the guards, and the gate’s\nlock holds firm, blocking my path.",
         "The enchanted lock resets at my slightest\nmistake, sealing the door tight.",
         "The masterful lock defies my trembling hands,\nand the crown remains beyond reach.",
-        "A clumsy word frightens the young princess,\nand she cries for the guards."
+        "A clumsy word frightens the young princess,\nand she cries for the guards.",
+        "My rival laughs at me as his devilish\ncontraption remains frustratingly secure."
     ]
     globalObjects.victory.extraText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, flavorText[gameVars.currLevel], {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
 
