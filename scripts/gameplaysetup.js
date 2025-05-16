@@ -446,7 +446,7 @@ function pinMoveUp(pinNum) {
         dropDelay = 0;
     }
 
-    currPin.currDelay = PhaserScene.time.delayedCall(Math.min(currPin.randDur - 1, Math.floor(currPin.randDur * 0.8) + 10), () => {
+    currPin.currDelay = PhaserScene.time.delayedCall(Math.min(currPin.randDur - 1, Math.floor(currPin.randDur * 0.76) + 10), () => {
         if (!overrideCantOpen) {
             gameVars.canLock = true;
             gameVars.canShowGreen = true;
