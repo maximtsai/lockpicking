@@ -4,8 +4,8 @@
 			"image": "sprites/lock-0.webp",
 			"format": "RGBA8888",
 			"size": {
-				"w": 1016,
-				"h": 1825
+				"w": 994,
+				"h": 1905
 			},
 			"scale": 1,
 			"frames": [
@@ -49,110 +49,10 @@
 						"h": 404
 					},
 					"frame": {
-						"x": 426,
-						"y": 1,
+						"x": 1,
+						"y": 438,
 						"w": 421,
 						"h": 404
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "flavorimage7.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 184,
-						"h": 184
-					},
-					"spriteSourceSize": {
-						"x": 10,
-						"y": 28,
-						"w": 166,
-						"h": 155
-					},
-					"frame": {
-						"x": 849,
-						"y": 1,
-						"w": 166,
-						"h": 155
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "flavorimage4.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 200,
-						"h": 200
-					},
-					"spriteSourceSize": {
-						"x": 18,
-						"y": 20,
-						"w": 158,
-						"h": 172
-					},
-					"frame": {
-						"x": 849,
-						"y": 158,
-						"w": 158,
-						"h": 172
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "blank.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 10,
-						"h": 10
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 3,
-						"h": 3
-					},
-					"frame": {
-						"x": 1009,
-						"y": 158,
-						"w": 3,
-						"h": 3
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "padlock_swivel.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 800,
-						"h": 600
-					},
-					"spriteSourceSize": {
-						"x": 349,
-						"y": 116,
-						"w": 153,
-						"h": 120
-					},
-					"frame": {
-						"x": 849,
-						"y": 332,
-						"w": 153,
-						"h": 120
 					},
 					"anchor": {
 						"x": 0.5,
@@ -175,7 +75,7 @@
 					},
 					"frame": {
 						"x": 426,
-						"y": 407,
+						"y": 1,
 						"w": 407,
 						"h": 394
 					},
@@ -185,24 +85,24 @@
 					}
 				},
 				{
-					"filename": "flavorimage2.png",
+					"filename": "lock.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
-						"w": 215,
-						"h": 215
+						"w": 800,
+						"h": 600
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 15,
-						"w": 174,
-						"h": 196
+						"x": 297,
+						"y": 91,
+						"w": 378,
+						"h": 377
 					},
 					"frame": {
-						"x": 835,
-						"y": 454,
-						"w": 174,
-						"h": 196
+						"x": 1,
+						"y": 844,
+						"w": 378,
+						"h": 377
 					},
 					"anchor": {
 						"x": 0.5,
@@ -210,24 +110,24 @@
 					}
 				},
 				{
-					"filename": "shadow.png",
+					"filename": "masterlockrunes.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
-						"w": 300,
-						"h": 102
+						"w": 800,
+						"h": 600
 					},
 					"spriteSourceSize": {
-						"x": 63,
-						"y": 0,
-						"w": 171,
-						"h": 102
+						"x": 257,
+						"y": 134,
+						"w": 370,
+						"h": 368
 					},
 					"frame": {
-						"x": 835,
-						"y": 652,
-						"w": 171,
-						"h": 102
+						"x": 1,
+						"y": 1223,
+						"w": 370,
+						"h": 368
 					},
 					"anchor": {
 						"x": 0.5,
@@ -235,24 +135,24 @@
 					}
 				},
 				{
-					"filename": "flavorimage5.png",
+					"filename": "security_lock.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
-						"w": 176,
-						"h": 176
+						"w": 800,
+						"h": 600
 					},
 					"spriteSourceSize": {
-						"x": 5,
-						"y": 12,
-						"w": 167,
-						"h": 153
+						"x": 283,
+						"y": 160,
+						"w": 290,
+						"h": 311
 					},
 					"frame": {
-						"x": 835,
-						"y": 756,
-						"w": 167,
-						"h": 153
+						"x": 1,
+						"y": 1593,
+						"w": 290,
+						"h": 311
 					},
 					"anchor": {
 						"x": 0.5,
@@ -274,8 +174,8 @@
 						"h": 160
 					},
 					"frame": {
-						"x": 1,
-						"y": 438,
+						"x": 426,
+						"y": 397,
 						"w": 398,
 						"h": 160
 					},
@@ -285,7 +185,7 @@
 					}
 				},
 				{
-					"filename": "lockshadowextra.png",
+					"filename": "masterlock.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -293,16 +193,616 @@
 						"h": 600
 					},
 					"spriteSourceSize": {
-						"x": 508,
+						"x": 259,
+						"y": 135,
+						"w": 366,
+						"h": 366
+					},
+					"frame": {
+						"x": 424,
+						"y": 559,
+						"w": 366,
+						"h": 366
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "mechanism.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 800,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 220,
+						"y": 271,
+						"w": 393,
+						"h": 160
+					},
+					"frame": {
+						"x": 381,
+						"y": 927,
+						"w": 393,
+						"h": 160
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "mechanism_bar_many.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 800,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 258,
+						"y": 306,
+						"w": 328,
+						"h": 94
+					},
+					"frame": {
+						"x": 381,
+						"y": 1089,
+						"w": 328,
+						"h": 94
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "mechanism_bar.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 800,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 258,
+						"y": 306,
+						"w": 322,
+						"h": 94
+					},
+					"frame": {
+						"x": 381,
+						"y": 1185,
+						"w": 322,
+						"h": 94
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "padlock.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 800,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 293,
+						"y": 180,
+						"w": 268,
+						"h": 277
+					},
+					"frame": {
+						"x": 373,
+						"y": 1281,
+						"w": 268,
+						"h": 277
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "flavorimage4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 200,
+						"h": 200
+					},
+					"spriteSourceSize": {
+						"x": 18,
+						"y": 20,
+						"w": 158,
+						"h": 172
+					},
+					"frame": {
+						"x": 835,
+						"y": 1,
+						"w": 158,
+						"h": 172
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "heartlockshadow.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 400,
+						"h": 300
+					},
+					"spriteSourceSize": {
+						"x": 91,
+						"y": 23,
+						"w": 245,
+						"h": 236
+					},
+					"frame": {
+						"x": 293,
+						"y": 1593,
+						"w": 245,
+						"h": 236
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "pick_heart.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 800,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 82,
+						"y": 322,
+						"w": 298,
+						"h": 67
+					},
+					"frame": {
+						"x": 293,
+						"y": 1831,
+						"w": 298,
+						"h": 67
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "flavorimage1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 181,
+						"h": 181
+					},
+					"spriteSourceSize": {
+						"x": 22,
+						"y": 14,
+						"w": 141,
+						"h": 161
+					},
+					"frame": {
+						"x": 835,
+						"y": 175,
+						"w": 141,
+						"h": 161
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "security_pin.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 800,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 344,
+						"y": 0,
+						"w": 75,
+						"h": 226
+					},
+					"frame": {
+						"x": 643,
+						"y": 1281,
+						"w": 75,
+						"h": 226
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "masterlockback.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 400,
+						"h": 300
+					},
+					"spriteSourceSize": {
+						"x": 117,
+						"y": 55,
+						"w": 208,
+						"h": 208
+					},
+					"frame": {
+						"x": 540,
+						"y": 1560,
+						"w": 208,
+						"h": 208
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "pickshadow.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 800,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 63,
+						"y": 335,
+						"w": 312,
+						"h": 36
+					},
+					"frame": {
+						"x": 540,
+						"y": 1770,
+						"w": 312,
+						"h": 36
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "pick.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 800,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 60,
+						"y": 332,
+						"w": 310,
+						"h": 34
+					},
+					"frame": {
+						"x": 593,
+						"y": 1808,
+						"w": 310,
+						"h": 34
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "flavorimage2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 215,
+						"h": 215
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 15,
+						"w": 174,
+						"h": 196
+					},
+					"frame": {
+						"x": 792,
+						"y": 559,
+						"w": 174,
+						"h": 196
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "heartsmall.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 194,
+						"h": 188
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 9,
+						"w": 176,
+						"h": 170
+					},
+					"frame": {
+						"x": 792,
+						"y": 757,
+						"w": 176,
+						"h": 170
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "flavorimage7.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 184,
+						"h": 184
+					},
+					"spriteSourceSize": {
+						"x": 10,
+						"y": 28,
+						"w": 166,
+						"h": 155
+					},
+					"frame": {
+						"x": 776,
+						"y": 929,
+						"w": 166,
+						"h": 155
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "padlock_swivel.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 800,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 349,
+						"y": 116,
+						"w": 153,
+						"h": 120
+					},
+					"frame": {
+						"x": 835,
+						"y": 338,
+						"w": 153,
+						"h": 120
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "lockshadow.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 800,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 353,
 						"y": 231,
-						"w": 23,
+						"w": 147,
 						"h": 42
 					},
 					"frame": {
-						"x": 401,
-						"y": 438,
-						"w": 23,
+						"x": 593,
+						"y": 1844,
+						"w": 147,
 						"h": 42
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "shadow.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 300,
+						"h": 102
+					},
+					"spriteSourceSize": {
+						"x": 63,
+						"y": 0,
+						"w": 171,
+						"h": 102
+					},
+					"frame": {
+						"x": 776,
+						"y": 1086,
+						"w": 171,
+						"h": 102
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "flavorimage3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 245,
+						"h": 200
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 245,
+						"h": 199
+					},
+					"frame": {
+						"x": 720,
+						"y": 1190,
+						"w": 245,
+						"h": 199
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "flavorimage5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 176,
+						"h": 176
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 12,
+						"w": 167,
+						"h": 153
+					},
+					"frame": {
+						"x": 720,
+						"y": 1391,
+						"w": 167,
+						"h": 153
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "goal.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 140,
+						"h": 140
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 140,
+						"h": 140
+					},
+					"frame": {
+						"x": 750,
+						"y": 1546,
+						"w": 140,
+						"h": 140
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "lockbar.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 78,
+						"h": 141
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 0,
+						"w": 74,
+						"h": 141
+					},
+					"frame": {
+						"x": 889,
+						"y": 1391,
+						"w": 74,
+						"h": 141
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "pickbroke.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 104,
+						"h": 104
+					},
+					"spriteSourceSize": {
+						"x": 4,
+						"y": 2,
+						"w": 94,
+						"h": 98
+					},
+					"frame": {
+						"x": 892,
+						"y": 1534,
+						"w": 94,
+						"h": 98
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "icon_green_flash.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 31,
+						"h": 31
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 31,
+						"h": 31
+					},
+					"frame": {
+						"x": 373,
+						"y": 1560,
+						"w": 31,
+						"h": 31
 					},
 					"anchor": {
 						"x": 0.5,
@@ -324,8 +824,8 @@
 						"h": 62
 					},
 					"frame": {
-						"x": 401,
-						"y": 482,
+						"x": 381,
+						"y": 844,
 						"w": 21,
 						"h": 62
 					},
@@ -349,8 +849,8 @@
 						"h": 62
 					},
 					"frame": {
-						"x": 401,
-						"y": 546,
+						"x": 944,
+						"y": 929,
 						"w": 21,
 						"h": 62
 					},
@@ -360,7 +860,7 @@
 					}
 				},
 				{
-					"filename": "mechanism.png",
+					"filename": "lockshadowextra.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -368,16 +868,16 @@
 						"h": 600
 					},
 					"spriteSourceSize": {
-						"x": 220,
-						"y": 271,
-						"w": 393,
-						"h": 160
+						"x": 508,
+						"y": 231,
+						"w": 23,
+						"h": 42
 					},
 					"frame": {
-						"x": 1,
-						"y": 600,
-						"w": 393,
-						"h": 160
+						"x": 742,
+						"y": 1844,
+						"w": 23,
+						"h": 42
 					},
 					"anchor": {
 						"x": 0.5,
@@ -399,8 +899,8 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 396,
-						"y": 610,
+						"x": 540,
+						"y": 1808,
 						"w": 21,
 						"h": 21
 					},
@@ -424,10 +924,35 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 396,
-						"y": 633,
+						"x": 563,
+						"y": 1808,
 						"w": 21,
 						"h": 21
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "flavorimage6.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 180,
+						"h": 180
+					},
+					"spriteSourceSize": {
+						"x": 38,
+						"y": 72,
+						"w": 133,
+						"h": 108
+					},
+					"frame": {
+						"x": 854,
+						"y": 1688,
+						"w": 133,
+						"h": 108
 					},
 					"anchor": {
 						"x": 0.5,
@@ -449,8 +974,8 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 396,
-						"y": 656,
+						"x": 711,
+						"y": 1089,
 						"w": 21,
 						"h": 21
 					},
@@ -474,8 +999,8 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 396,
-						"y": 679,
+						"x": 643,
+						"y": 1509,
 						"w": 21,
 						"h": 21
 					},
@@ -499,8 +1024,8 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 396,
-						"y": 702,
+						"x": 406,
+						"y": 1560,
 						"w": 21,
 						"h": 21
 					},
@@ -524,8 +1049,8 @@
 						"h": 19
 					},
 					"frame": {
-						"x": 396,
-						"y": 725,
+						"x": 944,
+						"y": 993,
 						"w": 19,
 						"h": 19
 					},
@@ -535,524 +1060,24 @@
 					}
 				},
 				{
-					"filename": "lock.png",
+					"filename": "blank.png",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
-						"w": 800,
-						"h": 600
-					},
-					"spriteSourceSize": {
-						"x": 297,
-						"y": 91,
-						"w": 378,
-						"h": 377
-					},
-					"frame": {
-						"x": 1,
-						"y": 762,
-						"w": 378,
-						"h": 377
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "icon_green_flash.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 31,
-						"h": 31
+						"w": 10,
+						"h": 10
 					},
 					"spriteSourceSize": {
 						"x": 0,
 						"y": 0,
-						"w": 31,
-						"h": 31
+						"w": 3,
+						"h": 3
 					},
 					"frame": {
-						"x": 381,
-						"y": 762,
-						"w": 31,
-						"h": 31
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "masterlockrunes.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 800,
-						"h": 600
-					},
-					"spriteSourceSize": {
-						"x": 257,
-						"y": 134,
-						"w": 370,
-						"h": 368
-					},
-					"frame": {
-						"x": 381,
-						"y": 803,
-						"w": 370,
-						"h": 368
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "security_pin.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 800,
-						"h": 600
-					},
-					"spriteSourceSize": {
-						"x": 344,
-						"y": 0,
-						"w": 75,
-						"h": 226
-					},
-					"frame": {
-						"x": 753,
-						"y": 803,
-						"w": 75,
-						"h": 226
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "masterlock.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 800,
-						"h": 600
-					},
-					"spriteSourceSize": {
-						"x": 259,
-						"y": 135,
-						"w": 366,
-						"h": 366
-					},
-					"frame": {
-						"x": 1,
-						"y": 1141,
-						"w": 366,
-						"h": 366
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "security_lock.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 800,
-						"h": 600
-					},
-					"spriteSourceSize": {
-						"x": 283,
-						"y": 160,
-						"w": 290,
-						"h": 311
-					},
-					"frame": {
-						"x": 1,
-						"y": 1509,
-						"w": 290,
-						"h": 311
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "heartlockshadow.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 400,
-						"h": 300
-					},
-					"spriteSourceSize": {
-						"x": 91,
-						"y": 23,
-						"w": 245,
-						"h": 236
-					},
-					"frame": {
-						"x": 753,
-						"y": 1031,
-						"w": 245,
-						"h": 236
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "flavorimage6.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 180,
-						"h": 180
-					},
-					"spriteSourceSize": {
-						"x": 38,
-						"y": 72,
-						"w": 133,
-						"h": 108
-					},
-					"frame": {
-						"x": 830,
-						"y": 911,
-						"w": 133,
-						"h": 108
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "padlock.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 800,
-						"h": 600
-					},
-					"spriteSourceSize": {
-						"x": 293,
-						"y": 180,
-						"w": 268,
-						"h": 277
-					},
-					"frame": {
-						"x": 293,
-						"y": 1509,
-						"w": 268,
-						"h": 277
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "pickshadow.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 800,
-						"h": 600
-					},
-					"spriteSourceSize": {
-						"x": 63,
-						"y": 335,
-						"w": 312,
-						"h": 36
-					},
-					"frame": {
-						"x": 293,
-						"y": 1788,
-						"w": 312,
-						"h": 36
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "flavorimage1.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 181,
-						"h": 181
-					},
-					"spriteSourceSize": {
-						"x": 22,
-						"y": 14,
-						"w": 141,
-						"h": 161
-					},
-					"frame": {
-						"x": 607,
-						"y": 1173,
-						"w": 141,
-						"h": 161
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "flavorimage3.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 245,
-						"h": 200
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 245,
-						"h": 199
-					},
-					"frame": {
-						"x": 750,
-						"y": 1269,
-						"w": 245,
-						"h": 199
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "goal.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 140,
-						"h": 140
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 140,
-						"h": 140
-					},
-					"frame": {
-						"x": 607,
-						"y": 1336,
-						"w": 140,
-						"h": 140
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "masterlockback.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 400,
-						"h": 300
-					},
-					"spriteSourceSize": {
-						"x": 117,
-						"y": 55,
-						"w": 208,
-						"h": 208
-					},
-					"frame": {
-						"x": 369,
-						"y": 1173,
-						"w": 208,
-						"h": 208
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "pickbroke.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 104,
-						"h": 104
-					},
-					"spriteSourceSize": {
-						"x": 4,
-						"y": 2,
-						"w": 94,
-						"h": 98
-					},
-					"frame": {
-						"x": 369,
-						"y": 1383,
-						"w": 94,
-						"h": 98
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "mechanism_bar_many.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 800,
-						"h": 600
-					},
-					"spriteSourceSize": {
-						"x": 258,
-						"y": 306,
-						"w": 328,
-						"h": 94
-					},
-					"frame": {
-						"x": 607,
-						"y": 1478,
-						"w": 328,
-						"h": 94
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "lockbar.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 78,
-						"h": 141
-					},
-					"spriteSourceSize": {
-						"x": 2,
-						"y": 0,
-						"w": 74,
-						"h": 141
-					},
-					"frame": {
-						"x": 937,
-						"y": 1470,
-						"w": 74,
-						"h": 141
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "mechanism_bar.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 800,
-						"h": 600
-					},
-					"spriteSourceSize": {
-						"x": 258,
-						"y": 306,
-						"w": 322,
-						"h": 94
-					},
-					"frame": {
-						"x": 607,
-						"y": 1574,
-						"w": 322,
-						"h": 94
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "pick_heart.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 800,
-						"h": 600
-					},
-					"spriteSourceSize": {
-						"x": 82,
-						"y": 322,
-						"w": 298,
-						"h": 67
-					},
-					"frame": {
-						"x": 563,
-						"y": 1670,
-						"w": 298,
-						"h": 67
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "lockshadow.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 800,
-						"h": 600
-					},
-					"spriteSourceSize": {
-						"x": 353,
-						"y": 231,
-						"w": 147,
-						"h": 42
-					},
-					"frame": {
-						"x": 863,
-						"y": 1670,
-						"w": 147,
-						"h": 42
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "pick.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 800,
-						"h": 600
-					},
-					"spriteSourceSize": {
-						"x": 60,
-						"y": 332,
-						"w": 310,
-						"h": 34
-					},
-					"frame": {
-						"x": 563,
-						"y": 1739,
-						"w": 310,
-						"h": 34
+						"x": 373,
+						"y": 1223,
+						"w": 3,
+						"h": 3
 					},
 					"anchor": {
 						"x": 0.5,
@@ -1065,6 +1090,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:f10c3ed1eadbff4c406d9bcfd1abaecb:f96a548b0efa616c5681e24cfacedab7:827d362ceaf98d4a0088a2f3b765f464$"
+		"smartupdate": "$TexturePacker:SmartUpdate:ce0ed3cd462b6a2f4e8ea8d1fda379f0:cc4dfb7618d8b9429fd998e22ac404ca:827d362ceaf98d4a0088a2f3b765f464$"
 	}
 }

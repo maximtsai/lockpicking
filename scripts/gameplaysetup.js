@@ -892,7 +892,7 @@ function showFail() {
         "The enchanted lock resets at my slightest\nmistake, sealing the door tight.",
         "The masterful lock defies my trembling hands,\nand the crown remains beyond reach.",
         "A clumsy word frightens the young princess,\nand she cries for the guards.",
-        "My rival laughs at me as his devilish\ncontraption remains frustratingly secure."
+        "My rival laughs at me as his devilish\ncontraption remains tightly locked."
     ]
     globalObjects.victory.extraText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, flavorText[gameVars.currLevel], {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
 
@@ -961,6 +961,45 @@ function slideOpenLock() {
     if (gameVars.currLevel >= gameVars.latestLevel) {
         gameVars.latestLevel = gameVars.currLevel + 1;
         localStorage.setItem("latestLevel", gameVars.latestLevel.toString())
+    }
+    if (gameVars.currRoom === 'princess') {
+        // Victory Stars;
+        for (let i = 0; i < 5; i++) {
+            let newStar = PhaserScene.add.image(gameConsts.halfWidth + 30, gameConsts.halfHeight, 'lock', 'heartsmall.png').setDepth(-1).setScale(0.8 + Math.random() * 0.4).setRotation(Math.random() * 6);
+            let durAmt = 1100 + Math.floor(newStar.scaleX * 350);
+            let rotAmt = 2.8 + Math.random() * 0.9;
+            if (Math.random() < 0.5) {
+                rotAmt = -rotAmt;
+            }
+            PhaserScene.tweens.add({
+                targets: newStar,
+                scaleX: 0,
+                scaleY: 0,
+                rotation: rotAmt,
+                duration: durAmt,
+            })
+
+            let angle = Math.PI * 0.4 * (i + 0.5);
+            let amplitude = 120 + newStar.scaleX * 100;
+            let velX = Math.sin(angle) * amplitude;
+            let velY = -Math.cos(angle) * amplitude;
+            newStar.x += velX * 0.2; newStar.y += velY * 0.2;
+            PhaserScene.tweens.add({
+                targets: newStar,
+                x: "+=" + velX,
+                duration: durAmt,
+                ease: 'Quint.easeOut'
+            })
+            PhaserScene.tweens.add({
+                targets: newStar,
+                y: "+=" + velY,
+                duration: durAmt,
+                ease: 'Quint.easeOut',
+                onComplete: () => {
+                    newStar.destroy();
+                }
+            })
+        }
     }
     PhaserScene.tweens.add({
         targets: globalObjects.mechanism,
