@@ -224,7 +224,11 @@ function update(time, delta) {
                 closePopup();
             } else if (gameVars.showNextButton !== false) {
                 if (gameVars.currRoom === 'princess') {
-                    openEpiloguePopup();
+                    if (gameVars.showNextButton === 6) {
+                        gotoLevel(gameVars.showNextButton);
+                    } else {
+                        openEpiloguePopup();
+                    }
                 } else if (gameVars.currRoom === 'challenge') {
                     gotoLevel(7);
                 } else {

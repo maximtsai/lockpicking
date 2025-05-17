@@ -99,10 +99,9 @@ function loadPracticeRoom() {
                 })
             }
         })
-
     }
     swapMusic('quietshadows');
-    createPins(3);
+    createPins(2);
     setPicksLeft(99);
     for (let i in globalObjects.indicators) {
         globalObjects.indicators[i].visible = true;
@@ -124,10 +123,10 @@ function loadPracticeRoom() {
     globalObjects.extras.push(instructions);
     let instructions2 = PhaserScene.add.text(97, gameConsts.height - 130, "Move pick", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
     globalObjects.extras.push(instructions2);
-    let instructions3 = PhaserScene.add.text(64, gameConsts.height - 96, "Lift tumbler", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
+    let instructions3 = PhaserScene.add.text(64, gameConsts.height - 96, "Lift pin", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
     globalObjects.extras.push(instructions3);
 
-    let instructions4 = PhaserScene.add.text(28, gameConsts.height - 62, "                 / Enter to set tumbler\nwhen at top of lock", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
+    let instructions4 = PhaserScene.add.text(28, gameConsts.height - 62, "                 / Enter to set pin\nwhen at top of lock", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
     globalObjects.extras.push(instructions4);
     // let goalText = PhaserScene.add.text(570, gameConsts.height - 135, 'GOAL:\nSet all the\ntumblers\nin place ->', {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setOrigin(0, 0);
     // goalText.setStroke('#000000', 4)
@@ -247,13 +246,13 @@ function loadEnchantedRoom() {
     globalObjects.extras.push(bar4);
     globalObjects.playUponUnlock = [() => {
         PhaserScene.tweens.add({
-            delay: 200, targets: bar1, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+            delay: 150, targets: bar1, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
         })
         PhaserScene.tweens.add({
-            delay: 300, targets: bar2, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+            delay: 0, targets: bar2, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
         })
         PhaserScene.tweens.add({
-            delay: 100, targets: bar3, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+            delay: 150, targets: bar3, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
         })
         PhaserScene.tweens.add({
             delay: 0, targets: bar4, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
@@ -284,13 +283,13 @@ function loadCrownRoom() {
     globalObjects.extras.push(bar4);
     globalObjects.playUponUnlock = [() => {
         PhaserScene.tweens.add({
-            delay: 200, targets: bar1, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+            delay: 150, targets: bar1, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
         })
         PhaserScene.tweens.add({
-            delay: 300, targets: bar2, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+            delay: 0, targets: bar2, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
         })
         PhaserScene.tweens.add({
-            delay: 100, targets: bar3, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+            delay: 150, targets: bar3, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
         })
         PhaserScene.tweens.add({
             delay: 0, targets: bar4, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
