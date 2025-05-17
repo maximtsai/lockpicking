@@ -100,6 +100,19 @@ function setupGame() {
     gameVars.currentPin = 0;
     globalObjects.infoText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, " ", {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
 
+    let blackPixelTemp = PhaserScene.add.image(gameConsts.halfWidth,gameConsts.halfHeight, 'blackPixel').setScale(500,600).setRotation(0.3).setDepth(999).setAlpha(1);
+    PhaserScene.tweens.add({
+        targets: blackPixelTemp,
+        x: "+=2300",
+        ease: 'Cubic.easeIn',
+        duration: 300,
+        alpha: 0,
+        onComplete: () => {
+            blackPixelTemp.destroy();
+        }
+    })
+
+    playSound("whoosh").seek = 0.3;
 
     for (let i = 0; i < 6; i++) {
         let xOffset = 0;
@@ -437,16 +450,35 @@ function pinMoveUp(pinNum) {
         if (!gameVars.firstPin) {
             gameVars.firstPin = true;
             randVal = Math.max(2, randVal);
+            let instructions = PhaserScene.add.text(348, gameConsts.halfHeight - 98, "Press SPACE when\npin hits the top  ->", {fontFamily: 'kingthings', fontSize: 22, color: '#FFFFFF', align: 'left'}).setDepth(99).setAlpha(0).setStroke('#000000', 4).setOrigin(1, 0);
+            PhaserScene.tweens.add({
+                targets: instructions,
+                alpha: 1,
+                delay: 200,
+                duration: 400,
+                completeDelay: 5000,
+                onComplete: () => {
+                    PhaserScene.tweens.add({
+                        targets: instructions,
+                        alpha: 0,
+                        duration: 500,
+                        onComplete: () => {
+                            instructions.destroy();
+                        }
+                    })
+                }
+            })
+
         }
         currPin.randDur = Math.max(90, 90 + randVal * 25);
     }
-    let dropDelay = Math.max(0, Math.floor(currPin.randDur * 1.7 - 130));
+    let dropDelay = Math.max(0, Math.floor(currPin.randDur * 1.7 - 135));
     let overrideCantOpen = currPin.randDur < 90;
     if (overrideCantOpen) {
         dropDelay = 0;
     }
 
-    currPin.currDelay = PhaserScene.time.delayedCall(Math.min(currPin.randDur - 1, Math.floor(currPin.randDur * 0.76) + 10), () => {
+    currPin.currDelay = PhaserScene.time.delayedCall(Math.min(currPin.randDur - 1, Math.floor(currPin.randDur * 0.77) + 10), () => {
         if (!overrideCantOpen) {
             gameVars.canLock = true;
             gameVars.canShowGreen = true;
@@ -468,7 +500,7 @@ function pinMoveUp(pinNum) {
 
                 }
             }, 10)
-            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3) + dropDelay * 1.55), () => {
+            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3) + dropDelay * 1.5), () => {
                 gameVars.canShowGreen = false;
                 setTimeout(() => {
                     gameVars.canLock = false;
@@ -780,7 +812,7 @@ function decrementAllPins() {
         if (pinFallCount <= 3) {
             if (!gameVars.curse1) {
                 gameVars.curse1 = true;
-                globalObjects.infoText.setText("A mistake causes the lock's magic\nto jumble all the tumblers.");
+                globalObjects.infoText.setText("A mistake causes the lock's magic\nto jumble all the pins.");
                 showMessage = true;
             } else if (!gameVars.curse3) {
                 gameVars.curse3 = true;
@@ -1307,8 +1339,8 @@ function openEpiloguePopup() {
 function openInstructPopup() {
     let instructContent = {};
     instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, 'INSTRUCTIONS', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
-    instructContent.goal = PhaserScene.add.text(gameConsts.halfWidth - 158, 200, 'GOAL: Set all\ntumblers in place\nto unlock the lock', {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0, 0.5);
-    instructContent.tips = PhaserScene.add.text(gameConsts.halfWidth, 293, "Tumblers can only be set at the top\nof the lock, or else the lockpick breaks.", {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+    instructContent.goal = PhaserScene.add.text(gameConsts.halfWidth - 158, 200, 'GOAL: Set all\npins in place\nto unlock the lock', {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0, 0.5);
+    instructContent.tips = PhaserScene.add.text(gameConsts.halfWidth, 293, "Pins can only be set at the top\nof the lock, or else the lockpick breaks.", {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
 
     instructContent.image = PhaserScene.add.image(gameConsts.halfWidth + 20, gameConsts.halfHeight - 150, 'lock', 'goal.png').setDepth(102).setScale(0.8).setOrigin(0 ,0);
 
@@ -1319,8 +1351,8 @@ function openInstructPopup() {
     instructContent.arrowUp = PhaserScene.add.image(xOffset+42, yOffset+gameConsts.height - 78, 'ui', 'arrow.png').setScale(0.8).setDepth(102).setTint(0x000000);
     instructContent.controls = PhaserScene.add.text(xOffset+29, yOffset+gameConsts.height - 157, "CONTROLS:", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
     instructContent.movepick = PhaserScene.add.text(xOffset+97, yOffset+gameConsts.height - 124, "Move pick", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
-    instructContent.lifttumbler = PhaserScene.add.text(xOffset+64, yOffset+gameConsts.height - 90, "Lift tumbler", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
-    instructContent.spaceenter = PhaserScene.add.text(xOffset+30, yOffset+gameConsts.height - 62, "Space/Enter to set tumbler", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
+    instructContent.lifttumbler = PhaserScene.add.text(xOffset+64, yOffset+gameConsts.height - 90, "Lift pin", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
+    instructContent.spaceenter = PhaserScene.add.text(xOffset+30, yOffset+gameConsts.height - 62, "Space/Enter to set pin", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
     // instructContent.tips2 = PhaserScene.add.text(gameConsts.halfWidth, 472, "Tip: Listen and observe carefully\nhow the tumblers move", {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
 
     openPopup(instructContent)
