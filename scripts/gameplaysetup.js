@@ -935,7 +935,7 @@ function showFail() {
         scaleY: 1,
         ease: 'Cubic.easeOut',
         duration: 700,
-        completeDelay: 500,
+        completeDelay: 320,
         onComplete: () => {
             globalObjects.victory.retry = new Button({
                 normal: {
