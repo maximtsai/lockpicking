@@ -246,13 +246,13 @@ function loadEnchantedRoom() {
     globalObjects.extras.push(bar4);
     globalObjects.playUponUnlock = [() => {
         PhaserScene.tweens.add({
-            delay: 150, targets: bar1, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+            delay: 90, targets: bar1, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
         })
         PhaserScene.tweens.add({
             delay: 0, targets: bar2, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
         })
         PhaserScene.tweens.add({
-            delay: 150, targets: bar3, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+            delay: 90, targets: bar3, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
         })
         PhaserScene.tweens.add({
             delay: 0, targets: bar4, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
@@ -283,13 +283,13 @@ function loadCrownRoom() {
     globalObjects.extras.push(bar4);
     globalObjects.playUponUnlock = [() => {
         PhaserScene.tweens.add({
-            delay: 150, targets: bar1, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+            delay: 90, targets: bar1, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
         })
         PhaserScene.tweens.add({
             delay: 0, targets: bar2, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
         })
         PhaserScene.tweens.add({
-            delay: 150, targets: bar3, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+            delay: 90, targets: bar3, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
         })
         PhaserScene.tweens.add({
             delay: 0, targets: bar4, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400

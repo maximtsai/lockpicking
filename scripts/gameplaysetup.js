@@ -472,10 +472,11 @@ function pinMoveUp(pinNum) {
             })
 
         }
-        currPin.randDur = Math.max(90, 90 + randVal * 25);
+        currPin.randDur = Math.max(80, 80 + randVal * 25);
     }
-    let dropDelay = Math.max(0, Math.floor(currPin.randDur * 1.7 - 135));
-    let overrideCantOpen = currPin.randDur < 90;
+    let dropDelay = Math.max(0, Math.floor(currPin.randDur * 1.8 - 140));
+    console.log(dropDelay);
+    let overrideCantOpen = currPin.randDur < 81;
     if (overrideCantOpen) {
         dropDelay = 0;
     }
