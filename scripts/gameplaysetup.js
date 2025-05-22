@@ -452,36 +452,40 @@ function pinMoveUp(pinNum) {
         if (!gameVars.firstPin) {
             gameVars.firstPin = true;
             randVal = Math.max(2, randVal);
-            let instructions = PhaserScene.add.text(348, gameConsts.halfHeight - 98, "Press SPACE when\npin hits the top  ->", {fontFamily: 'kingthings', fontSize: 22, color: '#FFFFFF', align: 'left'}).setDepth(99).setAlpha(0).setStroke('#000000', 4).setOrigin(1, 0);
-            PhaserScene.tweens.add({
-                targets: instructions,
-                alpha: 1,
-                delay: 200,
-                duration: 400,
-                completeDelay: 5000,
-                onComplete: () => {
-                    PhaserScene.tweens.add({
-                        targets: instructions,
-                        alpha: 0,
-                        duration: 500,
-                        onComplete: () => {
-                            instructions.destroy();
-                        }
-                    })
-                }
-            })
+            if (gameVars.currLevel < 4) {
+                let instructions = PhaserScene.add.text(348, gameConsts.halfHeight - 103, "Press SPACE when\npin hits the top  ->", {fontFamily: 'kingthings', fontSize: 22, color: '#FFFFFF', align: 'left'}).setDepth(99).setAlpha(0).setStroke('#000000', 4).setOrigin(1, 0);
+                PhaserScene.tweens.add({
+                    targets: instructions,
+                    alpha: 1,
+                    delay: 200,
+                    duration: 400,
+                    completeDelay: 5000,
+                    onComplete: () => {
+                        PhaserScene.tweens.add({
+                            targets: instructions,
+                            alpha: 0,
+                            duration: 500,
+                            onComplete: () => {
+                                instructions.destroy();
+                            }
+                        })
+                    }
+                })
+            }
 
         }
         currPin.randDur = Math.max(80, 80 + randVal * 25);
     }
-    let dropDelay = Math.max(0, Math.floor(currPin.randDur * 1.8 - 140));
-    console.log(dropDelay);
+    let dropDelay = Math.max(0, Math.floor(currPin.randDur * 1.85 - 145));
     let overrideCantOpen = currPin.randDur < 81;
     if (overrideCantOpen) {
         dropDelay = 0;
     }
+    if (dropDelay > 100) {
+        dropDelay += 33;
+    }
 
-    currPin.currDelay = PhaserScene.time.delayedCall(Math.min(currPin.randDur - 1, Math.floor(currPin.randDur * 0.77) + 10), () => {
+    currPin.currDelay = PhaserScene.time.delayedCall(Math.min(currPin.randDur - 1, Math.floor(currPin.randDur * 0.79) + 10), () => {
         if (!overrideCantOpen) {
             gameVars.canLock = true;
             gameVars.canShowGreen = true;
@@ -503,7 +507,7 @@ function pinMoveUp(pinNum) {
 
                 }
             }, 10)
-            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3) + dropDelay * 1.5), () => {
+            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3) + dropDelay * 1.4), () => {
                 gameVars.canShowGreen = false;
                 setTimeout(() => {
                     gameVars.canLock = false;
@@ -538,7 +542,7 @@ function pinMoveUp(pinNum) {
                 targets: currPin,
                 y: currPin.startY,
                 ease: 'Quad.easeIn',
-                duration: Math.max(420, currPin.randDur * 6.75 - 210),
+                duration: Math.max(420, currPin.randDur * 6.85 - 225),
                 onStart: () => {
                     currPin.fallSoundTimeout = setTimeout(() => {
                         if (!currPin.locked) {
@@ -558,10 +562,10 @@ function pinMoveUp(pinNum) {
                     while (currPin.lastRandVal === randVal) {
                         randVal = Math.floor(Math.random() * 5);
                     }
-                    if (randVal == currPin.secondLastRandVal) {
+                    if (randVal === currPin.secondLastRandVal) {
                         // reduce chances of getting second last one, but not impossible.
                         let testRandVal = Math.floor(Math.random() * 5);
-                        if (testRandVal != currPin.lastRandVal) {
+                        if (testRandVal !== currPin.lastRandVal) {
                             // make sure we don't get last rand val either.
                             randVal = testRandVal;
                         }
@@ -645,16 +649,39 @@ function tryLock() {
             if (gameVars.princessCounter === gameVars.pinsFixed) {
                 gameVars.princessCounter++;
                 let pinText = [
-                    "I kneel, whispering that I'm a friend\nwho got lost, not a scary monster.",
+                    "The first tumbler unlocks, and I shake off\nan unnatural shiver.",
                     "",
-                    "I show the princess a shiny coin, saying I'm a treasure\nhunter for pretty things like her toys.",
+                    "A glimpse of the past flashes and I blink it away.\nOr was that the future?",
                     "",
-                    "I tell her we are secret friends now,\nand promise a new toy if she doesn't tell anyone about me.",
+                    "The seal unravels, and the scroll is mine now,\nthough I dare not look at it.",
                     ""
                 ];
-                if (pinText[gameVars.pinsFixed - 1] !== "") {
+                let pinFixIndex = gameVars.pinsFixed - 1;
+                let flashImage = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'backgrounds', 'stairs.png').setScale(1.44).setAlpha(0.38);
+                if (pinFixIndex === 0) {
+                    flashImage.setAlpha(0.55)
+                    playSound('heartbeatfast', 0.7)
+                } else if (pinFixIndex === 2) {
+                    flashImage.setAlpha(0.59);
+                    flashImage.setFrame('eye.png');
+                    playSound('heartbeatfast', 0.7)
+                } else if (pinFixIndex === 4) {
+                    flashImage.setAlpha(0.54)
+                    flashImage.setFrame('stars.png');
+                    playSound('heartbeatfast', 0.7)
+                }
+                PhaserScene.tweens.add({
+                    targets: flashImage,
+                    scaleX: 1.46,
+                    scaleY: 1.46,
+                    alpha: 0,
+                    ease: 'Quint.easeOut',
+                    duration: 2500
+                })
+
+                if (pinText[pinFixIndex] !== "") {
                     globalObjects.infoText.setAlpha(0);
-                    globalObjects.infoText.setText(pinText[gameVars.pinsFixed - 1]);
+                    globalObjects.infoText.setText(pinText[pinFixIndex]);
                     if (globalObjects.infoText.currAnim) {
                         globalObjects.infoText.currAnim.stop();
                     }
@@ -919,12 +946,12 @@ function showFail() {
 
     let flavorText = [
         "I somehow botch my practice lock with\na mountain of lockpicks. Great start.",
-        "My hasty fingers fumble the crude lock,\nand now I remain stuck behind bars.",
-        "The clothier’s sturdy lock catches my tools,\nleaving me in rags unfit for the castle.",
-        "My missteps alert the guards, and the gate’s\nlock holds firm, blocking my path.",
+        "My last lockpick breaks as I fumble the\nlockbox, leaving me with nothing.",
+        "My pick breaks in the chest's lock, and\nI am forced to withdraw from the tavern.",
+        "The robust lock holds, and my broken picks\nsplash in the murky water.",
         "The enchanted lock resets at my slightest\nmistake, sealing the door tight.",
-        "The masterful lock defies my trembling hands,\nand the crown remains beyond reach.",
-        "A clumsy word frightens the young princess,\nand she cries for the guards.",
+        "The masterful lock defies my trembling hands,\nand the scroll remains beyond reach.",
+        "I misjudge the star lock's shifting tumblers,\nand whatever secrets in the scroll are now sealed away.",
         "My rival laughs at me as his devilish\ncontraption remains tightly locked."
     ]
     globalObjects.victory.extraText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, flavorText[gameVars.currLevel], {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
@@ -1223,10 +1250,10 @@ function openEpiloguePopup() {
     localStorage.setItem("latestLevel", "7");
     gameVars.latestLevel = 7;
     gameVars.showNextButton = false;
-    let text1 = "The princess calms down and waves goodbye before returning to her toys.";
-    let text2 = "I grab the crown and escape with it hidden under my cloak."
-    let text3 = "Though my hands are full of treasure, my mind is occupied by the child's smile.";
-    let text4 = "I wonder if I'll come back again for more stories with my new friend.";
+    let text1 = "I grab the scroll, its eerie glow fading as I slip out the library.";
+    let text2 = "Whispers of unknown truths brush my mind, but I shake them off."
+    let text3 = "The scroll's value in coin is all that matters to me.";
+    let text4 = "I escape, already scheming my next heist, unaware of the scroll's ancient power\nas I eagerly trade it for a fleeting fortune.";
 
     createGlobalClickBlocker(false);
     let blackout = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'blackPixel').setScale(1000).setAlpha(0).setDepth(998);
@@ -1246,7 +1273,7 @@ function openEpiloguePopup() {
         alpha: 1,
         delay: 1200,
         duration: 1400,
-        completeDelay: 5000,
+        completeDelay: 6500,
         onComplete: () => {
             let fintext = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 130, "Thank you for playing!", {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF'}).setOrigin(0.5, 0).setDepth(999);
             let fintext2 = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 100, "(Challenge level unlocked)", {fontFamily: 'kingthings', fontSize: 18, color: '#FFFFFF'}).setOrigin(0.5, 0).setDepth(999).setAlpha(0.75);
@@ -1314,13 +1341,13 @@ function openEpiloguePopup() {
     PhaserScene.tweens.add({
         targets: textPrompt3,
         alpha: 1,
-        delay: 5700,
+        delay: 6000,
         duration: 1400,
     })
     PhaserScene.tweens.add({
         targets: textPrompt4,
         alpha: 1,
-        delay: 7500,
+        delay: 8200,
         duration: 1400,
     })
     epilogue.textPrompt = textPrompt1;
@@ -1396,7 +1423,7 @@ function openInstructPopup() {
 function openCreditsPopup() {
     let instructContent = {};
     instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, 'Credits', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
-    instructContent.goal = PhaserScene.add.text(gameConsts.halfWidth - 158, 228, 'Game by Maxim Tsai\nSFX from Soundimage.org and Freesound.org\nMusic from Suno\nHeavily inspired by Elder Scrolls IV: Oblivion\n\nSprite Count: ~75\nAudio Count: 28\nDev Time: ~3 Weeks', {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0, 0.5);
+    instructContent.goal = PhaserScene.add.text(gameConsts.halfWidth - 158, 228, 'Game by Maxim Tsai\nSFX from Soundimage.org and Freesound.org\nMusic from Suno\nFan game inspired by Elder Scrolls IV: Oblivion', {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0, 0.5);
     instructContent.other = PhaserScene.add.text(gameConsts.halfWidth, 334, 'Check out my other games!', {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0.5, 0.5).setScale(0.9);
 
     openPopup(instructContent);
@@ -1484,12 +1511,12 @@ function openCreditsPopup() {
 }
 function openFlavorPopup(title = " ", content = " ", image, scale = 0.95) {
     let instructContent = {};
-    instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, title, {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+    instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, title, {fontFamily: 'kingthings', fontSize: 32, color: '#140000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
 
     if (image) {
-        instructContent.image = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + 73, 'lock', image).setDepth(102).setScale(scale);
+        instructContent.image = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + 73, 'lock', image).setDepth(102).setScale(scale).setVisible(false);
     }
-    instructContent.controls = PhaserScene.add.text(gameConsts.halfWidth - 170, gameConsts.halfHeight - 153, content, {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setScale(1, 0.98).setDepth(102);
+    instructContent.controls = PhaserScene.add.text(gameConsts.halfWidth - 170, gameConsts.halfHeight - 143, content, {fontFamily: 'kingthings', fontSize: 23, color: '#140000', align: 'left'}).setOrigin(0, 0).setScale(1, 0.98).setDepth(102);
 
     let extraContents = {};
 

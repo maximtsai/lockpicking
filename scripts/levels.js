@@ -101,12 +101,12 @@ function loadPracticeRoom() {
         })
     }
     swapMusic('quietshadows');
-    createPins(2);
+    createPins(3);
     setPicksLeft(99);
     for (let i in globalObjects.indicators) {
         globalObjects.indicators[i].visible = true;
     }
-    globalObjects.currBackground.setFrame('door.png').setScale(2);
+    globalObjects.currBackground.setFrame('skull.png').setScale(1.37);
     globalObjects.mechanism.setFrame('mechanism.png');
     globalObjects.lock.setFrame('lock.png');
     let arrowLeft = PhaserScene.add.image(42, gameConsts.height - 116, 'ui', 'arrow.png').setRotation(Math.PI*-0.5).setScale(0.8);
@@ -145,7 +145,7 @@ function loadPracticeRoom() {
 
 function loadEscapeRoom() {
     swapMusic('lili');
-    globalObjects.currBackground.setFrame('bars.png').setScale(2);
+    globalObjects.currBackground.setFrame('loot.png').setScale(1.36);
     globalObjects.mechanism.setFrame('mechanism_bar.png');
     globalObjects.lock.setFrame('padlock.png');
 
@@ -162,12 +162,12 @@ function loadEscapeRoom() {
     }]
     createPins(2);
     setPicksLeft(3);
-    globalObjects.roomTitle.setText('ESCAPE')
+    globalObjects.roomTitle.setText('LOCKBOX');
 }
 
 function loadClothesRoom() {
     swapMusic('lili');
-    globalObjects.currBackground.setFrame('clothes.png').setScale(2);
+    globalObjects.currBackground.setFrame('shop.png').setScale(1.37);
     globalObjects.mechanism.setFrame('mechanism_bar.png');
     globalObjects.lock.setFrame('padlock.png');
 
@@ -184,12 +184,12 @@ function loadClothesRoom() {
     }]
     createPins(3);
     setPicksLeft(3);
-    globalObjects.roomTitle.setText('CLOTHIER')
+    globalObjects.roomTitle.setText('TAVERN')
 }
 
 function loadGateRoom() {
     swapMusic('indeep');
-    globalObjects.currBackground.setFrame('gate.png').setScale(2);
+    globalObjects.currBackground.setFrame('sewer.png').setScale(1.37);
     globalObjects.mechanism.setFrame('mechanism_bar.png');
     globalObjects.lock.setFrame('security_lock.png');
 
@@ -225,12 +225,12 @@ function loadGateRoom() {
     }]
     createPins(4);
     setPicksLeft(3);
-    globalObjects.roomTitle.setText('GATES')
+    globalObjects.roomTitle.setText('SEWER')
 }
 
 function loadEnchantedRoom() {
     swapMusic('indeep');
-    globalObjects.currBackground.setFrame('door.png').setScale(2);
+    globalObjects.currBackground.setFrame('gates.png').setScale(1.37);
     globalObjects.mechanism.setFrame('mechanismgold.png');
     globalObjects.lock.setFrame('goldenlock.png');
 
@@ -261,12 +261,12 @@ function loadEnchantedRoom() {
 
     createPins(3, true);
     setPicksLeft(3);
-    globalObjects.roomTitle.setText('ENCHANTED DOOR')
+    globalObjects.roomTitle.setText('ENCHANTED GATE')
 }
 
 function loadCrownRoom() {
     swapMusic('indeep');
-    globalObjects.currBackground.setFrame('bedroom.png').setScale(2);
+    globalObjects.currBackground.setFrame('magic.png').setScale(1.37);
     globalObjects.mechanism.setFrame('mechanismgold.png');
     globalObjects.lock.setFrame('goldenlock.png');
 
@@ -297,13 +297,14 @@ function loadCrownRoom() {
     }]
     createPins(4, true);
     setPicksLeft(3);
-    globalObjects.roomTitle.setText("THE CROWN")
+    globalObjects.roomTitle.setText("PALACE DOOR")
+
 }
 
 function loadPrincessRoom() {
     swapMusic('princess');
     gameVars.princessCounter = 1;
-    globalObjects.currBackground.setFrame('princess.png').setScale(1.3);
+    globalObjects.currBackground.setFrame('stairs.png').setScale(1.37);
     globalObjects.mechanism.setFrame('blank.png');
     globalObjects.lock.setFrame('heartlock.png');
 
@@ -328,7 +329,7 @@ function loadPrincessRoom() {
     globalObjects.extras.push(heartPulse);
 
 
-    let shadow = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'heartlockshadow.png').setDepth(-9).setScale(2);
+    let shadow = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'heartlockshadow.png').setDepth(-9).setScale(1.37);
     globalObjects.extras.push(shadow);
     globalObjects.playUponUnlock = [() => {
         heartPulse.anim1.stop();
@@ -340,11 +341,11 @@ function loadPrincessRoom() {
     }]
     createPins(5, true);
     setPicksLeft(4);
-    globalObjects.roomTitle.setText('THE PRINCESS')
+    globalObjects.roomTitle.setText('SEALED SCROLL')
 }
 
 function loadChallengeRoom() {
-    globalObjects.currBackground.setFrame('workbench2.png').setScale(2);
+    globalObjects.currBackground.setFrame('workbench2.png').setScale(1.37);
     globalObjects.mechanism.setFrame('mechanism_bar_many.png');
     globalObjects.lock.setFrame('masterlock.png');
 
@@ -444,13 +445,13 @@ function gotoLevel(lvl, skipIntro = false) {
 
             let flavorStory = [
                 "",
-                "I'm caught in chains after a botched theft,\na reminder of the risks I take for treasures\nlike the crown.\n\nFortunately the cell lock is of shoddy make.\nWith some finesse, I'll be able to get out.",
-                "To slip into the castle unnoticed, I need\nfiner clothes to blend in.\n\nThe clothier lock is sturdy, but I’m confident\nmy tools can handle it. I'll break in and claim\nthe attire I need.",
-                "The castle looms before me, but the outer\ngates stand in my way. Their locks are well\ncrafted, but familiar.\n\nI find a blind spot in the guards' patrols\nand start my work.",
-                "An unassuming door blocks my path to the\nupper floors. Its lock glows with tricky\nenchantments that reset at the slightest\nmistake.\n\nI steady my hands to unravel its magic.",
-                "The treasury door stands before me, the\ncrown mere steps beyond.\n\nThe lock I face is a masterpiece of\ncraftsmanship and enchantment. Every\nknown safeguard fortifies this final barrier.",
-                "The crown is within my grasp, but I stumble\ninto a startled young princess who looks\nup from her stuffed toy.\n\nI must win her trust quickly to keep her from\ncalling the guards.\n\nThis is a challenge greater than any lock, so\nI approach with care, as one wrong move could\nend my heist.",
-                "A rival locksmith unveils a contraption\nso complex it could barely be called a lock\nanymore. There's something devious about\nthis device but I’ve never backed down from\na challenge.\n\nI'll bring extra picks just in case."
+                "I prowl the Imperial City's underground,\nneeding coin to fund my heist for a\nvaluable scroll with a very generous\npayout.\n\nMy eyes notice an abandoned lockbox\nthat tempts me with easy pickings.",
+                "With some spare coin and a seat at the\ntavern, I get information on the scroll's\nwhereabouts, but I need maps to help\nnavigate the way.\n\nThe backroom's locked chest holds\nsmuggler goods, open to anyone with\nthe finesse to take its contents.",
+                "The scroll lies within the Imperial\nPalace, reachable through the sewers,\nbut a rusted grate bars the way.\n\nThe lock on it is sturdy but familiar, and\nshould yield as long as I'm careful.",
+                "I've reached the end of the sewers,\nbut a strange gate adorned with the\nroyal crest blocks my path.\n\nThe lock on this gate looks simple but\nglows with a tricky enchantment that\nundoes my progress at the slightest\nmistake.",
+                "The vault-like door to the inner Palace\nstands before me, its locks a masterpiece\nof craftsmanship and enchantment.\n\nEvery known safeguard protects this\nbarrier, testing my skill to its limit.",
+                "I've finally reached the royal library,\na chamber of ancient tomes guarded\nby blind monks.\n\nI spot the scroll right away but a\nstar-shaped seal secures its contents.\n\nI sense this scroll hides secrets greater\nthan any treasure, but I've come too\nfar to stop now.",
+                "After much drinking and bragging about\nmy latest heist, a rival locksmith presents\nto me a contraption so complex it could\nbarely be called a lock anymore.\n\nThere's something devious about this\ndevice but my prior boasting prevents\nme from withdrawing from this\nchallenge.\n\nI'll bring extra picks just in case."
             ]
 
             switch(lvl) {
@@ -474,8 +475,8 @@ function gotoLevel(lvl, skipIntro = false) {
                     break;
                 case 6:
                     setRoom("princess");
-                    globalObjects.pickshadow.setVisible(false);
-                    globalObjects.pick.setFrame('pick_heart.png');
+                    // globalObjects.pickshadow.setVisible(false);
+                    // globalObjects.pick.setFrame('pick_heart.png');
                     break;
                 case 7:
                     setRoom("challenge");
@@ -483,12 +484,12 @@ function gotoLevel(lvl, skipIntro = false) {
             }
             let levelNames = [
                 "Training",
-                "Level 1: Escape",
-                "Level 2: Suiting Up",
-                "Level 3: Palace Gate",
-                "Level 4: Enchanted Door",
-                "Level 5: The Crown",
-                "Level 6: The Princess?",
+                "Level 1: Lockbox",
+                "Level 2: Tavern",
+                "Level 3: Sewer",
+                "Level 4: Enchanted Gate",
+                "Level 5: Palace Door",
+                "Level 6: Sealed Scroll",
                 "Level 7: Challenge"];
             if (lvl > 0 && !skipIntro) {
                 setTimeout(() => {
@@ -514,12 +515,12 @@ function openLevelPopup() {
 
     let levelNames = [
         "Training",
-        "Level 1: Escape",
-        "Level 2: Dressing Up",
-        "Level 3: Palace Gate",
-        "Level 4: Enchanted Door",
-        "Level 5: The Crown",
-        "Level 6: The Princess?",
+        "Level 1: Lockbox",
+        "Level 2: Tavern",
+        "Level 3: Sewer",
+        "Level 4: Enchanted Gate",
+        "Level 5: Palace Door",
+        "Level 6: Sealed Scroll",
         "Level 7: Challenge!"];
     let levelNamesAlt = [
         "Training",

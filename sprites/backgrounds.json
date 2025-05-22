@@ -4,130 +4,30 @@
 			"image": "sprites/backgrounds-0.webp",
 			"format": "RGBA8888",
 			"size": {
-				"w": 884,
-				"h": 1478
+				"w": 1806,
+				"h": 1813
 			},
 			"scale": 1,
 			"frames": [
-				{
-					"filename": "princess.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 640,
-						"h": 480
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 640,
-						"h": 480
-					},
-					"frame": {
-						"x": 1,
-						"y": 1,
-						"w": 640,
-						"h": 480
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "bars.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 440,
-						"h": 330
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 440,
-						"h": 330
-					},
-					"frame": {
-						"x": 1,
-						"y": 483,
-						"w": 440,
-						"h": 330
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "bedroom.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 440,
-						"h": 330
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 440,
-						"h": 330
-					},
-					"frame": {
-						"x": 443,
-						"y": 483,
-						"w": 440,
-						"h": 330
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "clothes.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 440,
-						"h": 330
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 440,
-						"h": 330
-					},
-					"frame": {
-						"x": 1,
-						"y": 815,
-						"w": 440,
-						"h": 330
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
 				{
 					"filename": "door.png",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 440,
-						"h": 330
+						"w": 600,
+						"h": 450
 					},
 					"spriteSourceSize": {
 						"x": 0,
 						"y": 0,
-						"w": 440,
-						"h": 330
+						"w": 600,
+						"h": 450
 					},
 					"frame": {
-						"x": 443,
-						"y": 815,
-						"w": 440,
-						"h": 330
+						"x": 1,
+						"y": 1,
+						"w": 600,
+						"h": 450
 					},
 					"anchor": {
 						"x": 0.5,
@@ -135,24 +35,199 @@
 					}
 				},
 				{
-					"filename": "gate.png",
+					"filename": "eye.png",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 440,
-						"h": 330
+						"w": 600,
+						"h": 450
 					},
 					"spriteSourceSize": {
 						"x": 0,
 						"y": 0,
-						"w": 440,
-						"h": 330
+						"w": 600,
+						"h": 450
+					},
+					"frame": {
+						"x": 603,
+						"y": 1,
+						"w": 600,
+						"h": 450
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "gates.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 600,
+						"h": 450
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 600,
+						"h": 450
+					},
+					"frame": {
+						"x": 1205,
+						"y": 1,
+						"w": 600,
+						"h": 450
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "loot.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 600,
+						"h": 450
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 600,
+						"h": 450
 					},
 					"frame": {
 						"x": 1,
-						"y": 1147,
-						"w": 440,
-						"h": 330
+						"y": 453,
+						"w": 600,
+						"h": 450
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "magic.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 600,
+						"h": 450
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 600,
+						"h": 450
+					},
+					"frame": {
+						"x": 603,
+						"y": 453,
+						"w": 600,
+						"h": 450
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "sewer.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 600,
+						"h": 450
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 600,
+						"h": 450
+					},
+					"frame": {
+						"x": 1205,
+						"y": 453,
+						"w": 600,
+						"h": 450
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "shop.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 600,
+						"h": 450
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 600,
+						"h": 450
+					},
+					"frame": {
+						"x": 1,
+						"y": 905,
+						"w": 600,
+						"h": 450
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "skull.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 600,
+						"h": 450
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 600,
+						"h": 450
+					},
+					"frame": {
+						"x": 603,
+						"y": 905,
+						"w": 600,
+						"h": 450
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "stairs.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 600,
+						"h": 450
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 600,
+						"h": 450
+					},
+					"frame": {
+						"x": 1205,
+						"y": 905,
+						"w": 600,
+						"h": 450
 					},
 					"anchor": {
 						"x": 0.5,
@@ -164,20 +239,45 @@
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 440,
-						"h": 330
+						"w": 600,
+						"h": 450
 					},
 					"spriteSourceSize": {
 						"x": 0,
 						"y": 0,
-						"w": 440,
-						"h": 330
+						"w": 600,
+						"h": 450
 					},
 					"frame": {
-						"x": 443,
-						"y": 1147,
-						"w": 440,
-						"h": 330
+						"x": 1,
+						"y": 1357,
+						"w": 600,
+						"h": 450
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "stars.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 605,
+						"h": 455
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 605,
+						"h": 455
+					},
+					"frame": {
+						"x": 603,
+						"y": 1357,
+						"w": 605,
+						"h": 455
 					},
 					"anchor": {
 						"x": 0.5,
@@ -190,6 +290,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:3ec9ecf920826b7d505d56930e4e3680:2934c5d914def2875de9fd5bc44669a5:6ce2ab4a85f7daf91b8ccc33ab04fb60$"
+		"smartupdate": "$TexturePacker:SmartUpdate:7adfe0232b63db68733c1bfb26b2ba8a:5a0fd18441561a9b2a5bdfc1a0c047f6:6ce2ab4a85f7daf91b8ccc33ab04fb60$"
 	}
 }

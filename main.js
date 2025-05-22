@@ -88,9 +88,9 @@ let deltaScale = 1;
 let timeUpdateCounter = 0;
 let timeUpdateCounterMax = 3;
 let url1 = 'itch.io';// 'crazygames';
-let url2 = 'adayofjoy';// 'localhost';
+let url2 = 'ground';// 'localhost';
 let url3 = 'classic.itch';// '1001juegos';
-let url4 = 'maximtsai';// '';
+let url4 = 'localhost';// '';
 
 function preload ()
 {
@@ -120,7 +120,7 @@ function create ()
         // Stops execution of rest of game
         let gameDiv = document.getElementById('preload-notice');
         let invalidSite = document.location.href.substring(0, 25);
-        gameDiv.innerHTML = invalidSite + "...\nis an invalid site.\n\n\n" + "Try the game on itch.io!";
+        gameDiv.innerHTML = invalidSite + "...\nis an invalid site.\n\n\n" + "Try the game on Newgrounds!";
         return;
     }
     oldTime = Date.now();

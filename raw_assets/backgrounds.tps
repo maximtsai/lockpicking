@@ -173,17 +173,19 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">backgrounds/bars.png</key>
-            <key type="filename">backgrounds/bedroom.png</key>
-            <key type="filename">backgrounds/clothes.png</key>
             <key type="filename">backgrounds/door.png</key>
-            <key type="filename">backgrounds/gate.png</key>
+            <key type="filename">backgrounds/eye.png</key>
+            <key type="filename">backgrounds/gates.png</key>
+            <key type="filename">backgrounds/magic.png</key>
+            <key type="filename">backgrounds/shop.png</key>
+            <key type="filename">backgrounds/skull.png</key>
+            <key type="filename">backgrounds/stairs.png</key>
             <key type="filename">backgrounds/workbench2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>spriteScale</key>
-                <double>0.55</double>
+                <double>0.75</double>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
@@ -193,18 +195,48 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">backgrounds/princess.png</key>
+            <key type="filename">backgrounds/loot.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>spriteScale</key>
-                <double>0.8</double>
+                <double>0.75</double>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>200,150,400,300</rect>
+                <rect>340,191,681,381</rect>
                 <key>scale9Paddings</key>
-                <rect>200,150,400,300</rect>
+                <rect>340,191,681,381</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">backgrounds/sewer.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>0.75</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>340,192,681,383</rect>
+                <key>scale9Paddings</key>
+                <rect>340,192,681,383</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">backgrounds/stars.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>0.75</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>202,152,403,303</rect>
+                <key>scale9Paddings</key>
+                <rect>202,152,403,303</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
