@@ -144,7 +144,7 @@ function loadPracticeRoom() {
 }
 
 function loadEscapeRoom() {
-    swapMusic('lili');
+    swapMusic('quietshadows');
     globalObjects.currBackground.setFrame('loot.png').setScale(1.36);
     globalObjects.mechanism.setFrame('mechanism_bar.png');
     globalObjects.lock.setFrame('padlock.png');
@@ -188,7 +188,7 @@ function loadClothesRoom() {
 }
 
 function loadGateRoom() {
-    swapMusic('indeep');
+    swapMusic('lili');
     globalObjects.currBackground.setFrame('sewer.png').setScale(1.37);
     globalObjects.mechanism.setFrame('mechanism_bar.png');
     globalObjects.lock.setFrame('security_lock.png');
