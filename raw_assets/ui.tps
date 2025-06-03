@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.0.3</string>
+        <string>7.2.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -230,6 +230,21 @@
                 <rect>110,130,220,260</rect>
                 <key>scale9Paddings</key>
                 <rect>110,130,220,260</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ui/popupsmall.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>113,91,225,181</rect>
+                <key>scale9Paddings</key>
+                <rect>113,91,225,181</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

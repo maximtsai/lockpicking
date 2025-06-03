@@ -77,7 +77,11 @@ let gameVars = {
     gameManualSlowSpeedInverse: 1,
     gameScale: 1,
     canvasXOffset: 0,
-    canvasYOffset: 0
+    canvasYOffset: 0,
+    usingSkull: false,
+    picksLeft: 99,
+    firstPickBroken: false,
+
 };
 let loadObjects = {}; // Objects used in loading screen, removed once game starts
 let globalObjects = {}; // globally accessible objects

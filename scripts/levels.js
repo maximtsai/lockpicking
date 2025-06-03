@@ -160,7 +160,7 @@ function loadEscapeRoom() {
             duration: 400
         })
     }]
-    createPins(2);
+    createPins(1);
     setPicksLeft(3);
     globalObjects.roomTitle.setText('LOCKBOX');
 }
@@ -182,7 +182,7 @@ function loadClothesRoom() {
             duration: 400
         })
     }]
-    createPins(3);
+    createPins(2);
     setPicksLeft(3);
     globalObjects.roomTitle.setText('TAVERN')
 }
@@ -223,7 +223,7 @@ function loadGateRoom() {
             }
         });
     }]
-    createPins(4);
+    createPins(3);
     setPicksLeft(3);
     globalObjects.roomTitle.setText('SEWER')
 }
@@ -408,7 +408,13 @@ function gotoNextLevel() {
 }
 
 function gotoLevel(lvl, skipIntro = false) {
+    if (gameVars.usingSkull) {
+        hideCheatOption();
+        gameVars.usingSkull = false;
 
+    }
+
+    gameVars.firstPickBroken = false;
     gameVars.showNextButton = false;
     gameVars.currLevel = lvl;
     createGlobalClickBlocker(false)
@@ -446,9 +452,9 @@ function gotoLevel(lvl, skipIntro = false) {
             let flavorStory = [
                 "",
                 "I prowl the Imperial City's underground,\nneeding coin to fund my heist for a\nvaluable scroll with a very generous\npayout.\n\nMy eyes notice an abandoned lockbox\nthat tempts me with easy pickings.",
-                "With some spare coin and a seat at the\ntavern, I get information on the scroll's\nwhereabouts, but I need maps to help\nnavigate the way.\n\nThe backroom's locked chest holds\nsmuggler goods, open to anyone with\nthe finesse to take its contents.",
+                "With some spare coin and a seat at the\ntavern, I get information on the scroll's\nwhereabouts, but I need maps to help\nnavigate the way.\n\nThe tavern's backrooms contain\nsmuggler goods, only loosely guarded\nto anyone with the finesse to take\nits contents.",
                 "The scroll lies within the Imperial\nPalace, reachable through the sewers,\nbut a rusted grate bars the way.\n\nThe lock on it is sturdy but familiar, and\nshould yield as long as I'm careful.",
-                "I've reached the end of the sewers,\nbut a strange gate adorned with the\nroyal crest blocks my path.\n\nThe lock on this gate looks simple but\nglows with a tricky enchantment that\nundoes my progress at the slightest\nmistake.",
+                "I've reached the end of the sewers,\nbut a strange gate adorned with the\nroyal crest blocks my path.\n\nThe lock on this gate looks simple but\nI notice the glow of a tricky enchantment.\nI'll have to be careful with this one.",
                 "The vault-like door to the inner Palace\nstands before me, its locks a masterpiece\nof craftsmanship and enchantment.\n\nEvery known safeguard protects this\nbarrier, testing my skill to its limit.",
                 "I've finally reached the royal library,\na chamber of ancient tomes guarded\nby blind monks.\n\nI spot the scroll right away but a\nstar-shaped seal secures its contents.\n\nI sense this scroll hides secrets greater\nthan any treasure, but I've come too\nfar to stop now.",
                 "After much drinking and bragging about\nmy latest heist, a rival locksmith presents\nto me a contraption so complex it could\nbarely be called a lock anymore.\n\nThere's something devious about this\ndevice but my prior boasting prevents\nme from withdrawing from this\nchallenge.\n\nI'll bring extra picks just in case."
@@ -587,6 +593,76 @@ function openLevelPopup() {
         }
 
     }
+
+    addPopupContents(extraContents);
+}
+
+
+function openCheatPopup() {
+    let lvlContents = {};
+    lvlContents.title = PhaserScene.add.text(gameConsts.halfWidth, 190, 'USE SKULL KEY?', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+    lvlContents.body = PhaserScene.add.text(gameConsts.halfWidth, 325, "Less known cousin of the legendary unbreakable\nSkeleton Key. This special lockpick isn't quite as\npowerful, but it's still got a good few uses left.\n\nAllows you to \"auto-attempt\" the lock.", {fontFamily: 'kingthings', fontSize: 17, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0.5, 0.5);
+    lvlContents.image = PhaserScene.add.image(gameConsts.halfWidth, 239, 'lock', 'imagekey.png').setDepth(102).setScale(0.86);
+    openPopup(lvlContents, true);
+
+    let extraContents = {};
+    let cheatButton = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "menu_btn_normal.png",
+            x: gameConsts.halfWidth,
+            y: gameConsts.halfHeight + 104,
+            scaleX: 0.65,
+            scaleY: 0.65,
+            alpha: 1,
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "menu_btn_hover.png",
+            alpha: 1,
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "menu_btn_press.png",
+            alpha: 1,
+        },
+        disable: {
+            atlas: 'buttons',
+            ref: "menu_btn_press.png",
+            alpha: 0.5,
+        },
+        onHover: () => {
+            if (canvas) {
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            globalObjects.pickshadow.setVisible(false);
+            globalObjects.pick.setFrame('pick_heart.png');
+            gameVars.usingSkull = true;
+            globalObjects.pick.alpha = 0;
+            playSound('scratch3');
+            setPicksLeft(Math.max(gameVars.picksLeft, 30));
+
+            PhaserScene.tweens.add({
+                targets: globalObjects.pick,
+                alpha: 1,
+                duration: 900,
+                ease: 'Cubic.easeOut'
+            })
+            hideCheatOption()
+            closePopup();
+        }
+    });
+    cheatButton.addText("USE KEY", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'});
+    cheatButton.setDepth(103);
+
+    extraContents["cheatbtn"] = cheatButton;
 
     addPopupContents(extraContents);
 }
