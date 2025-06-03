@@ -98,6 +98,59 @@ function setupGame() {
     globalObjects.pickshadow = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'pickshadow.png').setAlpha(0.6);
     globalObjects.mechanism = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'mechanism.png');
     globalObjects.pick = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'pick.png');
+
+            // x: gameConsts.halfWidth - 284,
+            // y: 309,
+
+    globalObjects.autopick = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "menu_btn_normal.png",
+            x: gameConsts.halfWidth + 25,
+            y: 424,
+            scaleX: 0.65,
+            scaleY: 0.65,
+            alpha: 1
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "menu_btn_hover.png",
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "menu_btn_press.png",
+        },
+        disable: {
+            atlas: 'buttons',
+            ref: "menu_btn_press.png",
+            alpha: 0
+        },
+        onHover: () => {
+            if (canvas) {
+                playSound('click').detune = -50;
+                canvas.style.cursor = 'pointer';
+            }
+            globalObjects.autopickText.visible = true;
+            let lockpickChance = getLockpickChance();
+            globalObjects.autopickText.setText("UNLOCK CHANCE: "+lockpickChance+"%")
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+            globalObjects.autopickText.visible = false;
+        },
+        onMouseUp: () => {
+            attemptAutoLockpick();
+        }
+    });
+    globalObjects.autopick.addText("AUTO-ATTEMPT", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'});
+    globalObjects.autopick.setTextOffset(0.5, 0.5);
+    globalObjects.autopick.setDepth(2);
+    globalObjects.autopick.setState(DISABLE);
+
+    globalObjects.autopickText = PhaserScene.add.text(gameConsts.halfWidth + 25, 457, "UNLOCK CHANCE: 1%", {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setVisible(false).setOrigin(0.5, 0.5);
+
     globalObjects.pins = [];
     globalObjects.indicators = [];
     gameVars.currentPin = 0;
@@ -175,21 +228,6 @@ function setupCheatButton() {
     cheatButton.setOrigin(0, 0.5);
     cheatButton.setDepth(2);
     globalObjects.cheatButton = cheatButton;
-}
-
-function showCheatOption() {
-    if (!gameVars.usingSkull) {
-        setTimeout(() => {
-            globalObjects.cheatButton.setState(NORMAL);
-            globalObjects.cheatButton.tweenToPos(-66, 150, 625, 'Back.easeOut');
-        }, 250)
-    }
-
-}
-
-function hideCheatOption() {
-    globalObjects.cheatButton.setState(DISABLE)
-    globalObjects.cheatButton.tweenToPos(-150, 150, 300, 'Cubic.easeOut')
 }
 
 function setupLevelButton() {
@@ -541,7 +579,7 @@ function pinMoveUp(pinNum) {
         dropDelay = 0;
     }
     if (dropDelay > 100) {
-        dropDelay += 33;
+        dropDelay += 20;
     }
 
     currPin.currDelay = PhaserScene.time.delayedCall(Math.min(currPin.randDur - 1, Math.floor(currPin.randDur * 0.72) + 10), () => {
@@ -566,7 +604,7 @@ function pinMoveUp(pinNum) {
 
                 }
             }, 10)
-            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3) + dropDelay * 1.63), () => {
+            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3) + dropDelay * 1.6), () => {
                 gameVars.canShowGreen = false;
                 setTimeout(() => {
                     gameVars.canLock = false;
@@ -671,101 +709,101 @@ function tryLock() {
             },
         })
     } else if (gameVars.canLock) {
-        let randSoundIdx = Math.floor(Math.random() * 4) + 1;
-        let randSound = "scratch" + randSoundIdx;
-        playSound(randSound, 1.3).detune = 100 - Math.random() * 200;
-        // playSound(Math.random() < 0.5 ? 'lockin1' : 'lockin2').detune = 100 - Math.random() * 200;
-        // Lock
-        if (currPin.currAnim) {
-            currPin.currAnim.stop();
+        setPin(false);
+    } else {
+        if (!gameVars.firstPickBroken) {
+            showCheatOption();
+            gameVars.firstPickBroken = true;
         }
-        if (currPin.currSound) {
-            currPin.currSound.stop();
-        }
-        currPin.locked = true;
-        gameVars.pinsFixed = Math.max(gameVars.pinsFixed, getNumPinsLocked());
-        globalObjects.indicators[gameVars.currentPin].setFrame('icon_black.png');
-        PhaserScene.tweens.add({
-            targets: currPin,
-            y: gameConsts.halfHeight - 37 + gameConsts.UIYOffset,
-            ease: 'Quad.easeOut',
-            duration: 200,
-        });
-        PhaserScene.tweens.add({
-            targets: currPin,
-            alpha: 0.6,
-            duration: 600,
-        });
 
-        let hasUnlocked = false;
-        for (let i in globalObjects.pins) {
-            if (!globalObjects.pins[i].locked) {
-                hasUnlocked = true;
+        breakPick(false);
+
+    }
+}
+
+function setPin(isAuto) {
+
+    let currPin = globalObjects.pins[gameVars.currentPin];
+    let randSoundIdx = Math.floor(Math.random() * 4) + 1;
+    let randSound = "scratch" + randSoundIdx;
+    playSound(randSound, 1.3).detune = 100 - Math.random() * 200;
+    // playSound(Math.random() < 0.5 ? 'lockin1' : 'lockin2').detune = 100 - Math.random() * 200;
+    // Lock
+    if (currPin.currAnim) {
+        currPin.currAnim.stop();
+    }
+    if (currPin.currSound) {
+        currPin.currSound.stop();
+    }
+    currPin.locked = true;
+    gameVars.pinsFixed = Math.max(gameVars.pinsFixed, getNumPinsLocked());
+    let currIndicator = globalObjects.indicators[gameVars.currentPin];
+    currIndicator.setFrame('icon_black.png');
+    setTimeout(() => {
+        currIndicator.setFrame('icon_black.png');
+    }, 300)
+    PhaserScene.tweens.add({
+        targets: currPin,
+        y: gameConsts.halfHeight - 37 + gameConsts.UIYOffset,
+        ease: 'Quad.easeOut',
+        duration: 200,
+    });
+    PhaserScene.tweens.add({
+        targets: currPin,
+        alpha: 0.6,
+        duration: 600,
+    });
+
+    let hasUnlocked = false;
+    for (let i in globalObjects.pins) {
+        if (!globalObjects.pins[i].locked) {
+            if (!hasUnlocked && isAuto) {
+                // slide to next pin
+                gameVars.currentPin = i;
+                updatePickSpot();
             }
+            hasUnlocked = true;
         }
+    }
 
-        if (gameVars.currRoom === 'princess') {
-            if (gameVars.princessCounter === gameVars.pinsFixed) {
-                gameVars.princessCounter++;
-                let pinText = [
-                    "The first tumbler unlocks, and I shake off\nan unnatural shiver.",
-                    "",
-                    "A glimpse of the past flashes and I blink it away.\nOr was that the future?",
-                    "",
-                    "The seal unravels, and the scroll is mine now,\nthough I dare not look at it.",
-                    ""
-                ];
-                let pinFixIndex = gameVars.pinsFixed - 1;
-                let flashImage = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'backgrounds', 'stairs.png').setScale(1.44).setAlpha(0.38);
-                if (pinFixIndex === 0) {
-                    flashImage.setAlpha(0.55)
-                    playSound('heartbeatfast', 0.7)
-                } else if (pinFixIndex === 2) {
-                    flashImage.setAlpha(0.59);
-                    flashImage.setFrame('eye.png');
-                    playSound('heartbeatfast', 0.7)
-                } else if (pinFixIndex === 4) {
-                    flashImage.setAlpha(0.54)
-                    flashImage.setFrame('stars.png');
-                    playSound('heartbeatfast', 0.7)
-                }
-                PhaserScene.tweens.add({
-                    targets: flashImage,
-                    scaleX: 1.46,
-                    scaleY: 1.46,
-                    alpha: 0,
-                    ease: 'Quint.easeOut',
-                    duration: 2500
-                })
 
-                if (pinText[pinFixIndex] !== "") {
-                    globalObjects.infoText.setAlpha(0);
-                    globalObjects.infoText.setText(pinText[pinFixIndex]);
-                    if (globalObjects.infoText.currAnim) {
-                        globalObjects.infoText.currAnim.stop();
-                    }
-                    globalObjects.infoText.currAnim = PhaserScene.tweens.add({
-                        targets: globalObjects.infoText,
-                        alpha: 1,
-                        duration: 500,
-                        ease: 'Cubic.easeOut',
-                        completeDelay: 7000,
-                        onComplete: () => {
-                            globalObjects.infoText.currAnim = PhaserScene.tweens.add({
-                                targets: globalObjects.infoText,
-                                alpha: 0,
-                                duration: 500,
-                                ease: 'Cubic.easeOut',
-                            })
-                        }
-                    })
-                }
+    if (gameVars.currRoom === 'princess') {
+        if (gameVars.princessCounter === gameVars.pinsFixed) {
+            gameVars.princessCounter++;
+            let pinText = [
+                "The first tumbler unlocks, and I shake off\nan unnatural shiver.",
+                "",
+                "A glimpse of the past flashes and I blink it away.\nOr was that the future?",
+                "",
+                "The seal unravels, and the scroll is mine now,\nthough I dare not look at it.",
+                ""
+            ];
+            let pinFixIndex = gameVars.pinsFixed - 1;
+            let flashImage = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'backgrounds', 'stairs.png').setScale(1.44).setAlpha(0.38);
+            if (pinFixIndex === 0) {
+                flashImage.setAlpha(0.55)
+                playSound('heartbeatfast', 0.7)
+            } else if (pinFixIndex === 2) {
+                flashImage.setAlpha(0.59);
+                flashImage.setFrame('eye.png');
+                playSound('heartbeatfast', 0.7)
+            } else if (pinFixIndex === 4) {
+                flashImage.setAlpha(0.54)
+                flashImage.setFrame('stars.png');
+                playSound('heartbeatfast', 0.7)
             }
-        } else if (gameVars.currRoom === 'challenge') {
-            if (gameVars.pinsFixed === 5 && !gameVars.curses99) {
-                gameVars.curses99 = true;
+            PhaserScene.tweens.add({
+                targets: flashImage,
+                scaleX: 1.46,
+                scaleY: 1.46,
+                alpha: 0,
+                ease: 'Quint.easeOut',
+                duration: 2500
+            })
+
+            if (pinText[pinFixIndex] !== "") {
                 globalObjects.infoText.setAlpha(0);
-                globalObjects.infoText.setText("Almost there...")
+                globalObjects.infoText.setText(pinText[pinFixIndex]);
                 if (globalObjects.infoText.currAnim) {
                     globalObjects.infoText.currAnim.stop();
                 }
@@ -774,7 +812,7 @@ function tryLock() {
                     alpha: 1,
                     duration: 500,
                     ease: 'Cubic.easeOut',
-                    completeDelay: 4500,
+                    completeDelay: 7000,
                     onComplete: () => {
                         globalObjects.infoText.currAnim = PhaserScene.tweens.add({
                             targets: globalObjects.infoText,
@@ -786,82 +824,101 @@ function tryLock() {
                 })
             }
         }
-        if (!hasUnlocked) {
-            slideOpenLock();
-        }
-
-    } else {
-        if (!gameVars.firstPickBroken) {
-            showCheatOption();
-            gameVars.firstPickBroken = true;
-        }
-        playSound('pickbreak', 1);
-
-        if (!gameVars.usingSkull && gameVars.picksLeft <= 1) {
-            if (globalObjects.pick.currAnim) {
-                globalObjects.pick.currAnim.stop();
+    } else if (gameVars.currRoom === 'challenge') {
+        if (gameVars.pinsFixed === 5 && !gameVars.curses99) {
+            gameVars.curses99 = true;
+            globalObjects.infoText.setAlpha(0);
+            globalObjects.infoText.setText("Almost there...")
+            if (globalObjects.infoText.currAnim) {
+                globalObjects.infoText.currAnim.stop();
             }
+            globalObjects.infoText.currAnim = PhaserScene.tweens.add({
+                targets: globalObjects.infoText,
+                alpha: 1,
+                duration: 500,
+                ease: 'Cubic.easeOut',
+                completeDelay: 4500,
+                onComplete: () => {
+                    globalObjects.infoText.currAnim = PhaserScene.tweens.add({
+                        targets: globalObjects.infoText,
+                        alpha: 0,
+                        duration: 500,
+                        ease: 'Cubic.easeOut',
+                    })
+                }
+            })
         }
+    }
+    if (!hasUnlocked) {
+        slideOpenLock();
+    }
+}
 
+function breakPick(isAuto) {
+    playSound('pickbreak', 1);
+
+    if (!gameVars.usingSkull && gameVars.picksLeft <= 1) {
+        if (globalObjects.pick.currAnim) {
+            globalObjects.pick.currAnim.stop();
+        }
+    }
+    if (!isAuto) {
         if (gameVars.dropAllOnFail) {
             decrementAllPins();
         } else if (gameVars.dropOnFail) {
             decrementPins();
         }
-        decrementPicksLeft();
-        let redIndicator = globalObjects.indicators[gameVars.currentPin];
-        redIndicator.setFrame('icon_red.png');
-        redIndicator.stuck = true;
-        setTimeout(() => {
-            redIndicator.stuck = false;
-            redIndicator.setFrame('icon_yellow.png');
-        }, 400)
-        let pickBrokeVfx = getTempPoolObject('lock', 'pickbroke.png', 'pickbroke', 300).setDepth(5);
-        pickBrokeVfx.setPosition(globalObjects.pick.x - 80, globalObjects.pick.y + 50);
-        pickBrokeVfx.setScale(0.7).setAlpha(1).setRotation(Math.random() * 3);
-        PhaserScene.tweens.add({
-            targets: pickBrokeVfx,
-            alpha: 0,
-            y: "+=20",
-            scaleX: 1.1,
-            scaleY: 1.1,
-            duration: 300,
-            ease: 'Quad.easeOut'
-        })
-        gameVars.pickStuck = true;
-        if (gameVars.usingSkull && gameVars.picksLeft >= 1) {
-            gameVars.pickStuck = false;
-            PhaserScene.tweens.add({
-                targets: [globalObjects.pick],
-                x: "+=2",
-                duration: 40,
-                onComplete: () => {
-                    PhaserScene.tweens.add({
-                        targets: [globalObjects.pick],
-                        x: "-=2",
-                        ease: 'Bounce.easeOut',
-                        duration: 250,
-                    })
-                }
-            })
-
-        } else {
-            PhaserScene.tweens.add({
-                targets: [globalObjects.pick, globalObjects.pickshadow],
-                rotation: 0.35,
-                y: gameConsts.halfHeight + 130 + gameConsts.UIYOffset,
-                x: "+=25",
-                duration: 290,
-                alpha: 0,
-                onComplete: () => {
-                    resetPick(false);
-
-                },
-            })
-        }
-
-
     }
+    decrementPicksLeft();
+    let redIndicator = globalObjects.indicators[gameVars.currentPin];
+    redIndicator.setFrame('icon_red.png');
+    redIndicator.stuck = true;
+    setTimeout(() => {
+        redIndicator.stuck = false;
+        redIndicator.setFrame('icon_yellow.png');
+    }, 400)
+    let pickBrokeVfx = getTempPoolObject('lock', 'pickbroke.png', 'pickbroke', 300).setDepth(5);
+    pickBrokeVfx.setPosition(globalObjects.pick.x - 80, globalObjects.pick.y + 50);
+    pickBrokeVfx.setScale(0.7).setAlpha(1).setRotation(Math.random() * 3);
+    PhaserScene.tweens.add({
+        targets: pickBrokeVfx,
+        alpha: 0,
+        y: "+=20",
+        scaleX: 1.1,
+        scaleY: 1.1,
+        duration: 300,
+        ease: 'Quad.easeOut'
+    })
+    gameVars.pickStuck = true;
+    if (gameVars.usingSkull && gameVars.picksLeft >= 1) {
+        gameVars.pickStuck = false;
+        PhaserScene.tweens.add({
+            targets: [globalObjects.pick],
+            x: "+=2",
+            duration: 40,
+            onComplete: () => {
+                PhaserScene.tweens.add({
+                    targets: [globalObjects.pick],
+                    x: "-=2",
+                    ease: 'Bounce.easeOut',
+                    duration: 250,
+                })
+            }
+        })
+    } else {
+        PhaserScene.tweens.add({
+            targets: [globalObjects.pick, globalObjects.pickshadow],
+            rotation: 0.35,
+            y: gameConsts.halfHeight + 130 + gameConsts.UIYOffset,
+            x: "+=25",
+            duration: 290,
+            alpha: 0,
+            onComplete: () => {
+                resetPick(false);
+            },
+        })
+    }
+
 }
 
 function getNumPinsLocked() {
@@ -999,6 +1056,8 @@ function resetPick(setToZero = true) {
 }
 
 function showFail() {
+    hideAutoPick();
+    hideCheatOption();
     if (globalObjects.infoText.currAnim) {
         globalObjects.infoText.currAnim.stop();
         globalObjects.infoText.alpha = 0;
@@ -1097,7 +1156,22 @@ function showFail() {
 
 }
 
+function hideAutoPick() {
+    if (globalObjects.autopick) {
+        globalObjects.autopick.setState(DISABLE);
+
+        if (canvas) {
+            canvas.style.cursor = 'default';
+        }
+    }
+    if (globalObjects.autopickText) {
+        globalObjects.autopickText.setVisible(false);
+    }
+}
+
 function slideOpenLock() {
+    hideAutoPick();
+    hideCheatOption();
     playSound('success', 1.1);
     if (globalObjects.playUponUnlock) {
         for (let i in globalObjects.playUponUnlock) {
@@ -1346,10 +1420,10 @@ function openEpiloguePopup() {
     localStorage.setItem("latestLevel", "7");
     gameVars.latestLevel = 7;
     gameVars.showNextButton = false;
-    let text1 = "I grab the scroll, its eerie glow fading as I slip out the library.";
+    let text1 = "I grab the scroll, its eerie tingle fading as I slip out the library.";
     let text2 = "Whispers of unknown truths brush my mind, but I shake them off."
     let text3 = "The scroll's value in coin is all that matters to me.";
-    let text4 = "I escape, already scheming my next heist, unaware of the scroll's ancient power\nas I eagerly trade it for a fleeting fortune.";
+    let text4 = "I escape, already scheming my next heist, blissfully unaware of the scroll's\ntrue power as I eagerly trade it for a quick fortune.";
 
     createGlobalClickBlocker(false);
     let blackout = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'blackPixel').setScale(1000).setAlpha(0).setDepth(998);
@@ -1646,7 +1720,8 @@ function openFlavorPopup(title = " ", content = " ", image, scale = 0.95) {
             }
         },
         onMouseUp: () => {
-            closePopup()
+            closePopup();
+            showCheatAfterDelay();
         }
     });
     extraContents.continueButton.addText("CONTINUE", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
@@ -1691,4 +1766,112 @@ function decrementPicksLeft() {
 
         showFail();
     }
+}
+
+
+function getLockpickChance() {
+    let lockpickChance = 1; // out of 100
+    switch(gameVars.currLevel) {
+        case 0:
+            lockpickChance = 25;
+            break;
+        case 1:
+            lockpickChance = 20;
+            break;
+        case 2:
+            lockpickChance = 20;
+            break;
+        case 3:
+            lockpickChance = 15;
+            break;
+        case 4:
+            lockpickChance = 15;
+            break;
+        case 5:
+            lockpickChance = 12;
+            break;
+        case 6:
+            lockpickChance = 10;
+            break;
+        case 7:
+            lockpickChance = 10;
+            break;
+        default:
+            lockpickChance = 10;
+            break;
+    }
+    return lockpickChance;
+}
+
+function attemptAutoLockpick() {
+
+    if (gameVars.picksLeft <= 0) {
+        return;
+    }
+
+    let lockpickChance = getLockpickChance();
+    globalObjects.autopickText.setText("UNLOCK CHANCE: "+lockpickChance+"%");
+
+    let currPin = globalObjects.pins[gameVars.currentPin]
+    if (currPin.inMotion || currPin.locked) {
+        // not even being moved, nothing happens other than warning message
+        PhaserScene.tweens.add({
+            targets: [globalObjects.pick, globalObjects.pickshadow],
+            rotation: -0.02,
+            x: "-=2",
+            duration: 10,
+            onComplete: () => {
+                PhaserScene.tweens.add({
+                    targets: [globalObjects.pick, globalObjects.pickshadow],
+                    rotation: 0,
+                    x: "+=5",
+                    duration: 40,
+                    onComplete: () => {
+                        PhaserScene.tweens.add({
+                            targets: [globalObjects.pick, globalObjects.pickshadow],
+                            x: "-=3",
+                            duration: 40,
+                            ease: 'Back.easeOut',
+                        })
+                    },
+                })
+            },
+        })
+    } else {
+        let chanceAdd = gameVars.pinsFixed === 0 ? 30 : 0;
+        let randGen = Math.random() * 100;
+        console.log(((lockpickChance - 10) * 0.7 + gameVars.autoFailureIncrementChance) + chanceAdd);
+        if (randGen < ((lockpickChance - 10) * 0.7 + gameVars.autoFailureIncrementChance) + chanceAdd) {
+            // unlock success
+            setPin(true);
+            gameVars.autoFailureIncrementChance = 0;
+        } else {
+            gameVars.autoFailureIncrementChance = gameVars.autoFailureIncrementChance * 1.2 + lockpickChance * 0.21;
+            breakPick(true);
+
+        }
+    }
+
+
+}
+
+function showCheatAfterDelay() {
+
+}
+
+function showCheatOption() {
+    if (!gameVars.usingSkull && gameVars.picksLeft > 1) {
+        setTimeout(() => {
+            if (gameVars.picksLeft > 0) {
+                globalObjects.cheatButton.setState(NORMAL);
+                globalObjects.cheatButton.tweenToPos(-70, 150, 625, 'Back.easeOut');
+            }
+        }, 250)
+    }
+
+}
+
+function hideCheatOption() {
+    globalObjects.cheatButton.setState(DISABLE)
+    globalObjects.cheatButton.tweenToPos(-150, 150, 300, 'Cubic.easeOut')
 }

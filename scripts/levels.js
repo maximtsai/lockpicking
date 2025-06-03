@@ -409,10 +409,9 @@ function gotoNextLevel() {
 
 function gotoLevel(lvl, skipIntro = false) {
     if (gameVars.usingSkull) {
-        hideCheatOption();
         gameVars.usingSkull = false;
-
     }
+    hideCheatOption();
 
     gameVars.firstPickBroken = false;
     gameVars.showNextButton = false;
@@ -451,7 +450,7 @@ function gotoLevel(lvl, skipIntro = false) {
 
             let flavorStory = [
                 "",
-                "I prowl the Imperial City's underground,\nneeding coin to fund my heist for a\nvaluable scroll with a very generous\npayout.\n\nMy eyes notice an abandoned lockbox\nthat tempts me with easy pickings.",
+                "I prowl the Imperial City's underground,\nneeding coin to fund my heist after\nhearing rumors of a valuable scroll with\na very generous payout.\n\nMy eyes notice an abandoned lockbox\nthat tempts me with easy pickings.",
                 "With some spare coin and a seat at the\ntavern, I get information on the scroll's\nwhereabouts, but I need maps to help\nnavigate the way.\n\nThe tavern's backrooms contain\nsmuggler goods, only loosely guarded\nto anyone with the finesse to take\nits contents.",
                 "The scroll lies within the Imperial\nPalace, reachable through the sewers,\nbut a rusted grate bars the way.\n\nThe lock on it is sturdy but familiar, and\nshould yield as long as I'm careful.",
                 "I've reached the end of the sewers,\nbut a strange gate adorned with the\nroyal crest blocks my path.\n\nThe lock on this gate looks simple but\nI notice the glow of a tricky enchantment.\nI'll have to be careful with this one.",
@@ -601,7 +600,7 @@ function openLevelPopup() {
 function openCheatPopup() {
     let lvlContents = {};
     lvlContents.title = PhaserScene.add.text(gameConsts.halfWidth, 190, 'USE SKULL KEY?', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
-    lvlContents.body = PhaserScene.add.text(gameConsts.halfWidth, 325, "Less known cousin of the legendary unbreakable\nSkeleton Key. This special lockpick isn't quite as\npowerful, but it's still got a good few uses left.\n\nAllows you to \"auto-attempt\" the lock.", {fontFamily: 'kingthings', fontSize: 17, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0.5, 0.5);
+    lvlContents.body = PhaserScene.add.text(gameConsts.halfWidth, 325, "A special lockpick themed after the legendary\nSkeleton Key. This special tool is a lot more\ndurable than your normal lockpick.\n\nAllows you to \"auto-attempt\" the lock.", {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0.5, 0.5);
     lvlContents.image = PhaserScene.add.image(gameConsts.halfWidth, 239, 'lock', 'imagekey.png').setDepth(102).setScale(0.86);
     openPopup(lvlContents, true);
 
@@ -644,6 +643,9 @@ function openCheatPopup() {
         onMouseUp: () => {
             globalObjects.pickshadow.setVisible(false);
             globalObjects.pick.setFrame('pick_heart.png');
+            globalObjects.autopick.setState(NORMAL);
+            globalObjects.autopickText.setVisible(true);
+
             gameVars.usingSkull = true;
             globalObjects.pick.alpha = 0;
             playSound('scratch3');

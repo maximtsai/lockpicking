@@ -81,6 +81,7 @@ let gameVars = {
     usingSkull: false,
     picksLeft: 99,
     firstPickBroken: false,
+    autoFailureIncrementChance: 2
 
 };
 let loadObjects = {}; // Objects used in loading screen, removed once game starts
@@ -226,6 +227,7 @@ function update(time, delta) {
         if (globalObjects.keyboardControls.getLockJustDown()) {
             if (gameVars.hasPopup) {
                 closePopup();
+                showCheatAfterDelay();
             } else if (gameVars.showNextButton !== false) {
                 if (gameVars.currRoom === 'princess') {
                     if (gameVars.showNextButton === 6) {
