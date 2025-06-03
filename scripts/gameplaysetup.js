@@ -575,7 +575,6 @@ function pinMoveUp(pinNum) {
     }
     let dropDelay = Math.max(0, Math.floor(currPin.randDur * 2.1 - 135));
     let overrideCantOpen = currPin.randDur < 81;
-    console.log(currPin.randDur, dropDelay);
     if (overrideCantOpen) {
         dropDelay = 0;
     }
@@ -1842,7 +1841,6 @@ function attemptAutoLockpick() {
     } else {
         let chanceAdd = gameVars.pinsFixed === 0 ? 20 : 0;
         let randGen = Math.random() * 100;
-        console.log(((lockpickChance - 10) * 0.7 + gameVars.autoFailureIncrementChance) + chanceAdd);
         if (randGen < ((lockpickChance - 10) * 0.7 + gameVars.autoFailureIncrementChance) + chanceAdd) {
             // unlock success
             setPin(true);
