@@ -571,10 +571,11 @@ function pinMoveUp(pinNum) {
             }
 
         }
-        currPin.randDur = Math.max(75, 75 + randVal * 25);
+        currPin.randDur = Math.max(80, 80 + randVal * 26);
     }
-    let dropDelay = Math.max(0, Math.floor(currPin.randDur * 1.9 - 150));
+    let dropDelay = Math.max(0, Math.floor(currPin.randDur * 2.1 - 135));
     let overrideCantOpen = currPin.randDur < 81;
+    console.log(currPin.randDur, dropDelay);
     if (overrideCantOpen) {
         dropDelay = 0;
     }
@@ -582,7 +583,7 @@ function pinMoveUp(pinNum) {
         dropDelay += 20;
     }
 
-    currPin.currDelay = PhaserScene.time.delayedCall(Math.min(currPin.randDur - 1, Math.floor(currPin.randDur * 0.72) + 10), () => {
+    currPin.currDelay = PhaserScene.time.delayedCall(Math.min(currPin.randDur - 1, Math.floor(currPin.randDur * 0.72) + 7), () => {
         if (!overrideCantOpen) {
             gameVars.canLock = true;
             gameVars.canShowGreen = true;
@@ -604,7 +605,7 @@ function pinMoveUp(pinNum) {
 
                 }
             }, 10)
-            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3) + dropDelay * 1.6), () => {
+            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3) + dropDelay * 1.67), () => {
                 gameVars.canShowGreen = false;
                 setTimeout(() => {
                     gameVars.canLock = false;
@@ -670,7 +671,7 @@ function pinMoveUp(pinNum) {
 
                     currPin.secondLastRandVal = currPin.lastRandVal;
                     currPin.lastRandVal = randVal;
-                    currPin.randDur = Math.max(65, 60 + randVal * 32);
+                    currPin.randDur = Math.max(55, 55 + randVal * 35);
                 }
             })
         }
@@ -1070,6 +1071,7 @@ function showFail() {
         duration: 800
     })
     globalObjects.victory = {};
+    gameVars.usedSkull = false;
 
     globalObjects.victory.dark = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight - 11, 'lock', 'shadow.png').setScale(3).setDepth(50).setAlpha(0);
     globalObjects.victory.title = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.halfHeight - 36, 'FAILURE...', {fontFamily: 'kingthings', fontSize: 72, color: '#EE0011', align: 'center'}).setStroke('#000000', 10).setDepth(50).setOrigin(0.5, 0.5).setAlpha(0);
@@ -1593,7 +1595,7 @@ function openInstructPopup() {
 function openCreditsPopup() {
     let instructContent = {};
     instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, 'Credits', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
-    instructContent.goal = PhaserScene.add.text(gameConsts.halfWidth - 158, 228, 'Game by Maxim Tsai\nSFX from Soundimage.org and Freesound.org\nMusic from Suno\nFan game inspired by Elder Scrolls IV: Oblivion', {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0, 0.5);
+    instructContent.goal = PhaserScene.add.text(gameConsts.halfWidth - 158, 194, 'Game by Maxim Tsai\nSFX from Soundimage.org and Freesound.org\nMusic from Suno\nFan game inspired by Elder Scrolls IV: Oblivion', {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0, 0.5);
     instructContent.other = PhaserScene.add.text(gameConsts.halfWidth, 334, 'Check out my other games!', {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0.5, 0.5).setScale(0.9);
 
     openPopup(instructContent);
@@ -1782,10 +1784,10 @@ function getLockpickChance() {
             lockpickChance = 15;
             break;
         case 3:
-            lockpickChance = 12.5;
+            lockpickChance = 12;
             break;
         case 4:
-            lockpickChance = 12.5;
+            lockpickChance = 12;
             break;
         case 5:
             lockpickChance = 11;
@@ -1846,7 +1848,7 @@ function attemptAutoLockpick() {
             setPin(true);
             gameVars.autoFailureIncrementChance = 0;
         } else {
-            gameVars.autoFailureIncrementChance = gameVars.autoFailureIncrementChance * 1.3 + lockpickChance * 0.17 + 0.05 * chanceAdd;
+            gameVars.autoFailureIncrementChance = gameVars.autoFailureIncrementChance * 1.3 + lockpickChance * 0.16 + 0.05 * chanceAdd;
             breakPick(true);
 
         }
@@ -1860,7 +1862,7 @@ function showCheatAfterDelay() {
 }
 
 function showCheatOption() {
-    if (!gameVars.usingSkull && gameVars.picksLeft > 1) {
+    if (!gameVars.usingSkull && gameVars.picksLeft > 1 && !gameVars.usedSkull) {
         setTimeout(() => {
             if (gameVars.picksLeft > 0) {
                 globalObjects.cheatButton.setState(NORMAL);

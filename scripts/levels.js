@@ -453,7 +453,7 @@ function gotoLevel(lvl, skipIntro = false) {
                 "I prowl the Imperial City's underground,\nneeding coin to fund my heist after\nhearing rumors of a valuable scroll with\na very generous payout.\n\nMy eyes notice an abandoned lockbox\nthat tempts me with easy pickings.",
                 "With some spare coin and a seat at the\ntavern, I get information on the scroll's\nwhereabouts, but I need maps to help\nnavigate the way.\n\nThe tavern's backrooms contain\nsmuggler goods, only loosely guarded\nto anyone with the finesse to take\nits contents.",
                 "The scroll lies within the Imperial\nPalace, reachable through the sewers,\nbut a rusted grate bars the way.\n\nThe lock on it is sturdy but familiar, and\nshould yield as long as I'm careful.",
-                "I've reached the end of the sewers,\nbut a strange gate adorned with the\nroyal crest blocks my path.\n\nThe lock on this gate looks simple but\nI notice the glow of a tricky enchantment.\nI'll have to be careful with this one.",
+                "I've reached the end of the sewers,\nbut a strange gate adorned with the\nroyal crest blocks my path.\n\nThe lock on this gate looks simple but\nI notice the glow of an enchantment.\nI'll have to be careful with this one.",
                 "The vault-like door to the inner Palace\nstands before me, its locks a masterpiece\nof craftsmanship and enchantment.\n\nEvery known safeguard protects this\nbarrier, testing my skill to its limit.",
                 "I've finally reached the royal library,\na chamber of ancient tomes guarded\nby blind monks.\n\nI spot the scroll right away but a\nstar-shaped seal secures its contents.\n\nI sense this scroll hides secrets greater\nthan any treasure, but I've come too\nfar to stop now.",
                 "After much drinking and bragging about\nmy latest heist, a rival locksmith presents\nto me a contraption so complex it could\nbarely be called a lock anymore.\n\nThere's something devious about this\ndevice but my prior boasting prevents\nme from withdrawing from this\nchallenge.\n\nI'll bring extra picks just in case."
@@ -647,6 +647,7 @@ function openCheatPopup() {
             globalObjects.autopickText.setVisible(true);
 
             gameVars.usingSkull = true;
+            gameVars.usedSkull = true;
             globalObjects.pick.alpha = 0;
             playSound('scratch3');
             setPicksLeft(Math.max(gameVars.picksLeft, 30));
