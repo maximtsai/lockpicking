@@ -1097,7 +1097,7 @@ function showFail() {
         "The enchanted lock resets at my slightest\nmistake, sealing the door tight.",
         "The masterful lock defies my trembling hands,\nand the scroll remains beyond reach.",
         "I misjudge the star lock's shifting tumblers,\nand whatever secrets in the scroll are now sealed away.",
-        "My rival laughs at me as his devilish\ncontraption remains tightly locked."
+        "My rival laughs in my face as his devilish\ncontraption remains tightly locked."
     ]
     globalObjects.victory.extraText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, flavorText[gameVars.currLevel], {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
 
@@ -1420,7 +1420,7 @@ function openEpiloguePopup() {
     localStorage.setItem("latestLevel", "7");
     gameVars.latestLevel = 7;
     gameVars.showNextButton = false;
-    let text1 = "I grab the scroll, its eerie tingle fading as I slip out the library.";
+    let text1 = "I grab the scroll and slip out the library, its eerie tingle starting to fade.";
     let text2 = "Whispers of unknown truths brush my mind, but I shake them off."
     let text3 = "The scroll's value in coin is all that matters to me.";
     let text4 = "I escape, already scheming my next heist, blissfully unaware of the scroll's\ntrue power as I eagerly trade it for a quick fortune.";
@@ -1773,28 +1773,28 @@ function getLockpickChance() {
     let lockpickChance = 1; // out of 100
     switch(gameVars.currLevel) {
         case 0:
-            lockpickChance = 25;
+            lockpickChance = 20;
             break;
         case 1:
-            lockpickChance = 20;
+            lockpickChance = 15;
             break;
         case 2:
-            lockpickChance = 20;
+            lockpickChance = 15;
             break;
         case 3:
-            lockpickChance = 15;
+            lockpickChance = 12.5;
             break;
         case 4:
-            lockpickChance = 15;
+            lockpickChance = 12.5;
             break;
         case 5:
-            lockpickChance = 12;
+            lockpickChance = 11;
             break;
         case 6:
             lockpickChance = 10;
             break;
         case 7:
-            lockpickChance = 10;
+            lockpickChance = 9;
             break;
         default:
             lockpickChance = 10;
@@ -1838,7 +1838,7 @@ function attemptAutoLockpick() {
             },
         })
     } else {
-        let chanceAdd = gameVars.pinsFixed === 0 ? 30 : 0;
+        let chanceAdd = gameVars.pinsFixed === 0 ? 20 : 0;
         let randGen = Math.random() * 100;
         console.log(((lockpickChance - 10) * 0.7 + gameVars.autoFailureIncrementChance) + chanceAdd);
         if (randGen < ((lockpickChance - 10) * 0.7 + gameVars.autoFailureIncrementChance) + chanceAdd) {
@@ -1846,7 +1846,7 @@ function attemptAutoLockpick() {
             setPin(true);
             gameVars.autoFailureIncrementChance = 0;
         } else {
-            gameVars.autoFailureIncrementChance = gameVars.autoFailureIncrementChance * 1.2 + lockpickChance * 0.21;
+            gameVars.autoFailureIncrementChance = gameVars.autoFailureIncrementChance * 1.3 + lockpickChance * 0.17 + 0.05 * chanceAdd;
             breakPick(true);
 
         }

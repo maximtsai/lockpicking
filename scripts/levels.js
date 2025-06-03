@@ -609,10 +609,10 @@ function openCheatPopup() {
         normal: {
             atlas: 'buttons',
             ref: "menu_btn_normal.png",
-            x: gameConsts.halfWidth,
+            x: gameConsts.halfWidth - 55,
             y: gameConsts.halfHeight + 104,
-            scaleX: 0.65,
-            scaleY: 0.65,
+            scaleX: 0.48,
+            scaleY: 0.61,
             alpha: 1,
         },
         hover: {
@@ -663,8 +663,54 @@ function openCheatPopup() {
     });
     cheatButton.addText("USE KEY", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'});
     cheatButton.setDepth(103);
-
     extraContents["cheatbtn"] = cheatButton;
+
+    let hideButton = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "menu_btn_normal.png",
+            x: gameConsts.halfWidth + 54,
+            y: gameConsts.halfHeight + 104,
+            scaleX: 0.385,
+            scaleY: 0.61,
+            alpha: 1,
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "menu_btn_hover.png",
+            alpha: 1,
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "menu_btn_press.png",
+            alpha: 1,
+        },
+        disable: {
+            atlas: 'buttons',
+            ref: "menu_btn_press.png",
+            alpha: 0.5,
+        },
+        onHover: () => {
+            if (canvas) {
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            playSound('paperflip', 0.4);
+
+            hideCheatOption()
+            closePopup();
+        }
+    });
+    hideButton.addText("HIDE", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'});
+    hideButton.setDepth(103);
+
+    extraContents["hidebtn"] = hideButton;
 
     addPopupContents(extraContents);
 }
