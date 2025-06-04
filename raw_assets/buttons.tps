@@ -173,6 +173,22 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">buttons/arrow.png</key>
+            <key type="filename">buttons/arrow_hover.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>19,19,37,37</rect>
+                <key>scale9Paddings</key>
+                <rect>19,19,37,37</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">buttons/audio_mid.png</key>
             <key type="filename">buttons/audio_off.png</key>
             <key type="filename">buttons/audio_on.png</key>
@@ -275,6 +291,22 @@
                 <rect>63,21,125,41</rect>
                 <key>scale9Paddings</key>
                 <rect>63,21,125,41</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">buttons/lock.png</key>
+            <key type="filename">buttons/lock_hover.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>46,21,91,43</rect>
+                <key>scale9Paddings</key>
+                <rect>46,21,91,43</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

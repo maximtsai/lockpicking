@@ -149,7 +149,9 @@ function setupGame() {
     globalObjects.autopick.setDepth(2);
     globalObjects.autopick.setState(DISABLE);
 
-    globalObjects.autopickText = PhaserScene.add.text(gameConsts.halfWidth + 25, 457, "UNLOCK CHANCE: 1%", {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setVisible(false).setOrigin(0.5, 0.5);
+    setupTouchButtons();
+
+    globalObjects.autopickText = PhaserScene.add.text(gameConsts.halfWidth + 25, 457, "UNLOCK CHANCE: X%", {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setVisible(false).setOrigin(0.5, 0.5);
 
     globalObjects.pins = [];
     globalObjects.indicators = [];
@@ -186,6 +188,162 @@ function setupGame() {
 
     setRoom('practice');
 
+}
+
+function setupTouchButtons() {
+    let xOrigin = gameConsts.halfWidth + 275;
+    let yOrigin = 484;
+    globalObjects.virtualUp = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "arrow.png",
+            x: xOrigin,
+            y: yOrigin,
+            scaleX: 0.92,
+            scaleY: 0.92,
+            alpha: 0.7
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "arrow_hover.png",
+            alpha: 1
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "arrow_hover.png",
+            alpha: 0.85
+        },
+        onHover: () => {
+            if (canvas) {
+                playSound('click').detune = -50;
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            globalObjects.keyboardControls.virtuallySetKeyJustDown(Phaser.Input.Keyboard.KeyCodes.UP)
+        }
+    });
+    globalObjects.virtualUp.setDepth(2);
+
+    globalObjects.virtualLeft = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "arrow.png",
+            x: xOrigin - 67,
+            y: yOrigin,
+            scaleX: 0.92,
+            scaleY: 0.92,
+            alpha: 0.7,
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "arrow_hover.png",
+            alpha: 1
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "arrow_hover.png",
+            alpha: 0.85
+        },
+        onHover: () => {
+            if (canvas) {
+                playSound('click').detune = -50;
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            globalObjects.keyboardControls.virtuallySetKeyJustDown(Phaser.Input.Keyboard.KeyCodes.LEFT)
+        }
+    });
+    globalObjects.virtualLeft.setDepth(2);
+    globalObjects.virtualLeft.setRotation(-0.5 * Math.PI);
+
+
+    globalObjects.virtualRight = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "arrow.png",
+            x: xOrigin + 67,
+            y: yOrigin,
+            scaleX: 0.92,
+            scaleY: 0.92,
+            alpha: 0.7,
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "arrow_hover.png",
+            alpha: 1
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "arrow_hover.png",
+            alpha: 0.85
+        },
+        onHover: () => {
+            if (canvas) {
+                playSound('click').detune = -50;
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            globalObjects.keyboardControls.virtuallySetKeyJustDown(Phaser.Input.Keyboard.KeyCodes.RIGHT)
+        }
+    });
+    globalObjects.virtualRight.setDepth(2);
+    globalObjects.virtualRight.setRotation(0.5 * Math.PI);
+
+
+    globalObjects.virtualEnter = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "lock.png",
+            x: xOrigin,
+            y: yOrigin + 67,
+            scaleX: 0.96,
+            scaleY: 0.92,
+            alpha: 0.7,
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "lock_hover.png",
+            alpha: 1
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "lock_hover.png",
+            alpha: 0.85
+        },
+        onHover: () => {
+            if (canvas) {
+                playSound('click').detune = -50;
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            globalObjects.keyboardControls.virtuallySetKeyJustDown(Phaser.Input.Keyboard.KeyCodes.ENTER)
+        }
+    });
+    globalObjects.virtualEnter.setDepth(2);
 }
 
 function setupCheatButton() {
@@ -541,6 +699,7 @@ function pinMoveUp(pinNum) {
     }
 
     if (currPin.currAnim) {
+        currPin.inMotion = false;
         currPin.currAnim.stop();
     }
     if (!currPin.randDur) {
@@ -722,7 +881,6 @@ function tryLock() {
 }
 
 function setPin(isAuto) {
-
     let currPin = globalObjects.pins[gameVars.currentPin];
     let randSoundIdx = Math.floor(Math.random() * 4) + 1;
     let randSound = "scratch" + randSoundIdx;
@@ -730,6 +888,7 @@ function setPin(isAuto) {
     // playSound(Math.random() < 0.5 ? 'lockin1' : 'lockin2').detune = 100 - Math.random() * 200;
     // Lock
     if (currPin.currAnim) {
+        currPin.inMotion = false;
         currPin.currAnim.stop();
     }
     if (currPin.currSound) {
@@ -771,9 +930,9 @@ function setPin(isAuto) {
         if (gameVars.princessCounter === gameVars.pinsFixed) {
             gameVars.princessCounter++;
             let pinText = [
-                "The first tumbler unlocks, and I shake off\nan unnatural shiver.",
+                "The first tumbler unlocks, and I\nshake off an unnatural shiver.",
                 "",
-                "A glimpse of the past flashes and I blink it away.\nOr was that the future?",
+                "A vision of the past flashes and I blink\nit away. Or was that the future?",
                 "",
                 "The seal unravels, and the scroll is mine now,\nthough I dare not look at it.",
                 ""
@@ -1100,7 +1259,7 @@ function showFail() {
         "I misjudge the star lock's shifting tumblers,\nand whatever secrets in the scroll are now sealed away.",
         "My rival laughs in my face as his devilish\ncontraption remains tightly locked."
     ]
-    globalObjects.victory.extraText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, flavorText[gameVars.currLevel], {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
+    globalObjects.victory.extraText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, flavorText[gameVars.currLevel], {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 6).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
 
     globalObjects.victory.title.setScale(1.3).setAlpha(0);
     PhaserScene.tweens.add({
@@ -1805,11 +1964,9 @@ function getLockpickChance() {
 }
 
 function attemptAutoLockpick() {
-
-    if (gameVars.picksLeft <= 0) {
+    if (gameVars.picksLeft <= 0 || gameVars.tempCantAuto) {
         return;
     }
-
     let lockpickChance = getLockpickChance();
     globalObjects.autopickText.setText("UNLOCK CHANCE: "+lockpickChance+"%");
 
@@ -1844,10 +2001,15 @@ function attemptAutoLockpick() {
         if (randGen < ((lockpickChance - 10) * 0.7 + gameVars.autoFailureIncrementChance) + chanceAdd) {
             // unlock success
             setPin(true);
+            gameVars.tempCantAuto = true;
+            setTimeout(() => {
+                gameVars.tempCantAuto = false;
+            }, 260);
             gameVars.autoFailureIncrementChance = 0;
         } else {
             gameVars.autoFailureIncrementChance = gameVars.autoFailureIncrementChance * 1.3 + lockpickChance * 0.16 + 0.05 * chanceAdd;
             breakPick(true);
+            updatePickSpot();
 
         }
     }

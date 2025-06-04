@@ -136,7 +136,10 @@ class Button {
             this.imageRefs[stateData.ref].scaleY = stateData.scaleY;
         }
         if (stateData.origin !== undefined) {
-            this.setOrigin(origin.x, origin.y);
+            this.setOrigin(stateData.origin.x, stateData.origin.y);
+        }
+        if (stateData.rotation !== undefined) {
+            this.setRotation(stateData.rotation);
         }
 
         if (stateData.tint === undefined) {
@@ -274,6 +277,9 @@ class Button {
         this.hover.rotation = rot;
         this.press.rotation = rot;
         this.disable.rotation = rot;
+        for (let i in this.imageRefs) {
+            this.imageRefs[i].setRotation(rot);
+        }
         if (this.text) {
             this.text.setRotation(rot);
         }
