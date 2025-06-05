@@ -191,17 +191,19 @@ function setupGame() {
 }
 
 function setupTouchButtons() {
-    let xOrigin = gameConsts.halfWidth + 275;
-    let yOrigin = 484;
+    let scaleAmt = isMobile ? 0.92 : 0.84;
+    let offsetX = isMobile ? 68 : 63;
+    let xOrigin = gameConsts.halfWidth + (isMobile ? 275 : 285);
+    let yOrigin = isMobile ? 484 : 492;
     globalObjects.virtualUp = new Button({
         normal: {
             atlas: 'buttons',
             ref: "arrow.png",
             x: xOrigin,
             y: yOrigin,
-            scaleX: 0.92,
-            scaleY: 0.92,
-            alpha: 0.7
+            scaleX: scaleAmt,
+            scaleY: scaleAmt,
+            alpha: (isMobile ? 0.75 : 0.6)
         },
         hover: {
             atlas: 'buttons',
@@ -210,8 +212,13 @@ function setupTouchButtons() {
         },
         press: {
             atlas: 'buttons',
+            ref: "arrow.png",
+            alpha: 0.75
+        },
+        disable: {
+            atlas: 'buttons',
             ref: "arrow_hover.png",
-            alpha: 0.85
+            alpha: 0
         },
         onHover: () => {
             if (canvas) {
@@ -234,11 +241,11 @@ function setupTouchButtons() {
         normal: {
             atlas: 'buttons',
             ref: "arrow.png",
-            x: xOrigin - 67,
+            x: xOrigin - offsetX,
             y: yOrigin,
-            scaleX: 0.92,
-            scaleY: 0.92,
-            alpha: 0.7,
+            scaleX: scaleAmt,
+            scaleY: scaleAmt,
+            alpha: (isMobile ? 0.75 : 0.6),
         },
         hover: {
             atlas: 'buttons',
@@ -247,8 +254,13 @@ function setupTouchButtons() {
         },
         press: {
             atlas: 'buttons',
+            ref: "arrow.png",
+            alpha: 0.75
+        },
+        disable: {
+            atlas: 'buttons',
             ref: "arrow_hover.png",
-            alpha: 0.85
+            alpha: 0
         },
         onHover: () => {
             if (canvas) {
@@ -273,11 +285,11 @@ function setupTouchButtons() {
         normal: {
             atlas: 'buttons',
             ref: "arrow.png",
-            x: xOrigin + 67,
+            x: xOrigin + offsetX,
             y: yOrigin,
-            scaleX: 0.92,
-            scaleY: 0.92,
-            alpha: 0.7,
+            scaleX: scaleAmt,
+            scaleY: scaleAmt,
+            alpha: (isMobile ? 0.75 : 0.6),
         },
         hover: {
             atlas: 'buttons',
@@ -286,8 +298,13 @@ function setupTouchButtons() {
         },
         press: {
             atlas: 'buttons',
+            ref: "arrow.png",
+            alpha: 0.75
+        },
+        disable: {
+            atlas: 'buttons',
             ref: "arrow_hover.png",
-            alpha: 0.85
+            alpha: 0
         },
         onHover: () => {
             if (canvas) {
@@ -313,10 +330,10 @@ function setupTouchButtons() {
             atlas: 'buttons',
             ref: "lock.png",
             x: xOrigin,
-            y: yOrigin + 67,
-            scaleX: 0.96,
-            scaleY: 0.92,
-            alpha: 0.7,
+            y: yOrigin + (isMobile ? 70 : 63),
+            scaleX: (isMobile ? 0.96 : 0.88),
+            scaleY: scaleAmt,
+            alpha: (isMobile ? 0.75 : 0.6),
         },
         hover: {
             atlas: 'buttons',
@@ -326,7 +343,12 @@ function setupTouchButtons() {
         press: {
             atlas: 'buttons',
             ref: "lock_hover.png",
-            alpha: 0.85
+            alpha: 0.75
+        },
+        disable: {
+            atlas: 'buttons',
+            ref: "lock_hover.png",
+            alpha: 0
         },
         onHover: () => {
             if (canvas) {
@@ -344,6 +366,18 @@ function setupTouchButtons() {
         }
     });
     globalObjects.virtualEnter.setDepth(2);
+
+    globalObjects.virtualUpUnder = PhaserScene.add.image(globalObjects.virtualUp.getXPos(), globalObjects.virtualUp.getYPos(), 'buttons', 'arrow_hover.png');
+    globalObjects.virtualUpUnder.setScale(globalObjects.virtualUp.getScaleX()).setAlpha(0);
+
+    globalObjects.virtualLeftUnder = PhaserScene.add.image(globalObjects.virtualLeft.getXPos(), globalObjects.virtualLeft.getYPos(), 'buttons', 'arrow_hover.png');
+    globalObjects.virtualLeftUnder.setScale(globalObjects.virtualLeft.getScaleX()).setRotation(-0.5*Math.PI).setAlpha(0);
+
+    globalObjects.virtualRightUnder = PhaserScene.add.image(globalObjects.virtualRight.getXPos(), globalObjects.virtualRight.getYPos(), 'buttons', 'arrow_hover.png');
+    globalObjects.virtualRightUnder.setScale(globalObjects.virtualRight.getScaleX()).setRotation(0.5*Math.PI).setAlpha(0);
+
+    globalObjects.virtualEnterUnder = PhaserScene.add.image(globalObjects.virtualEnter.getXPos(), globalObjects.virtualEnter.getYPos(), 'buttons', 'lock_hover.png');
+    globalObjects.virtualEnterUnder.setScale(globalObjects.virtualEnter.getScaleX(), globalObjects.virtualEnter.getScaleY()).setAlpha(0);
 }
 
 function setupCheatButton() {
@@ -1217,6 +1251,7 @@ function resetPick(setToZero = true) {
 function showFail() {
     hideAutoPick();
     hideCheatOption();
+    hideVirtualButtons();
     if (globalObjects.infoText.currAnim) {
         globalObjects.infoText.currAnim.stop();
         globalObjects.infoText.alpha = 0;
@@ -1277,9 +1312,9 @@ function showFail() {
                     atlas: 'buttons',
                     ref: "menu_btn_normal.png",
                     x: gameConsts.halfWidth,
-                    y: gameConsts.halfHeight + 30,
-                    scaleX: 0.62,
-                    scaleY: 0.62
+                    y: gameConsts.halfHeight + 31,
+                    scaleX: 0.85,
+                    scaleY: 0.85
                 },
                 hover: {
                     atlas: 'buttons',
@@ -1308,8 +1343,7 @@ function showFail() {
                 }
             });
             gameVars.showNextButton = gameVars.currLevel ? gameVars.currLevel : 0;
-            globalObjects.victory.retry.addText("RETRY", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
-            globalObjects.victory.retry.setTextOffset(0, 1);
+            globalObjects.victory.retry.addText("RETRY", {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'});
             globalObjects.victory.retry.setDepth(51);
         }
     })
@@ -1332,6 +1366,7 @@ function hideAutoPick() {
 function slideOpenLock() {
     hideAutoPick();
     hideCheatOption();
+    hideVirtualButtons();
     playSound('success', 1.1);
     if (globalObjects.playUponUnlock) {
         for (let i in globalObjects.playUponUnlock) {
@@ -1433,8 +1468,8 @@ function slideOpenLock() {
                             ref: "menu_btn_normal.png",
                             x: gameConsts.halfWidth,
                             y: gameConsts.halfHeight + 30,
-                            scaleX: 0.62,
-                            scaleY: 0.62
+                            scaleX: 0.8,
+                            scaleY: 0.8
                         },
                         hover: {
                             atlas: 'buttons',
@@ -1476,7 +1511,7 @@ function slideOpenLock() {
                     if (gameVars.currRoom === 'challenge') {
                         buttonText = "RETURN";
                     }
-                    globalObjects.victory.nextLvl.addText(buttonText, {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
+                    globalObjects.victory.nextLvl.addText(buttonText, {fontFamily: 'kingthings', fontSize: 28, color: '#000000', align: 'center'});
                     globalObjects.victory.nextLvl.setTextOffset(0, 1);
                     globalObjects.victory.nextLvl.setDepth(51);
                 }
@@ -2036,4 +2071,18 @@ function showCheatOption() {
 function hideCheatOption() {
     globalObjects.cheatButton.setState(DISABLE)
     globalObjects.cheatButton.tweenToPos(-150, 150, 300, 'Cubic.easeOut')
+}
+
+function hideVirtualButtons() {
+    globalObjects.virtualLeft.setState(DISABLE);
+    globalObjects.virtualRight.setState(DISABLE);
+    globalObjects.virtualUp.setState(DISABLE);
+    globalObjects.virtualEnter.setState(DISABLE);
+}
+
+function showVirtualButtons() {
+    globalObjects.virtualLeft.setState(NORMAL);
+    globalObjects.virtualRight.setState(NORMAL);
+    globalObjects.virtualUp.setState(NORMAL);
+    globalObjects.virtualEnter.setState(NORMAL);
 }

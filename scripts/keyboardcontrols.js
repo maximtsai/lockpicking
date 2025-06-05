@@ -80,6 +80,33 @@ class KeyboardControls {
             || this.virtualKeyJustDown[Phaser.Input.Keyboard.KeyCodes.ENTER]
     }
 
+
+    getLeftIsDown() {
+        return this.getKeyIsDown(Phaser.Input.Keyboard.KeyCodes.LEFT)
+            || this.getKeyIsDown(Phaser.Input.Keyboard.KeyCodes.A)
+            || this.getKeyIsDown(Phaser.Input.Keyboard.KeyCodes.Q)
+            || this.getKeyIsDown(Phaser.Input.Keyboard.KeyCodes.Z)
+    }
+
+    getRightIsDown() {
+        return this.getKeyIsDown(Phaser.Input.Keyboard.KeyCodes.RIGHT)
+            || this.getKeyIsDown(Phaser.Input.Keyboard.KeyCodes.E)
+            || this.getKeyIsDown(Phaser.Input.Keyboard.KeyCodes.D)
+            || this.getKeyIsDown(Phaser.Input.Keyboard.KeyCodes.X)
+    }
+
+    getUpIsDown() {
+        return this.getKeyIsDown(Phaser.Input.Keyboard.KeyCodes.UP)
+            || this.getKeyIsDown(Phaser.Input.Keyboard.KeyCodes.W)
+    }
+
+    getLockIsDown() {
+        return this.getKeyIsDown(Phaser.Input.Keyboard.KeyCodes.ENTER)
+            || this.getKeyIsDown(Phaser.Input.Keyboard.KeyCodes.SPACE)
+            || this.getKeyIsDown(Phaser.Input.Keyboard.KeyCodes.S)
+            || this.getKeyIsDown(Phaser.Input.Keyboard.KeyCodes.DOWN)
+    }
+
     getOneOfKeysIsDown(keyCode) {
         for (let i in keyCode) {
             let code = keyCode[i];

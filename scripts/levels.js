@@ -412,7 +412,6 @@ function gotoLevel(lvl, skipIntro = false) {
         gameVars.usingSkull = false;
     }
     hideCheatOption();
-
     gameVars.firstPickBroken = false;
     gameVars.showNextButton = false;
     gameVars.currLevel = lvl;
@@ -429,6 +428,7 @@ function gotoLevel(lvl, skipIntro = false) {
         ease: 'Quad.easeOut',
         duration: 200,
         onComplete: () => {
+            showVirtualButtons();
             hideGlobalClickBlocker();
             globalObjects.pick.setFrame('pick.png');
             globalObjects.pickshadow.setVisible(true);
@@ -529,7 +529,7 @@ function openLevelPopup() {
         "Level 7: Challenge!"];
     let levelNamesAlt = [
         "Training",
-        "Level 1: Escape",
+        "Level 1: Lockbox",
         "Level 2",
         "Level 3",
         "Level 4",

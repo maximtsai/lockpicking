@@ -249,6 +249,49 @@ function update(time, delta) {
                 tryLock();
             }
         }
+
+        if (globalObjects.virtualUp.getState() === NORMAL) {
+            if (globalObjects.keyboardControls.getLeftIsDown()) {
+                globalObjects.virtualLeftUnder.setAlpha(1);
+            } else {
+                globalObjects.virtualLeftUnder.alpha -= 0.001;
+                if (globalObjects.virtualLeftUnder.alpha < 0.996) {
+                    globalObjects.virtualLeftUnder.alpha = 0;
+                }
+            }
+
+            if (globalObjects.keyboardControls.getRightIsDown()) {
+                globalObjects.virtualRightUnder.setAlpha(1);
+            } else {
+                globalObjects.virtualRightUnder.alpha -= 0.001;
+                if (globalObjects.virtualRightUnder.alpha < 0.996) {
+                    globalObjects.virtualRightUnder.alpha = 0;
+                }
+            }
+            if (globalObjects.keyboardControls.getUpIsDown()) {
+                globalObjects.virtualUpUnder.setAlpha(1);
+            } else {
+                globalObjects.virtualUpUnder.alpha -= 0.001;
+                if (globalObjects.virtualUpUnder.alpha < 0.996) {
+                    globalObjects.virtualUpUnder.alpha = 0;
+                }
+            }
+
+            if (globalObjects.keyboardControls.getLockIsDown()) {
+                globalObjects.virtualEnterUnder.setAlpha(1);
+            } else {
+                globalObjects.virtualEnterUnder.alpha -= 0.001;
+                if (globalObjects.virtualEnterUnder.alpha < 0.996) {
+                    globalObjects.virtualEnterUnder.alpha = 0;
+                }
+            }
+        } else {
+            globalObjects.virtualLeftUnder.alpha = 0;
+            globalObjects.virtualRightUnder.alpha = 0;
+            globalObjects.virtualUpUnder.alpha = 0;
+            globalObjects.virtualEnterUnder.alpha = 0;
+        }
+
         if (globalObjects.currBackground) {
             let goalXOffset = (gameConsts.halfWidth -gameVars.mouseposx) * 0.025;// + gameConsts.halfWidth;
             let goalYOffset = (gameConsts.halfHeight -gameVars.mouseposy) * 0.025;// - gameConsts.halfHeight;
