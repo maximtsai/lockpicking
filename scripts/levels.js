@@ -412,6 +412,8 @@ function gotoLevel(lvl, skipIntro = false) {
         gameVars.usingSkull = false;
     }
     hideCheatOption();
+    hideAutoPick();
+
     gameVars.firstPickBroken = false;
     gameVars.showNextButton = false;
     gameVars.currLevel = lvl;
