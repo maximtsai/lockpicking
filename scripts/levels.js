@@ -101,12 +101,12 @@ function loadPracticeRoom() {
         })
     }
     swapMusic('quietshadows');
-    createPins(2);
+    createPins(3);
     setPicksLeft(99);
     for (let i in globalObjects.indicators) {
         globalObjects.indicators[i].visible = true;
     }
-    globalObjects.currBackground.setFrame('door.png').setScale(2);
+    globalObjects.currBackground.setFrame('skull.png').setScale(1.37);
     globalObjects.mechanism.setFrame('mechanism.png');
     globalObjects.lock.setFrame('lock.png');
     let arrowLeft = PhaserScene.add.image(42, gameConsts.height - 116, 'ui', 'arrow.png').setRotation(Math.PI*-0.5).setScale(0.8);
@@ -144,8 +144,28 @@ function loadPracticeRoom() {
 }
 
 function loadEscapeRoom() {
+    swapMusic('quietshadows');
+    globalObjects.currBackground.setFrame('loot.png').setScale(1.36);
+    globalObjects.mechanism.setFrame('mechanism_bar.png');
+    globalObjects.lock.setFrame('padlock.png');
+    let lockswivel = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'padlock_swivel.png').setDepth(-1);
+    globalObjects.extras.push(lockswivel);
+    globalObjects.playUponUnlock = [() => {
+        PhaserScene.tweens.add({
+            targets: lockswivel,
+            y: "-=22",
+            ease: 'Quart.easeOut',
+            duration: 400
+        })
+    }]
+    createPins(1);
+    setPicksLeft(3);
+    globalObjects.roomTitle.setText('LOCKBOX');
+}
+
+function loadClothesRoom() {
     swapMusic('lili');
-    globalObjects.currBackground.setFrame('bars.png').setScale(2);
+    globalObjects.currBackground.setFrame('shop.png').setScale(1.37);
     globalObjects.mechanism.setFrame('mechanism_bar.png');
     globalObjects.lock.setFrame('padlock.png');
 
@@ -162,34 +182,12 @@ function loadEscapeRoom() {
     }]
     createPins(2);
     setPicksLeft(3);
-    globalObjects.roomTitle.setText('ESCAPE')
-}
-
-function loadClothesRoom() {
-    swapMusic('lili');
-    globalObjects.currBackground.setFrame('clothes.png').setScale(2);
-    globalObjects.mechanism.setFrame('mechanism_bar.png');
-    globalObjects.lock.setFrame('padlock.png');
-
-
-    let lockswivel = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'padlock_swivel.png').setDepth(-1);
-    globalObjects.extras.push(lockswivel);
-    globalObjects.playUponUnlock = [() => {
-        PhaserScene.tweens.add({
-            targets: lockswivel,
-            y: "-=22",
-            ease: 'Quart.easeOut',
-            duration: 400
-        })
-    }]
-    createPins(3);
-    setPicksLeft(3);
-    globalObjects.roomTitle.setText('CLOTHIER')
+    globalObjects.roomTitle.setText('TAVERN')
 }
 
 function loadGateRoom() {
-    swapMusic('indeep');
-    globalObjects.currBackground.setFrame('gate.png').setScale(2);
+    swapMusic('lili');
+    globalObjects.currBackground.setFrame('sewer.png').setScale(1.37);
     globalObjects.mechanism.setFrame('mechanism_bar.png');
     globalObjects.lock.setFrame('security_lock.png');
 
@@ -223,14 +221,14 @@ function loadGateRoom() {
             }
         });
     }]
-    createPins(4);
+    createPins(3);
     setPicksLeft(3);
-    globalObjects.roomTitle.setText('GATES')
+    globalObjects.roomTitle.setText('SEWER')
 }
 
 function loadEnchantedRoom() {
     swapMusic('indeep');
-    globalObjects.currBackground.setFrame('door.png').setScale(2);
+    globalObjects.currBackground.setFrame('gates.png').setScale(1.37);
     globalObjects.mechanism.setFrame('mechanismgold.png');
     globalObjects.lock.setFrame('goldenlock.png');
 
@@ -246,13 +244,13 @@ function loadEnchantedRoom() {
     globalObjects.extras.push(bar4);
     globalObjects.playUponUnlock = [() => {
         PhaserScene.tweens.add({
-            delay: 150, targets: bar1, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+            delay: 90, targets: bar1, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
         })
         PhaserScene.tweens.add({
             delay: 0, targets: bar2, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
         })
         PhaserScene.tweens.add({
-            delay: 150, targets: bar3, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+            delay: 90, targets: bar3, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
         })
         PhaserScene.tweens.add({
             delay: 0, targets: bar4, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
@@ -261,12 +259,12 @@ function loadEnchantedRoom() {
 
     createPins(3, true);
     setPicksLeft(3);
-    globalObjects.roomTitle.setText('ENCHANTED DOOR')
+    globalObjects.roomTitle.setText('ENCHANTED GATE')
 }
 
 function loadCrownRoom() {
     swapMusic('indeep');
-    globalObjects.currBackground.setFrame('bedroom.png').setScale(2);
+    globalObjects.currBackground.setFrame('magic.png').setScale(1.37);
     globalObjects.mechanism.setFrame('mechanismgold.png');
     globalObjects.lock.setFrame('goldenlock.png');
 
@@ -283,13 +281,13 @@ function loadCrownRoom() {
     globalObjects.extras.push(bar4);
     globalObjects.playUponUnlock = [() => {
         PhaserScene.tweens.add({
-            delay: 150, targets: bar1, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+            delay: 90, targets: bar1, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
         })
         PhaserScene.tweens.add({
             delay: 0, targets: bar2, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
         })
         PhaserScene.tweens.add({
-            delay: 150, targets: bar3, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
+            delay: 90, targets: bar3, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
         })
         PhaserScene.tweens.add({
             delay: 0, targets: bar4, scaleY: 1.45, ease: 'Quart.easeOut', duration: 400
@@ -297,13 +295,14 @@ function loadCrownRoom() {
     }]
     createPins(4, true);
     setPicksLeft(3);
-    globalObjects.roomTitle.setText("THE CROWN")
+    globalObjects.roomTitle.setText("PALACE DOOR")
+
 }
 
 function loadPrincessRoom() {
     swapMusic('princess');
     gameVars.princessCounter = 1;
-    globalObjects.currBackground.setFrame('princess.png').setScale(1.3);
+    globalObjects.currBackground.setFrame('stairs.png').setScale(1.37);
     globalObjects.mechanism.setFrame('blank.png');
     globalObjects.lock.setFrame('heartlock.png');
 
@@ -328,7 +327,7 @@ function loadPrincessRoom() {
     globalObjects.extras.push(heartPulse);
 
 
-    let shadow = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'heartlockshadow.png').setDepth(-9).setScale(2);
+    let shadow = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'heartlockshadow.png').setDepth(-9).setScale(1.37);
     globalObjects.extras.push(shadow);
     globalObjects.playUponUnlock = [() => {
         heartPulse.anim1.stop();
@@ -340,11 +339,11 @@ function loadPrincessRoom() {
     }]
     createPins(5, true);
     setPicksLeft(4);
-    globalObjects.roomTitle.setText('THE PRINCESS')
+    globalObjects.roomTitle.setText('SEALED SCROLL')
 }
 
 function loadChallengeRoom() {
-    globalObjects.currBackground.setFrame('workbench2.png').setScale(2);
+    globalObjects.currBackground.setFrame('workbench2.png').setScale(1.37);
     globalObjects.mechanism.setFrame('mechanism_bar_many.png');
     globalObjects.lock.setFrame('masterlock.png');
 
@@ -374,7 +373,7 @@ function loadChallengeRoom() {
             duration: 500,
         })
         globalObjects.infoText.setAlpha(0);
-        globalObjects.infoText.setText("The over-engineered lock comes undone and\nmy rival stands with his mouth agape.")
+        globalObjects.infoText.setText("The lock practically falls apart once I crack it open.\nMy rival weeps while I stand victorious.")
         if (globalObjects.infoText.currAnim) {
             globalObjects.infoText.currAnim.stop();
         }
@@ -399,14 +398,21 @@ function loadChallengeRoom() {
     globalObjects.roomTitle.setText('CHALLENGE')
 }
 
-
-
 function gotoNextLevel() {
     let levelToGo = (gameVars.currLevel !== undefined) ? gameVars.currLevel + 1 : 0;
     gotoLevel(levelToGo);
 }
 
 function gotoLevel(lvl, skipIntro = false) {
+
+    if (gameVars.usingSkull) {
+        gameVars.usingSkull = false;
+    }
+    gameVars.usedSkull = false;
+
+    hideCheatOption();
+    gameVars.firstPickBroken = false;
+
     gameVars.showNextButton = false;
     gameVars.currLevel = lvl;
     createGlobalClickBlocker(false)
@@ -422,6 +428,7 @@ function gotoLevel(lvl, skipIntro = false) {
         ease: 'Quad.easeOut',
         duration: 200,
         onComplete: () => {
+            showVirtualButtons();
             let loadingText = PhaserScene.add.text(gameConsts.halfWidth,gameConsts.halfHeight, 'LOADING...', {fontFamily: 'kingthings', fontSize: 32, color: '#FFFFFF', align: 'center'}).setDepth(1999).setOrigin(0.5, 0.5).setAlpha(0);
             if (globalObjects.victory) {
                 for (let i in globalObjects.victory) {
@@ -457,13 +464,13 @@ function gotoLevel(lvl, skipIntro = false) {
 
                 let flavorStory = [
                     "",
-                    "I'm caught in chains after a botched theft,\na reminder of the risks I take for treasures\nlike the crown.\n\nFortunately the cell lock is of shoddy make.\nWith some finesse, I'll be able to get out.",
-                    "To slip into the castle unnoticed, I need\nfiner clothes to blend in.\n\nThe clothier lock is sturdy, but I’m confident\nmy tools can handle it. I'll break in and claim\nthe attire I need.",
-                    "The castle looms before me, but the outer\ngates stand in my way. Their locks are well\ncrafted, but familiar.\n\nI find a blind spot in the guards' patrols\nand start my work.",
-                    "An unassuming door blocks my path to the\nupper floors. Its lock glows with tricky\nenchantments that reset at the slightest\nmistake.\n\nI steady my hands to unravel its magic.",
-                    "The treasury door stands before me, the\ncrown mere steps beyond.\n\nThe lock I face is a masterpiece of\ncraftsmanship and enchantment. Every\nknown safeguard fortifies this final barrier.",
-                    "The crown is within my grasp, but I stumble\ninto a startled young princess who looks\nup from her stuffed toy.\n\nI must win her trust quickly to keep her from\ncalling the guards.\n\nThis is a challenge greater than any lock, so\nI approach with care, as one wrong move could\nend my heist.",
-                    "A rival locksmith unveils a contraption\nso complex it could barely be called a lock\nanymore. There's something devious about\nthis device but I’ve never backed down from\na challenge.\n\nI'll bring extra picks just in case."
+                    "I prowl the Imperial City's underground,\nneeding coin to fund my heist after\nhearing rumors of a valuable scroll with\na very generous payout.\n\nMy eyes notice an abandoned lockbox\nthat tempts me with easy pickings.",
+                    "With some spare coin and a seat at the\ntavern, I get information on the scroll's\nwhereabouts, but I need maps to help\nnavigate the way.\n\nThe tavern's backrooms contain\nsmuggler goods, only loosely guarded\nto anyone with the finesse to take\nits contents.",
+                    "The scroll lies within the Imperial\nPalace, reachable through the sewers,\nbut a rusted grate bars the way.\n\nThe lock on it is sturdy but familiar, and\nshould yield as long as I'm careful.",
+                    "I've reached the end of the sewers,\nbut a strange gate adorned with the\nroyal crest blocks my path.\n\nThe lock on this gate looks simple but\nI notice the glow of an enchantment.\nI'll have to be careful with this one.",
+                    "The vault-like door to the inner Palace\nstands before me, its locks a masterpiece\nof craftsmanship and enchantment.\n\nEvery known safeguard protects this\nbarrier, testing my skill to its limit.",
+                    "I've finally reached the royal library,\na chamber of ancient tomes guarded\nby blind monks.\n\nI spot the scroll right away but a\nstar-shaped seal secures its contents.\n\nI sense this scroll hides secrets greater\nthan any treasure, but I've come too\nfar to stop now.",
+                    "After much drinking and bragging about\nmy latest heist, a rival locksmith presents\nto me a contraption so complex it could\nbarely be called a lock anymore.\n\nThere's something devious about this\ndevice but my prior boasting prevents\nme from withdrawing from this\nchallenge.\n\nI'll bring extra picks just in case."
                 ]
 
                 switch(lvl) {
@@ -496,12 +503,12 @@ function gotoLevel(lvl, skipIntro = false) {
                 }
                 let levelNames = [
                     "Training",
-                    "Level 1: Escape",
-                    "Level 2: Suiting Up",
-                    "Level 3: Palace Gate",
-                    "Level 4: Enchanted Door",
-                    "Level 5: The Crown",
-                    "Level 6: The Princess?",
+                    "Level 1: Lockbox",
+                    "Level 2: Tavern",
+                    "Level 3: Sewer",
+                    "Level 4: Enchanted Gate",
+                    "Level 5: Palace Door",
+                    "Level 6: Sealed Scroll",
                     "Level 7: Challenge"];
                 if (lvl > 0 && !skipIntro) {
                     setTimeout(() => {
@@ -528,16 +535,16 @@ function openLevelPopup() {
 
     let levelNames = [
         "Training",
-        "Level 1: Escape",
-        "Level 2: Dressing Up",
-        "Level 3: Palace Gate",
-        "Level 4: Enchanted Door",
-        "Level 5: The Crown",
-        "Level 6: The Princess?",
+        "Level 1: Lockbox",
+        "Level 2: Tavern",
+        "Level 3: Sewer",
+        "Level 4: Enchanted Gate",
+        "Level 5: Palace Door",
+        "Level 6: Sealed Scroll",
         "Level 7: Challenge!"];
     let levelNamesAlt = [
         "Training",
-        "Level 1: Escape",
+        "Level 1: Lockbox",
         "Level 2",
         "Level 3",
         "Level 4",
@@ -603,6 +610,215 @@ function openLevelPopup() {
 
     addPopupContents(extraContents);
 }
+
+function openCheatPopup() {
+    let lvlContents = {};
+    lvlContents.title = PhaserScene.add.text(gameConsts.halfWidth, 187, 'USE SKULL KEY?', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+    lvlContents.body = PhaserScene.add.text(gameConsts.halfWidth, 333, "A special lockpick themed after the legendary\nSkeleton Key. This tool is a lot more durable\nthan your normal lockpick.\n\nAllows you to \"auto-attempt\" the lock.", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0.5, 0.5);
+    lvlContents.image = PhaserScene.add.image(gameConsts.halfWidth, 241, 'lock', 'imagekey.png').setDepth(102).setScale(0.86);
+    openPopup(lvlContents, true);
+    let extraContents = {};
+    let cheatButton = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "menu_btn_normal.png",
+            x: gameConsts.halfWidth - 55,
+            y: gameConsts.halfHeight + 115,
+            scaleX: 0.48,
+            scaleY: 0.61,
+            alpha: 1,
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "menu_btn_hover.png",
+            alpha: 1,
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "menu_btn_press.png",
+            alpha: 1,
+        },
+        disable: {
+            atlas: 'buttons',
+            ref: "menu_btn_press.png",
+            alpha: 0.5,
+        },
+        onHover: () => {
+            if (canvas) {
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            let blackPixelTemp = PhaserScene.add.image(gameConsts.halfWidth,gameConsts.halfHeight, 'blackPixel').setScale(600).setDepth(9999);
+            let lock = PhaserScene.add.image(gameConsts.halfWidth,gameConsts.halfHeight, 'ui', 'lock.png').setDepth(9999).setScale(1.25);
+            createGlobalClickBlocker(false);
+            let AdStarted = false;
+            let quarterRot = 0.5 * Math.PI;
+            lock.currAnim = PhaserScene.tweens.add({
+                targets: lock,
+                rotation: "+=" + quarterRot,
+                duration: 900,
+                completeDelay: 600,
+                ease: 'Quart.easeIn',
+                onComplete: () => {
+            lock.currAnim = PhaserScene.tweens.add({
+                targets: lock,
+                rotation: "+=" + quarterRot,
+                duration: 900,
+                completeDelay: 600,
+                ease: 'Quart.easeIn',
+                onComplete: () => {
+            lock.currAnim = PhaserScene.tweens.add({
+                targets: lock,
+                rotation: "+=" + quarterRot,
+                duration: 900,
+                completeDelay: 600,
+                ease: 'Quart.easeIn',
+                onComplete: () => {
+            lock.currAnim = PhaserScene.tweens.add({
+                targets: lock,
+                rotation: "+=" + quarterRot,
+                duration: 900,
+                completeDelay: 600,
+                ease: 'Quart.easeIn',
+                onComplete: () => {
+                    if (!AdStarted) {
+                        PhaserScene.tweens.add({
+                            targets: [blackPixelTemp, lock],
+                            alpha: 0,
+                            duration: 500
+                        })
+                        hideGlobalClickBlocker();
+
+                        globalObjects.pickshadow.setVisible(false);
+                        globalObjects.pick.setFrame('pick_heart.png');
+                        globalObjects.autopick.setState(NORMAL);
+                        globalObjects.autopickText.setVisible(true);
+                        gameVars.usingSkull = true;
+                        gameVars.usedSkull = true;
+                        globalObjects.pick.alpha = 0;
+                        playSound('scratch3');
+                        setPicksLeft(Math.max(gameVars.picksLeft, 30));
+                        PhaserScene.tweens.add({
+                            targets: globalObjects.pick,
+                            alpha: 1,
+                            duration: 900,
+                            ease: 'Cubic.easeOut'
+                        });
+                    }
+                }
+            })
+                }
+            })
+                }
+            })
+                }
+            })
+
+            hideCheatOption();
+            closePopup();
+
+            sdkShowRewardAd(() => {
+                AdStarted = true;
+            }, () => {
+                blackPixelTemp.destroy();
+                lock.destroy();
+                hideGlobalClickBlocker();
+
+                globalObjects.pickshadow.setVisible(false);
+                globalObjects.pick.setFrame('pick_heart.png');
+                globalObjects.autopick.setState(NORMAL);
+                globalObjects.autopickText.setVisible(true);
+                gameVars.usingSkull = true;
+                gameVars.usedSkull = true;
+                globalObjects.pick.alpha = 0;
+                playSound('scratch3');
+                setPicksLeft(Math.max(gameVars.picksLeft, 30));
+                PhaserScene.tweens.add({
+                    targets: globalObjects.pick,
+                    alpha: 1,
+                    duration: 900,
+                    ease: 'Cubic.easeOut'
+                })
+            }, () => {
+                blackPixelTemp.destroy();
+                lock.destroy();
+                hideGlobalClickBlocker();
+
+                globalObjects.pickshadow.setVisible(false);
+                globalObjects.pick.setFrame('pick_heart.png');
+                globalObjects.autopick.setState(NORMAL);
+                globalObjects.autopickText.setVisible(true);
+                gameVars.usingSkull = true;
+                gameVars.usedSkull = true;
+                globalObjects.pick.alpha = 0;
+                playSound('scratch3');
+                setPicksLeft(Math.max(gameVars.picksLeft, 30));
+                PhaserScene.tweens.add({
+                    targets: globalObjects.pick,
+                    alpha: 1,
+                    duration: 900,
+                    ease: 'Cubic.easeOut'
+                })
+            }) 
+        }
+    });
+    cheatButton.addText("USE KEY", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'});
+    cheatButton.setDepth(103);
+    extraContents["cheatbtn"] = cheatButton;
+    let hideButton = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "menu_btn_normal.png",
+            x: gameConsts.halfWidth + 54,
+            y: gameConsts.halfHeight + 115,
+            scaleX: 0.385,
+            scaleY: 0.61,
+            alpha: 1,
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "menu_btn_hover.png",
+            alpha: 1,
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "menu_btn_press.png",
+            alpha: 1,
+        },
+        disable: {
+            atlas: 'buttons',
+            ref: "menu_btn_press.png",
+            alpha: 0.5,
+        },
+        onHover: () => {
+            if (canvas) {
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            playSound('paperflip', 0.4);
+            hideCheatOption()
+            closePopup();
+        }
+    });
+    hideButton.addText("HIDE", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'});
+    hideButton.setDepth(103);
+    extraContents["hidebtn"] = hideButton;
+    addPopupContents(extraContents);
+}
+
+
 
 function addPopupContents(contents) {
     for (let i in contents) {

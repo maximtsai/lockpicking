@@ -77,7 +77,11 @@ let gameVars = {
     gameManualSlowSpeedInverse: 1,
     gameScale: 1,
     canvasXOffset: 0,
-    canvasYOffset: 0
+    canvasYOffset: 0,
+    usingSkull: false,
+    picksLeft: 99,
+    firstPickBroken: false,
+    autoFailureIncrementChance: 2
 };
 let loadObjects = {}; // Objects used in loading screen, removed once game starts
 let globalObjects = {}; // globally accessible objects
@@ -88,7 +92,7 @@ let deltaScale = 1;
 let timeUpdateCounter = 0;
 let timeUpdateCounterMax = 3;
 let url1 = 'localhost';// 'crazygames';
-let url2 = 'crazygames';// 'localhost';
+let url2 = 'crazygame';// 'localhost';
 let url3 = '1001juegos';// '1001juegos';
 
 function preload ()
@@ -115,10 +119,10 @@ function create ()
         let gameDiv = document.getElementById('preload-notice');
         let invalidSite = document.location.href.substring(0, 25);
         gameDiv.innerHTML = invalidSite + "...\nis an invalid site.\n\n\n" + "Try the game on Crazygames.com!";
-        gameDiv.onclick = () => {
-            window.location.href = 'https://www.crazygames.com/game/diner-in-the-storm';
-        }
-        gameDiv.style.cursor = 'pointer';
+        // gameDiv.onclick = () => {
+        //     window.location.href = 'https://www.crazygames.com/game/diner-in-the-storm';
+        // }
+        // gameDiv.style.cursor = 'pointer';
         return;
     }
     oldTime = Date.now();
@@ -236,6 +240,7 @@ function update(time, delta) {
         if (globalObjects.keyboardControls.getLockJustDown()) {
             if (gameVars.hasPopup) {
                 closePopup();
+                showCheatAfterDelay();
             } else if (gameVars.showNextButton !== false) {
                 if (gameVars.currRoom === 'princess') {
                     if (gameVars.showNextButton === 6) {
@@ -257,6 +262,49 @@ function update(time, delta) {
                 tryLock();
             }
         }
+
+        if (globalObjects.virtualUp.getState() === NORMAL) {
+            if (globalObjects.keyboardControls.getLeftIsDown()) {
+                globalObjects.virtualLeftUnder.setAlpha(1);
+            } else {
+                globalObjects.virtualLeftUnder.alpha -= 0.001;
+                if (globalObjects.virtualLeftUnder.alpha < 0.996) {
+                    globalObjects.virtualLeftUnder.alpha = 0;
+                }
+            }
+
+            if (globalObjects.keyboardControls.getRightIsDown()) {
+                globalObjects.virtualRightUnder.setAlpha(1);
+            } else {
+                globalObjects.virtualRightUnder.alpha -= 0.001;
+                if (globalObjects.virtualRightUnder.alpha < 0.996) {
+                    globalObjects.virtualRightUnder.alpha = 0;
+                }
+            }
+            if (globalObjects.keyboardControls.getUpIsDown()) {
+                globalObjects.virtualUpUnder.setAlpha(1);
+            } else {
+                globalObjects.virtualUpUnder.alpha -= 0.001;
+                if (globalObjects.virtualUpUnder.alpha < 0.996) {
+                    globalObjects.virtualUpUnder.alpha = 0;
+                }
+            }
+
+            if (globalObjects.keyboardControls.getLockIsDown()) {
+                globalObjects.virtualEnterUnder.setAlpha(1);
+            } else {
+                globalObjects.virtualEnterUnder.alpha -= 0.001;
+                if (globalObjects.virtualEnterUnder.alpha < 0.996) {
+                    globalObjects.virtualEnterUnder.alpha = 0;
+                }
+            }
+        } else {
+            globalObjects.virtualLeftUnder.alpha = 0;
+            globalObjects.virtualRightUnder.alpha = 0;
+            globalObjects.virtualUpUnder.alpha = 0;
+            globalObjects.virtualEnterUnder.alpha = 0;
+        }
+
         if (globalObjects.currBackground) {
             let goalXOffset = (gameConsts.halfWidth -gameVars.mouseposx) * 0.025;// + gameConsts.halfWidth;
             let goalYOffset = (gameConsts.halfHeight -gameVars.mouseposy) * 0.025;// - gameConsts.halfHeight;

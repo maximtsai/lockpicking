@@ -81,6 +81,7 @@ function setupGame() {
     setupLevelButton();
     setupMuteButtons();
     setupQuestionButton();
+    setupCheatButton();
 
     globalObjects.uitop = PhaserScene.add.image(gameConsts.halfWidth, 0, 'ui', 'top.png').setDepth(-1).setOrigin(0.5, 0);
 
@@ -95,6 +96,59 @@ function setupGame() {
     globalObjects.pickshadow = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'pickshadow.png').setAlpha(0.6);
     globalObjects.mechanism = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'mechanism.png');
     globalObjects.pick = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'pick.png');
+    
+
+    globalObjects.autopick = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "menu_btn_normal.png",
+            x: gameConsts.halfWidth + 25,
+            y: 424,
+            scaleX: 0.65,
+            scaleY: 0.65,
+            alpha: 1
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "menu_btn_hover.png",
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "menu_btn_press.png",
+        },
+        disable: {
+            atlas: 'buttons',
+            ref: "menu_btn_press.png",
+            alpha: 0
+        },
+        onHover: () => {
+            if (canvas) {
+                playSound('click').detune = -50;
+                canvas.style.cursor = 'pointer';
+            }
+            globalObjects.autopickText.visible = true;
+            let lockpickChance = getLockpickChance();
+            globalObjects.autopickText.setText("UNLOCK CHANCE: "+lockpickChance+"%")
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+            globalObjects.autopickText.visible = false;
+        },
+        onMouseUp: () => {
+            attemptAutoLockpick();
+        }
+    });
+    globalObjects.autopick.addText("AUTO-ATTEMPT", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'});
+    globalObjects.autopick.setTextOffset(0.5, 0.5);
+    globalObjects.autopick.setDepth(2);
+    globalObjects.autopick.setState(DISABLE);
+    globalObjects.autopickText = PhaserScene.add.text(gameConsts.halfWidth + 25, 457, "UNLOCK CHANCE: X%", {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setVisible(false).setOrigin(0.5, 0.5);
+
+    setupTouchButtons();
+
+
     globalObjects.pins = [];
     globalObjects.indicators = [];
     gameVars.currentPin = 0;
@@ -129,18 +183,251 @@ function setupGame() {
     globalObjects.title = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.halfHeight - 36, 'SUCCESS!', {fontFamily: 'kingthings', fontSize: 72, color: '#FFFF00', align: 'center'}).setStroke('#000000', 10).setDepth(50).setOrigin(0.5, 0.5).setAlpha(0);
 
     setRoom('practice');
-
 }
+
+
+function setupTouchButtons() {
+    let scaleAmt = isMobile ? 0.92 : 0.80;
+    let offsetX = isMobile ? 68 : 59;
+    let xOrigin = gameConsts.halfWidth + (isMobile ? 275 : 285);
+    let yOrigin = isMobile ? 484 : 493;
+    globalObjects.virtualUp = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "arrow.png",
+            x: xOrigin,
+            y: yOrigin,
+            scaleX: scaleAmt,
+            scaleY: scaleAmt,
+            alpha: (isMobile ? 0.75 : 0.6)
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "arrow_hover.png",
+            alpha: 1
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "arrow.png",
+            alpha: 0.75
+        },
+        disable: {
+            atlas: 'buttons',
+            ref: "arrow_hover.png",
+            alpha: 0
+        },
+        onHover: () => {
+            if (canvas) {
+                playSound('click').detune = -50;
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            globalObjects.keyboardControls.virtuallySetKeyJustDown(Phaser.Input.Keyboard.KeyCodes.UP)
+        }
+    });
+    globalObjects.virtualUp.setDepth(2);
+
+    globalObjects.virtualLeft = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "arrow.png",
+            x: xOrigin - offsetX,
+            y: yOrigin,
+            scaleX: scaleAmt,
+            scaleY: scaleAmt,
+            alpha: (isMobile ? 0.75 : 0.6),
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "arrow_hover.png",
+            alpha: 1
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "arrow.png",
+            alpha: 0.75
+        },
+        disable: {
+            atlas: 'buttons',
+            ref: "arrow_hover.png",
+            alpha: 0
+        },
+        onHover: () => {
+            if (canvas) {
+                playSound('click').detune = -50;
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            globalObjects.keyboardControls.virtuallySetKeyJustDown(Phaser.Input.Keyboard.KeyCodes.LEFT)
+        }
+    });
+    globalObjects.virtualLeft.setDepth(2);
+    globalObjects.virtualLeft.setRotation(-0.5 * Math.PI);
+
+
+    globalObjects.virtualRight = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "arrow.png",
+            x: xOrigin + offsetX,
+            y: yOrigin,
+            scaleX: scaleAmt,
+            scaleY: scaleAmt,
+            alpha: (isMobile ? 0.75 : 0.6),
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "arrow_hover.png",
+            alpha: 1
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "arrow.png",
+            alpha: 0.75
+        },
+        disable: {
+            atlas: 'buttons',
+            ref: "arrow_hover.png",
+            alpha: 0
+        },
+        onHover: () => {
+            if (canvas) {
+                playSound('click').detune = -50;
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            globalObjects.keyboardControls.virtuallySetKeyJustDown(Phaser.Input.Keyboard.KeyCodes.RIGHT)
+        }
+    });
+    globalObjects.virtualRight.setDepth(2);
+    globalObjects.virtualRight.setRotation(0.5 * Math.PI);
+
+
+    globalObjects.virtualEnter = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "lock.png",
+            x: xOrigin,
+            y: yOrigin + (isMobile ? 70 : 59),
+            scaleX: (isMobile ? 0.96 : 0.82),
+            scaleY: scaleAmt,
+            alpha: (isMobile ? 0.75 : 0.6),
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "lock_hover.png",
+            alpha: 1
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "lock_hover.png",
+            alpha: 0.75
+        },
+        disable: {
+            atlas: 'buttons',
+            ref: "lock_hover.png",
+            alpha: 0
+        },
+        onHover: () => {
+            if (canvas) {
+                playSound('click').detune = -50;
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            globalObjects.keyboardControls.virtuallySetKeyJustDown(Phaser.Input.Keyboard.KeyCodes.ENTER)
+        }
+    });
+    globalObjects.virtualEnter.setDepth(2);
+
+    globalObjects.virtualUpUnder = PhaserScene.add.image(globalObjects.virtualUp.getXPos(), globalObjects.virtualUp.getYPos(), 'buttons', 'arrow_hover.png');
+    globalObjects.virtualUpUnder.setScale(globalObjects.virtualUp.getScaleX()).setAlpha(0);
+
+    globalObjects.virtualLeftUnder = PhaserScene.add.image(globalObjects.virtualLeft.getXPos(), globalObjects.virtualLeft.getYPos(), 'buttons', 'arrow_hover.png');
+    globalObjects.virtualLeftUnder.setScale(globalObjects.virtualLeft.getScaleX()).setRotation(-0.5*Math.PI).setAlpha(0);
+
+    globalObjects.virtualRightUnder = PhaserScene.add.image(globalObjects.virtualRight.getXPos(), globalObjects.virtualRight.getYPos(), 'buttons', 'arrow_hover.png');
+    globalObjects.virtualRightUnder.setScale(globalObjects.virtualRight.getScaleX()).setRotation(0.5*Math.PI).setAlpha(0);
+
+    globalObjects.virtualEnterUnder = PhaserScene.add.image(globalObjects.virtualEnter.getXPos(), globalObjects.virtualEnter.getYPos(), 'buttons', 'lock_hover.png');
+    globalObjects.virtualEnterUnder.setScale(globalObjects.virtualEnter.getScaleX(), globalObjects.virtualEnter.getScaleY()).setAlpha(0);
+}
+
+function setupCheatButton() {
+    let cheatButton = new Button({
+        normal: {
+            atlas: 'buttons',
+            ref: "tab.png",
+            x: -150,
+            y: 150,
+            scaleX: 0.9,
+            scaleY: 0.9
+        },
+        hover: {
+            atlas: 'buttons',
+            ref: "tab_hover.png",
+        },
+        press: {
+            atlas: 'buttons',
+            ref: "tab_press.png",
+        },
+        disable: {
+            atlas: 'buttons',
+            ref: "tab_press.png",
+        },
+        onHover: () => {
+            if (canvas) {
+                playSound('click').detune = -50;
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            openCheatPopup();
+        }
+    });
+    cheatButton.setOrigin(0, 0.5);
+    cheatButton.setDepth(2);
+    globalObjects.cheatButton = cheatButton;
+}
+
 
 function setupLevelButton() {
     let levelButton = new Button({
         normal: {
             atlas: 'buttons',
             ref: "menu_btn_normal.png",
-            x: 73,
+            x: 75,
             y: 62,
-            scaleX: 0.54,
-            scaleY: 0.54
+            scaleX: 0.58,
+            scaleY: 0.58
         },
         hover: {
             atlas: 'buttons',
@@ -165,7 +452,7 @@ function setupLevelButton() {
             openLevelPopup();
         }
     });
-    levelButton.addText("LVL SELECT", {fontFamily: 'kingthings', fontSize: 22, color: '#000000', align: 'center'});
+    levelButton.addText("LVL SELECT", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
     levelButton.setTextOffset(0, 1);
     levelButton.setDepth(2);
 }
@@ -443,6 +730,7 @@ function pinMoveUp(pinNum) {
     }
 
     if (currPin.currAnim) {
+        currPin.inMotion = false;
         currPin.currAnim.stop();
     }
     if (!currPin.randDur) {
@@ -450,35 +738,37 @@ function pinMoveUp(pinNum) {
         if (!gameVars.firstPin) {
             gameVars.firstPin = true;
             randVal = Math.max(2, randVal);
-            let instructions = PhaserScene.add.text(348, gameConsts.halfHeight - 98, "Press SPACE when\npin hits the top  ->", {fontFamily: 'kingthings', fontSize: 22, color: '#FFFFFF', align: 'left'}).setDepth(99).setAlpha(0).setStroke('#000000', 4).setOrigin(1, 0);
-            PhaserScene.tweens.add({
-                targets: instructions,
-                alpha: 1,
-                delay: 200,
-                duration: 400,
-                completeDelay: 5000,
-                onComplete: () => {
-                    PhaserScene.tweens.add({
-                        targets: instructions,
-                        alpha: 0,
-                        duration: 500,
-                        onComplete: () => {
-                            instructions.destroy();
-                        }
-                    })
-                }
-            })
-
+            if (gameVars.currLevel < 4) {
+                let instructions = PhaserScene.add.text(348, gameConsts.halfHeight - 103, "Press SPACE when\npin hits the top  ->", {fontFamily: 'kingthings', fontSize: 22, color: '#FFFFFF', align: 'left'}).setDepth(99).setAlpha(0).setStroke('#000000', 4).setOrigin(1, 0);
+                globalObjects.instructions = instructions;
+                PhaserScene.tweens.add({
+                    targets: instructions,
+                    alpha: 1,
+                    delay: 200,
+                    duration: 400,
+                    completeDelay: 5000,
+                    onComplete: () => {
+                        PhaserScene.tweens.add({
+                            targets: instructions,
+                            alpha: 0,
+                            duration: 500,
+                            onComplete: () => {
+                                instructions.destroy();
+                            }
+                        })
+                    }
+                })
+            }
         }
-        currPin.randDur = Math.max(90, 90 + randVal * 25);
+        currPin.randDur = Math.max(80, 80 + randVal * 26);
     }
-    let dropDelay = Math.max(0, Math.floor(currPin.randDur * 1.7 - 135));
-    let overrideCantOpen = currPin.randDur < 90;
+    let dropDelay = Math.max(0, Math.floor(currPin.randDur * 2.1 - 135));
+    let overrideCantOpen = currPin.randDur < 81;
     if (overrideCantOpen) {
         dropDelay = 0;
     }
 
-    currPin.currDelay = PhaserScene.time.delayedCall(Math.min(currPin.randDur - 1, Math.floor(currPin.randDur * 0.77) + 10), () => {
+    currPin.currDelay = PhaserScene.time.delayedCall(Math.min(currPin.randDur - 1, Math.floor(currPin.randDur * 0.7) + 2), () => {
         if (!overrideCantOpen) {
             gameVars.canLock = true;
             gameVars.canShowGreen = true;
@@ -500,7 +790,7 @@ function pinMoveUp(pinNum) {
 
                 }
             }, 10)
-            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3) + dropDelay * 1.5), () => {
+            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3) + dropDelay * 1.77), () => {
                 gameVars.canShowGreen = false;
                 setTimeout(() => {
                     gameVars.canLock = false;
@@ -535,7 +825,7 @@ function pinMoveUp(pinNum) {
                 targets: currPin,
                 y: currPin.startY,
                 ease: 'Quad.easeIn',
-                duration: Math.max(420, currPin.randDur * 6.75 - 210),
+                duration: Math.max(420, currPin.randDur * 6.85 - 225),
                 onStart: () => {
                     currPin.fallSoundTimeout = setTimeout(() => {
                         if (!currPin.locked) {
@@ -555,10 +845,10 @@ function pinMoveUp(pinNum) {
                     while (currPin.lastRandVal === randVal) {
                         randVal = Math.floor(Math.random() * 5);
                     }
-                    if (randVal == currPin.secondLastRandVal) {
+                    if (randVal === currPin.secondLastRandVal) {
                         // reduce chances of getting second last one, but not impossible.
                         let testRandVal = Math.floor(Math.random() * 5);
-                        if (testRandVal != currPin.lastRandVal) {
+                        if (testRandVal !== currPin.lastRandVal) {
                             // make sure we don't get last rand val either.
                             randVal = testRandVal;
                         }
@@ -566,7 +856,7 @@ function pinMoveUp(pinNum) {
 
                     currPin.secondLastRandVal = currPin.lastRandVal;
                     currPin.lastRandVal = randVal;
-                    currPin.randDur = Math.max(65, 60 + randVal * 32);
+                    currPin.randDur = Math.max(55, 55 + randVal * 35);
                 }
             })
         }
@@ -605,78 +895,101 @@ function tryLock() {
             },
         })
     } else if (gameVars.canLock) {
-        let randSoundIdx = Math.floor(Math.random() * 4) + 1;
-        let randSound = "scratch" + randSoundIdx;
-        playSound(randSound, 1.3).detune = 100 - Math.random() * 200;
-        // playSound(Math.random() < 0.5 ? 'lockin1' : 'lockin2').detune = 100 - Math.random() * 200;
-        // Lock
-        if (currPin.currAnim) {
-            currPin.currAnim.stop();
-        }
-        if (currPin.currSound) {
-            currPin.currSound.stop();
-        }
-        currPin.locked = true;
-        gameVars.pinsFixed = Math.max(gameVars.pinsFixed, getNumPinsLocked());
-        globalObjects.indicators[gameVars.currentPin].setFrame('icon_black.png');
-        PhaserScene.tweens.add({
-            targets: currPin,
-            y: gameConsts.halfHeight - 37 + gameConsts.UIYOffset,
-            ease: 'Quad.easeOut',
-            duration: 200,
-        });
-        PhaserScene.tweens.add({
-            targets: currPin,
-            alpha: 0.6,
-            duration: 600,
-        });
-
-        let hasUnlocked = false;
-        for (let i in globalObjects.pins) {
-            if (!globalObjects.pins[i].locked) {
-                hasUnlocked = true;
-            }
+        setPin(false);
+    } else {
+        if (!gameVars.firstPickBroken) {
+            showCheatOption();
+            gameVars.firstPickBroken = true;
         }
 
-        if (gameVars.currRoom === 'princess') {
-            if (gameVars.princessCounter === gameVars.pinsFixed) {
-                gameVars.princessCounter++;
-                let pinText = [
-                    "I kneel, whispering that I'm a friend\nwho got lost, not a scary monster.",
-                    "",
-                    "I show the princess a shiny coin, saying I'm a treasure\nhunter for pretty things like her toys.",
-                    "",
-                    "I tell her we are secret friends now,\nand promise a new toy if she doesn't tell anyone about me.",
-                    ""
-                ];
-                if (pinText[gameVars.pinsFixed - 1] !== "") {
-                    globalObjects.infoText.setAlpha(0);
-                    globalObjects.infoText.setText(pinText[gameVars.pinsFixed - 1]);
-                    if (globalObjects.infoText.currAnim) {
-                        globalObjects.infoText.currAnim.stop();
-                    }
-                    globalObjects.infoText.currAnim = PhaserScene.tweens.add({
-                        targets: globalObjects.infoText,
-                        alpha: 1,
-                        duration: 500,
-                        ease: 'Cubic.easeOut',
-                        completeDelay: 7000,
-                        onComplete: () => {
-                            globalObjects.infoText.currAnim = PhaserScene.tweens.add({
-                                targets: globalObjects.infoText,
-                                alpha: 0,
-                                duration: 500,
-                                ease: 'Cubic.easeOut',
-                            })
-                        }
-                    })
-                }
+        breakPick(false);
+
+    }
+}
+function setPin(isAuto) {
+
+    let currPin = globalObjects.pins[gameVars.currentPin];
+    let randSoundIdx = Math.floor(Math.random() * 4) + 1;
+    let randSound = "scratch" + randSoundIdx;
+    playSound(randSound, 1.3).detune = 100 - Math.random() * 200;
+    // playSound(Math.random() < 0.5 ? 'lockin1' : 'lockin2').detune = 100 - Math.random() * 200;
+    // Lock
+    if (currPin.currAnim) {
+        currPin.inMotion = false;
+        currPin.currAnim.stop();
+    }
+    if (currPin.currSound) {
+        currPin.currSound.stop();
+    }
+    currPin.locked = true;
+    gameVars.pinsFixed = Math.max(gameVars.pinsFixed, getNumPinsLocked());
+    let currIndicator = globalObjects.indicators[gameVars.currentPin];
+    currIndicator.setFrame('icon_black.png');
+    setTimeout(() => {
+        currIndicator.setFrame('icon_black.png');
+    }, 300)
+    PhaserScene.tweens.add({
+        targets: currPin,
+        y: gameConsts.halfHeight - 37 + gameConsts.UIYOffset,
+        ease: 'Quad.easeOut',
+        duration: 200,
+    });
+    PhaserScene.tweens.add({
+        targets: currPin,
+        alpha: 0.6,
+        duration: 600,
+    });
+
+    let hasUnlocked = false;
+    for (let i in globalObjects.pins) {
+        if (!globalObjects.pins[i].locked) {
+            if (!hasUnlocked && isAuto) {
+                // slide to next pin
+                gameVars.currentPin = i;
+                updatePickSpot();
             }
-        } else if (gameVars.currRoom === 'challenge') {
-            if (gameVars.pinsFixed === 5 && !gameVars.curses99) {
-                gameVars.curses99 = true;
+            hasUnlocked = true;
+        }
+    }
+
+
+    if (gameVars.currRoom === 'princess') {
+        if (gameVars.princessCounter === gameVars.pinsFixed) {
+            gameVars.princessCounter++;
+            let pinText = [
+                "The first tumbler unlocks, and I shake off\nan unnatural shiver.",
+                "",
+                "A vision of the past flashes and I blink it away.\nOr was that the future?",
+                "",
+                "The seal unravels, and the scroll is mine now,\nthough I dare not look at it.",
+                ""
+            ];
+            let pinFixIndex = gameVars.pinsFixed - 1;
+            let flashImage = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'backgrounds', 'stairs.png').setScale(1.44).setAlpha(0.38);
+            if (pinFixIndex === 0) {
+                flashImage.setAlpha(0.55)
+                playSound('heartbeatfast', 0.7)
+            } else if (pinFixIndex === 2) {
+                flashImage.setAlpha(0.59);
+                flashImage.setFrame('eye.png');
+                playSound('heartbeatfast', 0.7)
+            } else if (pinFixIndex === 4) {
+                flashImage.setAlpha(0.54)
+                flashImage.setFrame('stars.png');
+                playSound('heartbeatfast', 0.7)
+            }
+            PhaserScene.tweens.add({
+                targets: flashImage,
+                scaleX: 1.46,
+                scaleY: 1.46,
+                alpha: 0,
+                ease: 'Quint.easeOut',
+                duration: 2500
+            })
+
+            if (pinText[pinFixIndex] !== "") {
                 globalObjects.infoText.setAlpha(0);
-                globalObjects.infoText.setText("Almost there...")
+                globalObjects.infoText.setText(pinText[pinFixIndex]);
                 if (globalObjects.infoText.currAnim) {
                     globalObjects.infoText.currAnim.stop();
                 }
@@ -685,7 +998,7 @@ function tryLock() {
                     alpha: 1,
                     duration: 500,
                     ease: 'Cubic.easeOut',
-                    completeDelay: 4500,
+                    completeDelay: 7000,
                     onComplete: () => {
                         globalObjects.infoText.currAnim = PhaserScene.tweens.add({
                             targets: globalObjects.infoText,
@@ -697,41 +1010,88 @@ function tryLock() {
                 })
             }
         }
-        if (!hasUnlocked) {
-            slideOpenLock();
+    } else if (gameVars.currRoom === 'challenge') {
+        if (gameVars.pinsFixed === 5 && !gameVars.curses99) {
+            gameVars.curses99 = true;
+            globalObjects.infoText.setAlpha(0);
+            globalObjects.infoText.setText("Almost there...")
+            if (globalObjects.infoText.currAnim) {
+                globalObjects.infoText.currAnim.stop();
+            }
+            globalObjects.infoText.currAnim = PhaserScene.tweens.add({
+                targets: globalObjects.infoText,
+                alpha: 1,
+                duration: 500,
+                ease: 'Cubic.easeOut',
+                completeDelay: 4500,
+                onComplete: () => {
+                    globalObjects.infoText.currAnim = PhaserScene.tweens.add({
+                        targets: globalObjects.infoText,
+                        alpha: 0,
+                        duration: 500,
+                        ease: 'Cubic.easeOut',
+                    })
+                }
+            })
         }
+    }
+    if (!hasUnlocked) {
+        slideOpenLock();
+    }
+}
 
-    } else {
-        playSound('pickbreak', 1);
+function breakPick(isAuto) {
+    playSound('pickbreak', 1);
+
+    if (!gameVars.usingSkull && gameVars.picksLeft <= 1) {
         if (globalObjects.pick.currAnim) {
             globalObjects.pick.currAnim.stop();
         }
+    }
+    if (!isAuto) {
         if (gameVars.dropAllOnFail) {
             decrementAllPins();
         } else if (gameVars.dropOnFail) {
             decrementPins();
         }
-        decrementPicksLeft();
-        let redIndicator = globalObjects.indicators[gameVars.currentPin];
-        redIndicator.setFrame('icon_red.png');
-        redIndicator.stuck = true;
-        setTimeout(() => {
-            redIndicator.stuck = false;
-            redIndicator.setFrame('icon_yellow.png');
-        }, 400)
-        let pickBrokeVfx = getTempPoolObject('lock', 'pickbroke.png', 'pickbroke', 300).setDepth(5);
-        pickBrokeVfx.setPosition(globalObjects.pick.x - 80, globalObjects.pick.y + 50);
-        pickBrokeVfx.setScale(0.7).setAlpha(1).setRotation(Math.random() * 3);
+    }
+    decrementPicksLeft();
+    let redIndicator = globalObjects.indicators[gameVars.currentPin];
+    redIndicator.setFrame('icon_red.png');
+    redIndicator.stuck = true;
+    setTimeout(() => {
+        redIndicator.stuck = false;
+        redIndicator.setFrame('icon_yellow.png');
+    }, 400)
+    let pickBrokeVfx = getTempPoolObject('lock', 'pickbroke.png', 'pickbroke', 300).setDepth(5);
+    pickBrokeVfx.setPosition(globalObjects.pick.x - 80, globalObjects.pick.y + 50);
+    pickBrokeVfx.setScale(0.7).setAlpha(1).setRotation(Math.random() * 3);
+    PhaserScene.tweens.add({
+        targets: pickBrokeVfx,
+        alpha: 0,
+        y: "+=20",
+        scaleX: 1.1,
+        scaleY: 1.1,
+        duration: 300,
+        ease: 'Quad.easeOut'
+    })
+    gameVars.pickStuck = true;
+    if (gameVars.usingSkull && gameVars.picksLeft >= 1) {
+        gameVars.pickStuck = false;
         PhaserScene.tweens.add({
-            targets: pickBrokeVfx,
-            alpha: 0,
-            y: "+=20",
-            scaleX: 1.1,
-            scaleY: 1.1,
-            duration: 300,
-            ease: 'Quad.easeOut'
+            targets: [globalObjects.pick],
+            x: "+=2",
+            duration: 40,
+            onComplete: () => {
+                PhaserScene.tweens.add({
+                    targets: [globalObjects.pick],
+                    x: "-=2",
+                    ease: 'Bounce.easeOut',
+                    duration: 250,
+                })
+            }
         })
-        gameVars.pickStuck = true;
+    } else {
         PhaserScene.tweens.add({
             targets: [globalObjects.pick, globalObjects.pickshadow],
             rotation: 0.35,
@@ -741,11 +1101,10 @@ function tryLock() {
             alpha: 0,
             onComplete: () => {
                 resetPick(false);
-
             },
         })
-
     }
+
 }
 
 function getNumPinsLocked() {
@@ -883,6 +1242,9 @@ function resetPick(setToZero = true) {
 }
 
 function showFail() {
+    hideAutoPick();
+    hideCheatOption();
+    hideVirtualButtons();
     if (globalObjects.infoText.currAnim) {
         globalObjects.infoText.currAnim.stop();
         globalObjects.infoText.alpha = 0;
@@ -895,6 +1257,7 @@ function showFail() {
         duration: 800
     })
     globalObjects.victory = {};
+    gameVars.usedSkull = false;
 
     globalObjects.victory.dark = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight - 11, 'lock', 'shadow.png').setScale(3).setDepth(50).setAlpha(0);
     globalObjects.victory.title = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.halfHeight - 36, 'FAILURE...', {fontFamily: 'kingthings', fontSize: 72, color: '#EE0011', align: 'center'}).setStroke('#000000', 10).setDepth(50).setOrigin(0.5, 0.5).setAlpha(0);
@@ -916,15 +1279,15 @@ function showFail() {
 
     let flavorText = [
         "I somehow botch my practice lock with\na mountain of lockpicks. Great start.",
-        "My hasty fingers fumble the crude lock,\nand now I remain stuck behind bars.",
-        "The clothier’s sturdy lock catches my tools,\nleaving me in rags unfit for the castle.",
-        "My missteps alert the guards, and the gate’s\nlock holds firm, blocking my path.",
+        "My last lockpick breaks as I fumble the\nlockbox, leaving me with nothing.",
+        "My pick breaks in the door's lock, and\nI am forced to withdraw from the tavern.",
+        "The robust lock holds, and my broken picks\nsplash in the murky water.",
         "The enchanted lock resets at my slightest\nmistake, sealing the door tight.",
-        "The masterful lock defies my trembling hands,\nand the crown remains beyond reach.",
-        "A clumsy word frightens the young princess,\nand she cries for the guards.",
-        "My rival laughs at me as his devilish\ncontraption remains tightly locked."
+        "The masterful lock defies my trembling hands,\nand the scroll remains beyond reach.",
+        "I misjudge the star lock's shifting tumblers,\nand whatever secrets in the scroll are now sealed away.",
+        "My rival laughs in my face as his devilish\ncontraption remains tightly locked."
     ]
-    globalObjects.victory.extraText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, flavorText[gameVars.currLevel], {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
+    globalObjects.victory.extraText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, flavorText[gameVars.currLevel], {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 6).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
 
     globalObjects.victory.title.setScale(1.3).setAlpha(0);
     PhaserScene.tweens.add({
@@ -943,8 +1306,8 @@ function showFail() {
                     ref: "menu_btn_normal.png",
                     x: gameConsts.halfWidth,
                     y: gameConsts.halfHeight + 30,
-                    scaleX: 0.62,
-                    scaleY: 0.62
+                    scaleX: 0.75,
+                    scaleY: 0.75
                 },
                 hover: {
                     atlas: 'buttons',
@@ -973,7 +1336,7 @@ function showFail() {
                 }
             });
             gameVars.showNextButton = gameVars.currLevel ? gameVars.currLevel : 0;
-            globalObjects.victory.retry.addText("RETRY", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
+            globalObjects.victory.retry.addText("RETRY", {fontFamily: 'kingthings', fontSize: 28, color: '#000000', align: 'center'});
             globalObjects.victory.retry.setTextOffset(0, 1);
             globalObjects.victory.retry.setDepth(51);
         }
@@ -981,7 +1344,22 @@ function showFail() {
 
 }
 
+function hideAutoPick() {
+    if (globalObjects.autopick) {
+        globalObjects.autopick.setState(DISABLE);
+        if (canvas) {
+            canvas.style.cursor = 'default';
+        }
+    }
+    if (globalObjects.autopickText) {
+        globalObjects.autopickText.setVisible(false);
+    }
+}
+
 function slideOpenLock() {
+    hideAutoPick();
+    hideCheatOption();
+    hideVirtualButtons();
     sdkGameplayStop();
     playSound('success', 1.1);
     if (globalObjects.playUponUnlock) {
@@ -1064,6 +1442,14 @@ function slideOpenLock() {
 
 
             globalObjects.victory.title.setScale(1.3).setAlpha(0);
+
+            if (globalObjects.instructions) {
+                PhaserScene.tweens.add({
+                    targets: globalObjects.instructions,
+                    alpha: 0,
+                    duration: 600
+                })
+            }
             PhaserScene.tweens.add({
                 targets: globalObjects.victory.title,
                 alpha: 1,
@@ -1082,8 +1468,8 @@ function slideOpenLock() {
                             ref: "menu_btn_normal.png",
                             x: gameConsts.halfWidth,
                             y: gameConsts.halfHeight + 30,
-                            scaleX: 0.62,
-                            scaleY: 0.62
+                            scaleX: 0.75,
+                            scaleY: 0.75
                         },
                         hover: {
                             atlas: 'buttons',
@@ -1125,7 +1511,7 @@ function slideOpenLock() {
                     if (gameVars.currRoom === 'challenge') {
                         buttonText = "RETURN";
                     }
-                    globalObjects.victory.nextLvl.addText(buttonText, {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
+                    globalObjects.victory.nextLvl.addText(buttonText, {fontFamily: 'kingthings', fontSize: 28, color: '#000000', align: 'center'});
                     globalObjects.victory.nextLvl.setTextOffset(0, 1);
                     globalObjects.victory.nextLvl.setDepth(51);
                 }
@@ -1139,7 +1525,7 @@ function setupPlayer() {
     globalObjects.options = new Options(PhaserScene, gameConsts.width - 27, 27);
 }
 
-function openPopup(contents) {
+function openPopup(contents, useSmall) {
     sdkGameplayStop();
     gameVars.hasPopup = true;
     playSound("paperflip", 0.7);
@@ -1159,7 +1545,7 @@ function openPopup(contents) {
         },
     });
     globalObjects.currPopup.dark.setDepth(100);
-    globalObjects.currPopup.bg = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'ui', 'popup.png').setDepth(100).setScale(0.865);
+    globalObjects.currPopup.bg = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'ui', useSmall ? 'popupsmall.png' : 'popup.png').setDepth(100).setScale(0.87);
     PhaserScene.tweens.add({
         targets: globalObjects.currPopup.bg,
         scaleX: 0.88,
@@ -1168,12 +1554,15 @@ function openPopup(contents) {
         ease: 'Back.easeOut'
     })
 
+    let xOffset = useSmall ? gameConsts.halfWidth + 144 : gameConsts.halfWidth + 158;
+    let yOffset = useSmall ? gameConsts.halfHeight - 113 : gameConsts.halfHeight - 177;
+
     let closeButton = new Button({
         normal: {
             atlas: 'buttons',
             ref: "general_btn.png",
-            x: gameConsts.halfWidth + 158,
-            y: gameConsts.halfHeight - 177,
+            x: xOffset,
+            y: yOffset,
             scaleX: 0.8,
             scaleY: 0.8,
             alpha: 0.92
@@ -1212,7 +1601,9 @@ function openPopup(contents) {
 }
 
 function closePopup(startGameplay = true) {
-    playSound("paperclose", 0.6);
+    let paperSfx = playSound("paperflip", 0.6);
+    paperSfx.detune = -100;
+    paperSfx.seek = 0.3;
     gameVars.hasPopup = false;
     for (let i in globalObjects.currPopup) {
         if (i !== 'active') {
@@ -1230,10 +1621,10 @@ function openEpiloguePopup() {
     sdkSetItem("latestLevel", "7");
     gameVars.latestLevel = 7;
     gameVars.showNextButton = false;
-    let text1 = "The princess calms down and waves goodbye before returning to her toys.";
-    let text2 = "I grab the crown and escape with it hidden under my cloak."
-    let text3 = "Though my hands are full of treasure, my mind is occupied by the child's smile.";
-    let text4 = "I wonder if I'll come back again for more stories with my new friend.";
+    let text1 = "I grab the scroll and slip out the library, its eerie tingle starting to fade.";
+    let text2 = "Whispers of unknown truths brush my mind, but I shake them off."
+    let text3 = "The scroll's value in coin is all that matters to me.";
+    let text4 = "I escape, already scheming my next heist, blissfully unaware of the scroll's\ntrue power as I eagerly trade it for a quick fortune.";
 
     createGlobalClickBlocker(false);
     let blackout = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight, 'blackPixel').setScale(1000).setAlpha(0).setDepth(998);
@@ -1253,7 +1644,7 @@ function openEpiloguePopup() {
         alpha: 1,
         delay: 1200,
         duration: 1400,
-        completeDelay: 5000,
+        completeDelay: 6500,
         onComplete: () => {
             let fintext = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 130, "Thank you for playing!", {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF'}).setOrigin(0.5, 0).setDepth(999);
             let fintext2 = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 100, "(Challenge level unlocked)", {fontFamily: 'kingthings', fontSize: 18, color: '#FFFFFF'}).setOrigin(0.5, 0).setDepth(999).setAlpha(0.75);
@@ -1321,13 +1712,13 @@ function openEpiloguePopup() {
     PhaserScene.tweens.add({
         targets: textPrompt3,
         alpha: 1,
-        delay: 5700,
+        delay: 6000,
         duration: 1400,
     })
     PhaserScene.tweens.add({
         targets: textPrompt4,
         alpha: 1,
-        delay: 7500,
+        delay: 8200,
         duration: 1400,
     })
     epilogue.textPrompt = textPrompt1;
@@ -1403,100 +1794,100 @@ function openInstructPopup() {
 function openCreditsPopup() {
     let instructContent = {};
     instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, 'Credits', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
-    instructContent.goal = PhaserScene.add.text(gameConsts.halfWidth - 158, 228, 'Game by Maxim Tsai\nSFX from Soundimage.org and Freesound.org\nMusic from Suno\nHeavily inspired by Elder Scrolls IV: Oblivion\n\nSprite Count: ~75\nAudio Count: 28\nDev Time: ~3 Weeks', {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0, 0.5);
-    instructContent.other = PhaserScene.add.text(gameConsts.halfWidth, 334, 'Check out my other games!', {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0.5, 0.5).setScale(0.9);
+    instructContent.goal = PhaserScene.add.text(gameConsts.halfWidth - 158, 194, 'Game by Maxim Tsai\nSFX from Soundimage.org and Freesound.org\nMusic from Suno\nInspired by Elder Scrolls IV: Oblivion', {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0, 0.5);
+    // instructContent.other = PhaserScene.add.text(gameConsts.halfWidth, 334, 'Check out my other games!', {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0.5, 0.5).setScale(0.9);
 
     openPopup(instructContent);
 
-    let exhibitButton = new Button({
-        normal: {
-            atlas: 'ui',
-            ref: "exhibit.png",
-            x: gameConsts.halfWidth - 80,
-            scaleX: 0.65,
-            scaleY: 0.65,
-            y: gameConsts.halfHeight + 109,
-            alpha: 0.9
-        },
-        hover: {
-            atlas: 'ui',
-            ref: "exhibit.png",
-            alpha: 1
-        },
-        press: {
-            atlas: 'ui',
-            ref: "exhibit.png",
-            alpha: 0.8
-        },
-        onHover: () => {
-            if (canvas) {
-                canvas.style.cursor = 'pointer';
-            }
-        },
-        onHoverOut: () => {
-            if (canvas) {
-                canvas.style.cursor = 'default';
-            }
-        },
-        onMouseUp: () => {
-            window.open("https://www.crazygames.com/game/exhibit-of-sorrows")
-        }
-    });
-    exhibitButton.addText("Exhibit of Sorrows\n(Horror, Clowns)", {fontFamily: 'Times New Roman', fontSize: 14, color: '#000000', align: 'center'})
-    exhibitButton.setTextOffset(0, 72);
-    exhibitButton.setDepth(101);
+    // let exhibitButton = new Button({
+    //     normal: {
+    //         atlas: 'ui',
+    //         ref: "exhibit.png",
+    //         x: gameConsts.halfWidth - 80,
+    //         scaleX: 0.65,
+    //         scaleY: 0.65,
+    //         y: gameConsts.halfHeight + 109,
+    //         alpha: 0.9
+    //     },
+    //     hover: {
+    //         atlas: 'ui',
+    //         ref: "exhibit.png",
+    //         alpha: 1
+    //     },
+    //     press: {
+    //         atlas: 'ui',
+    //         ref: "exhibit.png",
+    //         alpha: 0.8
+    //     },
+    //     onHover: () => {
+    //         if (canvas) {
+    //             canvas.style.cursor = 'pointer';
+    //         }
+    //     },
+    //     onHoverOut: () => {
+    //         if (canvas) {
+    //             canvas.style.cursor = 'default';
+    //         }
+    //     },
+    //     onMouseUp: () => {
+    //         window.open("https://www.crazygames.com/game/exhibit-of-sorrows")
+    //     }
+    // });
+    // exhibitButton.addText("Exhibit of Sorrows\n(Horror, Clowns)", {fontFamily: 'Times New Roman', fontSize: 14, color: '#000000', align: 'center'})
+    // exhibitButton.setTextOffset(0, 72);
+    // exhibitButton.setDepth(101);
 
-    let dinerButton = new Button({
-        normal: {
-            atlas: 'ui',
-            ref: "diner.png",
-            x: gameConsts.halfWidth + 80,
-            scaleX: 0.64,
-            scaleY: 0.64,
-            y: gameConsts.halfHeight + 109,
-            alpha: 0.9
-        },
-        hover: {
-            atlas: 'ui',
-            ref: "diner.png",
-            alpha: 1
-        },
-        press: {
-            atlas: 'ui',
-            ref: "diner.png",
-            alpha: 0.8
-        },
-        onHover: () => {
-            if (canvas) {
-                canvas.style.cursor = 'pointer';
-            }
-        },
-        onHoverOut: () => {
-            if (canvas) {
-                canvas.style.cursor = 'default';
-            }
-        },
-        onMouseUp: () => {
-            window.open("https://www.crazygames.com/game/diner-in-the-storm")
+    // let dinerButton = new Button({
+    //     normal: {
+    //         atlas: 'ui',
+    //         ref: "diner.png",
+    //         x: gameConsts.halfWidth + 80,
+    //         scaleX: 0.64,
+    //         scaleY: 0.64,
+    //         y: gameConsts.halfHeight + 109,
+    //         alpha: 0.9
+    //     },
+    //     hover: {
+    //         atlas: 'ui',
+    //         ref: "diner.png",
+    //         alpha: 1
+    //     },
+    //     press: {
+    //         atlas: 'ui',
+    //         ref: "diner.png",
+    //         alpha: 0.8
+    //     },
+    //     onHover: () => {
+    //         if (canvas) {
+    //             canvas.style.cursor = 'pointer';
+    //         }
+    //     },
+    //     onHoverOut: () => {
+    //         if (canvas) {
+    //             canvas.style.cursor = 'default';
+    //         }
+    //     },
+    //     onMouseUp: () => {
+    //         window.open("https://www.crazygames.com/game/diner-in-the-storm")
 
-        }
-    });
-    dinerButton.addText("Diner in the Storm\n(Mystery, Escape)", {fontFamily: 'Times New Roman', fontSize: 14, color: '#000000', align: 'center'})
-    dinerButton.setTextOffset(0, 71);
-    dinerButton.setDepth(101);
+    //     }
+    // });
+    // dinerButton.addText("Diner in the Storm\n(Mystery, Escape)", {fontFamily: 'Times New Roman', fontSize: 14, color: '#000000', align: 'center'})
+    // dinerButton.setTextOffset(0, 71);
+    // dinerButton.setDepth(101);
 
-    let extraContents = {exhibitButton: exhibitButton, dinerButton: dinerButton};
-    addPopupContents(extraContents);
+    // let extraContents = {exhibitButton: exhibitButton, dinerButton: dinerButton};
+    // addPopupContents(extraContents);
 
 }
 function openFlavorPopup(title = " ", content = " ", image, scale = 0.95) {
     let instructContent = {};
-    instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, title, {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+    instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, title, {fontFamily: 'kingthings', fontSize: 32, color: '#140000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
 
     if (image) {
-        instructContent.image = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + 73, 'lock', image).setDepth(102).setScale(scale);
+        instructContent.image = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + 73, 'lock', image).setDepth(102).setScale(scale).setVisible(false);
     }
-    instructContent.controls = PhaserScene.add.text(gameConsts.halfWidth - 170, gameConsts.halfHeight - 153, content, {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setScale(1, 0.98).setDepth(102);
+    instructContent.controls = PhaserScene.add.text(gameConsts.halfWidth - 170, gameConsts.halfHeight - 143, content, {fontFamily: 'kingthings', fontSize: 23, color: '#140000', align: 'left'}).setOrigin(0, 0).setScale(1, 0.98).setDepth(102);
 
     let extraContents = {};
 
@@ -1506,9 +1897,9 @@ function openFlavorPopup(title = " ", content = " ", image, scale = 0.95) {
             atlas: 'buttons',
             ref: "menu_btn_normal.png",
             x: gameConsts.halfWidth,
-            y: gameConsts.height - 120,
-            scaleX: 0.57,
-            scaleY: 0.57
+            y: gameConsts.height - 124,
+            scaleX: 0.64,
+            scaleY: 0.64
         },
         hover: {
             atlas: 'buttons',
@@ -1575,4 +1966,130 @@ function decrementPicksLeft() {
 
         showFail();
     }
+}
+
+
+function getLockpickChance() {
+    let lockpickChance = 1; // out of 100
+    switch(gameVars.currLevel) {
+        case 0:
+            lockpickChance = 20;
+            break;
+        case 1:
+            lockpickChance = 15;
+            break;
+        case 2:
+            lockpickChance = 15;
+            break;
+        case 3:
+            lockpickChance = 12;
+            break;
+        case 4:
+            lockpickChance = 12;
+            break;
+        case 5:
+            lockpickChance = 11;
+            break;
+        case 6:
+            lockpickChance = 10;
+            break;
+        case 7:
+            lockpickChance = 9;
+            break;
+        default:
+            lockpickChance = 10;
+            break;
+    }
+    return lockpickChance;
+}
+
+function attemptAutoLockpick() {
+
+    if (gameVars.picksLeft <= 0 || gameVars.tempCantAuto) {
+        return;
+    }
+
+    let lockpickChance = getLockpickChance();
+    globalObjects.autopickText.setText("UNLOCK CHANCE: "+lockpickChance+"%");
+
+    let currPin = globalObjects.pins[gameVars.currentPin]
+    if (currPin.inMotion || currPin.locked) {
+        // not even being moved, nothing happens other than warning message
+        PhaserScene.tweens.add({
+            targets: [globalObjects.pick, globalObjects.pickshadow],
+            rotation: -0.02,
+            x: "-=2",
+            duration: 10,
+            onComplete: () => {
+                PhaserScene.tweens.add({
+                    targets: [globalObjects.pick, globalObjects.pickshadow],
+                    rotation: 0,
+                    x: "+=5",
+                    duration: 40,
+                    onComplete: () => {
+                        PhaserScene.tweens.add({
+                            targets: [globalObjects.pick, globalObjects.pickshadow],
+                            x: "-=3",
+                            duration: 40,
+                            ease: 'Back.easeOut',
+                        })
+                    },
+                })
+            },
+        })
+    } else {
+        let chanceAdd = gameVars.pinsFixed === 0 ? 20 : 0;
+        let randGen = Math.random() * 100;
+        if (randGen < ((lockpickChance - 10) * 0.7 + gameVars.autoFailureIncrementChance) + chanceAdd) {
+            // unlock success
+            setPin(true);
+            gameVars.tempCantAuto = true;
+            setTimeout(() => {
+                gameVars.tempCantAuto = false;
+            }, 260);
+            gameVars.autoFailureIncrementChance = 0;
+        } else {
+            gameVars.autoFailureIncrementChance = gameVars.autoFailureIncrementChance * 1.3 + lockpickChance * 0.16 + 0.05 * chanceAdd;
+            breakPick(true);
+            updatePickSpot();
+
+        }
+    }
+
+
+}
+
+function showCheatAfterDelay() {
+
+}
+
+function showCheatOption() {
+    if (!gameVars.usingSkull && gameVars.picksLeft > 1 && !gameVars.usedSkull) {
+        setTimeout(() => {
+            if (gameVars.picksLeft > 0) {
+                globalObjects.cheatButton.setState(NORMAL);
+                globalObjects.cheatButton.tweenToPos(-70, 150, 625, 'Back.easeOut');
+            }
+        }, 250)
+    }
+
+}
+
+function hideCheatOption() {
+    globalObjects.cheatButton.setState(DISABLE)
+    globalObjects.cheatButton.tweenToPos(-150, 150, 300, 'Cubic.easeOut')
+}
+
+function hideVirtualButtons() {
+    globalObjects.virtualLeft.setState(DISABLE);
+    globalObjects.virtualRight.setState(DISABLE);
+    globalObjects.virtualUp.setState(DISABLE);
+    globalObjects.virtualEnter.setState(DISABLE);
+}
+
+function showVirtualButtons() {
+    globalObjects.virtualLeft.setState(NORMAL);
+    globalObjects.virtualRight.setState(NORMAL);
+    globalObjects.virtualUp.setState(NORMAL);
+    globalObjects.virtualEnter.setState(NORMAL);
 }

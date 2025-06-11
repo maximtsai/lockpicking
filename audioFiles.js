@@ -4,12 +4,12 @@ const audioFiles = [
     {name: 'indeep', src: 'audio/indeep.mp3'},
     {name: 'princess', src: 'audio/princess.mp3'},
 
+    {name: 'heartbeatfast', src: 'audio/heartbeatfast.mp3'},
     {name: 'button_click', src: 'audio/button_click.mp3'},
     {name: 'button_hover', src: 'audio/button_hover.mp3'},
     {name: 'locket', src: 'audio/locket.mp3'},
     {name: 'click', src: 'audio/click.mp3'},
     {name: 'paperflip', src: 'audio/paperflip.mp3'},
-    {name: 'paperclose', src: 'audio/paperclose.mp3'},
     {name: 'focus', src: 'audio/focus.mp3'},
     {name: 'pickbreak', src: 'audio/pickbreak.mp3'},
     {name: 'scratch1', src: 'audio/scratch1.mp3'},
