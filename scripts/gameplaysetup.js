@@ -790,7 +790,7 @@ function pinMoveUp(pinNum) {
 
                 }
             }, 10)
-            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3) + dropDelay * 1.77), () => {
+            currPin.currDelay = PhaserScene.time.delayedCall(Math.max(0, Math.ceil((currPin.randDur - 125) * 3) + dropDelay * 1.75), () => {
                 gameVars.canShowGreen = false;
                 setTimeout(() => {
                     gameVars.canLock = false;

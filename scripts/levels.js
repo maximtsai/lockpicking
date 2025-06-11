@@ -409,6 +409,7 @@ function gotoLevel(lvl, skipIntro = false) {
         gameVars.usingSkull = false;
     }
     gameVars.usedSkull = false;
+    hideAutoPick();
 
     hideCheatOption();
     gameVars.firstPickBroken = false;
