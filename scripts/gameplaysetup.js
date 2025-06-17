@@ -96,7 +96,7 @@ function setupGame() {
     globalObjects.pickshadow = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'pickshadow.png').setAlpha(0.6);
     globalObjects.mechanism = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'mechanism.png');
     globalObjects.pick = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + gameConsts.UIYOffset, 'lock', 'pick.png');
-    
+
 
     globalObjects.autopick = new Button({
         normal: {
@@ -833,7 +833,7 @@ function pinMoveUp(pinNum) {
                             let soundToPlay = 'pinfall' + randIdx;
                             currPin.currSound = playSound(soundToPlay, 2.4);
                             currPin.currSound.detune = 200 - Math.random() * 100 - dropDelay * 1;
-                            let seekSpot = (245 - dropDelay * 0.75 + Math.random() * 50) * 0.0032;
+                            let seekSpot = (260 - dropDelay * 0.75 + Math.random() * 45) * 0.003;
                             currPin.currSound.seek = Math.max(0, Math.min(1, seekSpot));
                         }
                     }, 200 + Math.floor(dropDelay * 0.45))
@@ -856,7 +856,10 @@ function pinMoveUp(pinNum) {
 
                     currPin.secondLastRandVal = currPin.lastRandVal;
                     currPin.lastRandVal = randVal;
-                    currPin.randDur = Math.max(55, 55 + randVal * 35);
+                    currPin.randDur = Math.max(50, 50 + randVal * 41);
+                    if (currPin.randDur < 60) {
+                        currPin.randDur = 35;
+                    }
                 }
             })
         }
