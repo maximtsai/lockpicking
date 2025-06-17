@@ -148,6 +148,7 @@ function onPreloadComplete (scene)
 }
 
 function onLoadComplete() {
+    gameVars.loadComplete = true;
     onLoadCompleteAndSDKComplete();
 }
 
@@ -158,7 +159,7 @@ function onLoadCompleteAndSDKComplete() {
         }
         return;
     }
-    if (!gameVars.loadComplete) {
+    if (gameVars.loadComplete) {
         if (loadObjects) {
             if (loadObjects.loadingText) {
                 loadObjects.loadingText.setVisible(false);
@@ -169,8 +170,6 @@ function onLoadCompleteAndSDKComplete() {
             loadObjects = {};
         }
 
-
-        gameVars.loadComplete = true;
         sdkLoadingStop();
         gameVars.latestLevel = parseInt(sdkGetItem("latestLevel"));
         if (!gameVars.latestLevel) {
