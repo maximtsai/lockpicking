@@ -160,7 +160,9 @@ function onLoadCompleteAndSDKComplete() {
     }
     if (!gameVars.loadComplete) {
         if (loadObjects) {
-            loadObjects.loadingText.setVisible(false);
+            if (loadObjects.loadingText) {
+                loadObjects.loadingText.setVisible(false);
+            }
             for (let i in loadObjects) {
                 loadObjects[i].destroy();
             }
