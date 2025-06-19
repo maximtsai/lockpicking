@@ -495,8 +495,6 @@ function gotoLevel(lvl, skipIntro = false) {
                         break;
                     case 6:
                         setRoom("princess");
-                        globalObjects.pickshadow.setVisible(false);
-                        globalObjects.pick.setFrame('pick_heart.png');
                         break;
                     case 7:
                         setRoom("challenge");
