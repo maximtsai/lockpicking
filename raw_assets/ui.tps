@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>6</int>
         <key>texturePackerVersion</key>
-        <string>7.2.0</string>
+        <string>7.0.3</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -215,6 +215,40 @@
                 <rect>50,44,100,87</rect>
                 <key>scale9Paddings</key>
                 <rect>50,44,100,87</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ui/flag_cn.png</key>
+            <key type="filename">ui/flag_ru.png</key>
+            <key type="filename">ui/flag_us.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>14,10,27,19</rect>
+                <key>scale9Paddings</key>
+                <rect>14,10,27,19</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">ui/flag_cn_glow.png</key>
+            <key type="filename">ui/flag_ru_glow.png</key>
+            <key type="filename">ui/flag_us_glow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,12,32,25</rect>
+                <key>scale9Paddings</key>
+                <rect>16,12,32,25</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
