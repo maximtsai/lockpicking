@@ -863,7 +863,7 @@ function pinMoveUp(pinNum) {
 
                     currPin.secondLastRandVal = currPin.lastRandVal;
                     currPin.lastRandVal = randVal;
-                    currPin.randDur = Math.max(55, 55 + randVal * 37);
+                    currPin.randDur = Math.max(50, 50 + randVal * 40);
                     if (currPin.randDur < 60) {
                         currPin.randDur = 35;
                     }
