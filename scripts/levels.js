@@ -118,16 +118,22 @@ function loadPracticeRoom() {
     globalObjects.extras.push(arrowUp);
     globalObjects.extras.push(space);
 
-    globalObjects.roomTitle.setText('TRAINING')
-    let instructions = PhaserScene.add.text(25, gameConsts.height - 157, "CONTROLS:", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
-    globalObjects.extras.push(instructions);
-    let instructions2 = PhaserScene.add.text(97, gameConsts.height - 130, "Move pick", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
-    globalObjects.extras.push(instructions2);
-    let instructions3 = PhaserScene.add.text(64, gameConsts.height - 96, "Lift pin", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
-    globalObjects.extras.push(instructions3);
 
-    let instructions4 = PhaserScene.add.text(28, gameConsts.height - 62, "                 / Enter to set pin\nwhen at top of lock", {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
+    globalObjects.roomTitle.setText(getLangText('room0'));
+    let instructions = PhaserScene.add.text(25, gameConsts.height - 157, getLangText('controls'), {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
+    globalObjects.extras.push(instructions);
+    globalObjects.instructLang1 = instructions;
+    let instructions2 = PhaserScene.add.text(97, gameConsts.height - 130, getLangText('move_pick'), {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
+    globalObjects.extras.push(instructions2);
+    globalObjects.instructLang2 = instructions2;
+    let instructions3 = PhaserScene.add.text(64, gameConsts.height - 96, getLangText('lift_pin'), {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
+    globalObjects.extras.push(instructions3);
+    globalObjects.instructLang3 = instructions3;
+    let instructions4 = PhaserScene.add.text(28, gameConsts.height - 62, getLangText('lock_pin'), {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setStroke('#000000', 4).setOrigin(0, 0);
     globalObjects.extras.push(instructions4);
+    globalObjects.instructLang4 = instructions4;
+
+
     // let goalText = PhaserScene.add.text(570, gameConsts.height - 135, 'GOAL:\nSet all the\ntumblers\nin place ->', {fontFamily: 'kingthings', fontSize: 20, color: '#FFFFFF', align: 'left'}).setDepth(99).setOrigin(0, 0);
     // goalText.setStroke('#000000', 4)
     // globalObjects.extras.push(goalText);
@@ -160,7 +166,7 @@ function loadEscapeRoom() {
     }]
     createPins(1);
     setPicksLeft(3);
-    globalObjects.roomTitle.setText('LOCKBOX');
+    globalObjects.roomTitle.setText(getLangText('room1'));
 }
 
 function loadClothesRoom() {
@@ -182,7 +188,7 @@ function loadClothesRoom() {
     }]
     createPins(2);
     setPicksLeft(3);
-    globalObjects.roomTitle.setText('TAVERN')
+    globalObjects.roomTitle.setText(getLangText('room2'));
 }
 
 function loadGateRoom() {
@@ -223,7 +229,7 @@ function loadGateRoom() {
     }]
     createPins(3);
     setPicksLeft(3);
-    globalObjects.roomTitle.setText('SEWER')
+    globalObjects.roomTitle.setText(getLangText('room3'));
 }
 
 function loadEnchantedRoom() {
@@ -259,7 +265,7 @@ function loadEnchantedRoom() {
 
     createPins(3, true);
     setPicksLeft(3);
-    globalObjects.roomTitle.setText('ENCHANTED GATE')
+    globalObjects.roomTitle.setText(getLangText('room4'));
 }
 
 function loadCrownRoom() {
@@ -295,7 +301,7 @@ function loadCrownRoom() {
     }]
     createPins(4, true);
     setPicksLeft(3);
-    globalObjects.roomTitle.setText("PALACE DOOR")
+    globalObjects.roomTitle.setText(getLangText('room5'));
 
 }
 
@@ -339,7 +345,7 @@ function loadPrincessRoom() {
     }]
     createPins(5, true);
     setPicksLeft(4);
-    globalObjects.roomTitle.setText('SEALED SCROLL')
+    globalObjects.roomTitle.setText(getLangText('room6'));
 }
 
 function loadChallengeRoom() {
@@ -395,7 +401,7 @@ function loadChallengeRoom() {
     }]
     createPins(6, true, true);
     setPicksLeft(6);
-    globalObjects.roomTitle.setText('CHALLENGE')
+    globalObjects.roomTitle.setText(getLangText('room7'));
 }
 
 function gotoNextLevel() {
@@ -465,13 +471,13 @@ function gotoLevel(lvl, skipIntro = false) {
 
                 let flavorStory = [
                     "",
-                    "I prowl the Imperial City's underground,\nneeding coin to fund my heist after\nhearing rumors of a valuable scroll with\na very generous payout.\n\nMy eyes notice an abandoned lockbox\nthat tempts me with easy pickings.",
-                    "With some spare coin and a seat at the\ntavern, I get information on the scroll's\nwhereabouts, but I need maps to help\nnavigate the way.\n\nThe tavern's backrooms contain\nsmuggler goods, only loosely guarded\nto anyone with the finesse to take\nits contents.",
-                    "The scroll lies within the Imperial\nPalace, reachable through the sewers,\nbut a rusted grate bars the way.\n\nThe lock on it is sturdy but familiar, and\nshould yield as long as I'm careful.",
-                    "I've reached the end of the sewers,\nbut a strange gate adorned with the\nroyal crest blocks my path.\n\nThe lock on this gate looks simple but\nI notice the glow of an enchantment.\nI'll have to be careful with this one.",
-                    "The vault-like door to the inner Palace\nstands before me, its locks a masterpiece\nof craftsmanship and enchantment.\n\nEvery known safeguard protects this\nbarrier, testing my skill to its limit.",
-                    "I've finally reached the royal library,\na chamber of ancient tomes guarded\nby blind monks.\n\nI spot the scroll right away but a\nstar-shaped seal secures its contents.\n\nI sense this scroll hides secrets greater\nthan any treasure, but I've come too\nfar to stop now.",
-                    "After much drinking and bragging about\nmy latest heist, a rival locksmith presents\nto me a contraption so complex it could\nbarely be called a lock anymore.\n\nThere's something devious about this\ndevice but my prior boasting prevents\nme from withdrawing from this\nchallenge.\n\nI'll bring extra picks just in case."
+                    getLangText('story1'),
+                    getLangText('story2'),
+                    getLangText('story3'),
+                    getLangText('story4'),
+                    getLangText('story5'),
+                    getLangText('story6'),
+                    getLangText('story7')
                 ]
 
                 switch(lvl) {
@@ -501,14 +507,14 @@ function gotoLevel(lvl, skipIntro = false) {
                         break;
                 }
                 let levelNames = [
-                    "Training",
-                    "Level 1: Lockbox",
-                    "Level 2: Tavern",
-                    "Level 3: Sewer",
-                    "Level 4: Enchanted Gate",
-                    "Level 5: Palace Door",
-                    "Level 6: Sealed Scroll",
-                    "Level 7: Challenge"];
+                    getLangText('room0'),
+                    getLangText('level') + " 1: " + getLangText('room1'),
+                    getLangText('level') + " 2: " + getLangText('room2'),
+                    getLangText('level') + " 3: " + getLangText('room3'),
+                    getLangText('level') + " 4: " + getLangText('room4'),
+                    getLangText('level') + " 5: " + getLangText('room5'),
+                    getLangText('level') + " 6: " + getLangText('room6'),
+                    getLangText('level') + " 7: " + getLangText('room7')];
                 if (lvl > 0 && !skipIntro) {
                     setTimeout(() => {
                         let imageScale = 1;
@@ -528,28 +534,28 @@ function gotoLevel(lvl, skipIntro = false) {
 
 function openLevelPopup() {
     let lvlContents = {};
-    lvlContents.title = PhaserScene.add.text(gameConsts.halfWidth, 123, 'LEVEL SELECT', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+    lvlContents.title = PhaserScene.add.text(gameConsts.halfWidth, 123, getLangText('level_select'), {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
     openPopup(lvlContents)
     let extraContents = {};
 
     let levelNames = [
-        "Training",
-        "Level 1: Lockbox",
-        "Level 2: Tavern",
-        "Level 3: Sewer",
-        "Level 4: Enchanted Gate",
-        "Level 5: Palace Door",
-        "Level 6: Sealed Scroll",
-        "Level 7: Challenge!"];
+        getLangText('room0'),
+        getLangText('level') + " 1: " + getLangText('room1'),
+        getLangText('level') + " 2: " + getLangText('room2'),
+        getLangText('level') + " 3: " + getLangText('room3'),
+        getLangText('level') + " 4: " + getLangText('room4'),
+        getLangText('level') + " 5: " + getLangText('room5'),
+        getLangText('level') + " 6: " + getLangText('room6'),
+        getLangText('level') + " 7: " + getLangText('room7')];
     let levelNamesAlt = [
         "Training",
-        "Level 1: Lockbox",
-        "Level 2",
-        "Level 3",
-        "Level 4",
-        "Level 5",
-        "Level 6",
-        "Level 7"];
+        getLangText('level') + " 1: " + + getLangText('room1'),
+        getLangText('level') + " 2",
+        getLangText('level') + " 3",
+        getLangText('level') + " 4",
+        getLangText('level') + " 5",
+        getLangText('level') + " 6",
+        getLangText('level') + " 7"];
     for (let i = 0; i < levelNames.length; i++) {
         let btnName = "level_"+i;
         if (i < levelNames.length - 1 || gameVars.latestLevel >= levelNames.length - 1) {
@@ -559,7 +565,7 @@ function openLevelPopup() {
                     ref: "menu_btn_normal.png",
                     x: gameConsts.halfWidth,
                     y: gameConsts.halfHeight - 140 + i * 41,
-                    scaleX: 1,
+                    scaleX: language === 'ru' ? 1.09 : 1,
                     scaleY: 0.65,
                     alpha: 1,
                 },
@@ -764,7 +770,7 @@ function openCheatPopup() {
                     duration: 900,
                     ease: 'Cubic.easeOut'
                 })
-            }) 
+            })
         }
     });
     cheatButton.addText("USE KEY", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'});

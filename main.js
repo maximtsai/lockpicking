@@ -172,6 +172,11 @@ function onLoadCompleteAndSDKComplete() {
 
         sdkLoadingStop();
         gameVars.latestLevel = parseInt(sdkGetItem("latestLevel"));
+        let potentialLanguage = sdkGetItem('language');
+        if (!!potentialLanguage) {
+            language = potentialLanguage;
+        }
+
         if (!gameVars.latestLevel) {
             gameVars.latestLevel = 1;//parseInt(localStorage.getItem("latestLevel")) || 1;
         }

@@ -88,7 +88,7 @@ function setupGame() {
 
     globalObjects.extras = [];
     globalObjects.roomTitle = PhaserScene.add.text(gameConsts.halfWidth, 20, 'TRAINING LOCK', {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(99).setOrigin(0.5, 0.5);
-    globalObjects.picksleftText = PhaserScene.add.text(12, 20, 'PICKS LEFT: 99', {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'left'}).setStroke('#000000', 4).setDepth(1).setOrigin(0, 0.5);
+    globalObjects.picksleftText = PhaserScene.add.text(12, 20, getLangText('picks_left') + '99', {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'left'}).setStroke('#000000', 4).setDepth(1).setOrigin(0, 0.5);
     gameVars.picksLeft = 99;
 
     // globalObjects.hoverTextManager = new InternalHoverTextManager(PhaserScene);
@@ -577,6 +577,7 @@ function toggleLang() {
         default:
             language = 'en_us';
     }
+    sdkSetItem('language', language);
     globalObjects.langBtn.setNormalRef(getLangFlag(true));
     globalObjects.langBtn.setHoverRef(getLangFlag(false));
     globalObjects.langBtn.setPressRef(getLangFlag(true));
@@ -584,7 +585,18 @@ function toggleLang() {
 }
 
 function updateLangSurface() {
-    globalObjects.levelButton.setText(getLangText('lvl_select'))
+    globalObjects.levelButton.setText(getLangText('lvl_select'));
+    globalObjects.picksleftText.setText(getLangText('picks_left') + gameVars.picksLeft);
+
+    globalObjects.roomTitle.setText(getLangText('room' + gameVars.currLevel));
+    if (globalObjects.instructLang1) {
+        globalObjects.instructLang1.setText(getLangText('controls'));
+        globalObjects.instructLang2.setText(getLangText('move_pick'));
+        globalObjects.instructLang3.setText(getLangText('lift_pin'));
+        globalObjects.instructLang4.setText(getLangText('lock_pin'));
+    }
+
+
 }
 
 function setupLangButtons() {
@@ -1603,7 +1615,7 @@ function slideOpenLock() {
                     });
                     gameVars.showNextButton = gameVars.currLevel ? gameVars.currLevel + 1 : 1;
 
-                    let buttonText = gameVars.currRoom === 'princess' ? "CONTINUE" : "NEXT LEVEL";
+                    let buttonText = gameVars.currRoom === 'princess' ? getLangText('continue') : "NEXT LEVEL";
                     if (gameVars.currRoom === 'challenge') {
                         buttonText = "RETURN";
                     }
@@ -1825,9 +1837,9 @@ function openEpiloguePopup() {
 
 function openInstructPopup() {
     let instructContent = {};
-    instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, 'INSTRUCTIONS', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
-    instructContent.goal = PhaserScene.add.text(gameConsts.halfWidth - 158, 200, 'GOAL: Set all\npins in place\nto unlock the lock', {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0, 0.5);
-    instructContent.tips = PhaserScene.add.text(gameConsts.halfWidth, 293, "Pins can only be set at the top\nof the lock, or else the lockpick breaks.", {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+    instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, getLangText('instructions'), {fontFamily: 'kingthings', fontSize: language === 'ru' ? 28 : 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+    instructContent.goal = PhaserScene.add.text(gameConsts.halfWidth - 158, 200, getLangText('goal'), {fontFamily: 'kingthings', fontSize: language === 'ru' ? 21 : 24, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0, 0.5);
+    instructContent.tips = PhaserScene.add.text(gameConsts.halfWidth, 293, getLangText('pins_can_only'), {fontFamily: 'kingthings', fontSize: language === 'ru' ? 16 : 18, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
 
     instructContent.image = PhaserScene.add.image(gameConsts.halfWidth + 20, gameConsts.halfHeight - 150, 'lock', 'goal.png').setDepth(102).setScale(0.8).setOrigin(0 ,0);
 
@@ -1836,10 +1848,10 @@ function openInstructPopup() {
     instructContent.arrowLeft = PhaserScene.add.image(xOffset+42, yOffset+gameConsts.height - 112, 'ui', 'arrow.png').setRotation(Math.PI*-0.5).setScale(0.8).setDepth(102).setTint(0x000000);
     instructContent.arrowRight = PhaserScene.add.image(xOffset+76, yOffset+gameConsts.height - 112, 'ui', 'arrow.png').setRotation(Math.PI*0.5).setScale(0.8).setDepth(102).setTint(0x000000);
     instructContent.arrowUp = PhaserScene.add.image(xOffset+42, yOffset+gameConsts.height - 78, 'ui', 'arrow.png').setScale(0.8).setDepth(102).setTint(0x000000);
-    instructContent.controls = PhaserScene.add.text(xOffset+29, yOffset+gameConsts.height - 157, "CONTROLS:", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
-    instructContent.movepick = PhaserScene.add.text(xOffset+97, yOffset+gameConsts.height - 124, "Move pick", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
-    instructContent.lifttumbler = PhaserScene.add.text(xOffset+64, yOffset+gameConsts.height - 90, "Lift pin", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
-    instructContent.spaceenter = PhaserScene.add.text(xOffset+30, yOffset+gameConsts.height - 62, "Space/Enter to set pin", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
+    instructContent.controls = PhaserScene.add.text(xOffset+29, yOffset+gameConsts.height - 157, getLangText('controls'), {fontFamily: 'kingthings', fontSize: language === 'ru' ? 21 : 24, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
+    instructContent.movepick = PhaserScene.add.text(xOffset+97, yOffset+gameConsts.height - 124, getLangText('move_pick'), {fontFamily: 'kingthings', fontSize: language === 'ru' ? 18 : 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
+    instructContent.lifttumbler = PhaserScene.add.text(xOffset+64, yOffset+gameConsts.height - 90, getLangText('lift_pin'), {fontFamily: 'kingthings', fontSize: language === 'ru' ? 18 : 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
+    instructContent.spaceenter = PhaserScene.add.text(xOffset+30, yOffset+gameConsts.height - 62, getLangText('set_pin'), {fontFamily: 'kingthings', fontSize: language === 'ru' ? 18 : 20, color: '#000000', align: 'left'}).setOrigin(0, 0).setDepth(102);
     // instructContent.tips2 = PhaserScene.add.text(gameConsts.halfWidth, 472, "Tip: Listen and observe carefully\nhow the tumblers move", {fontFamily: 'kingthings', fontSize: 18, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
 
     openPopup(instructContent)
@@ -1878,7 +1890,7 @@ function openInstructPopup() {
             openCreditsPopup();
         }
     });
-    creditsButton.addText("CREDITS", {fontFamily: 'kingthings', fontSize: 22, color: '#000000', align: 'center'});
+    creditsButton.addText(getLangText('credits'), {fontFamily: 'kingthings', fontSize: 22, color: '#000000', align: 'center'});
     creditsButton.setTextOffset(1, 0)
     creditsButton.setDepth(101);
     let extraContents = {creditsButton: creditsButton};
@@ -1978,12 +1990,13 @@ function openCreditsPopup() {
 }
 function openFlavorPopup(title = " ", content = " ", image, scale = 0.95) {
     let instructContent = {};
-    instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, title, {fontFamily: 'kingthings', fontSize: 32, color: '#140000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+    instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, title, {fontFamily: 'kingthings', fontSize: language === 'ru' ? 23 : 32, color: '#140000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+    instructContent.title.scaleX = language === 'ru' ? 0.93 : 1;
 
     if (image) {
         instructContent.image = PhaserScene.add.image(gameConsts.halfWidth, gameConsts.halfHeight + 73, 'lock', image).setDepth(102).setScale(scale).setVisible(false);
     }
-    instructContent.controls = PhaserScene.add.text(gameConsts.halfWidth - 170, gameConsts.halfHeight - 143, content, {fontFamily: 'kingthings', fontSize: 23, color: '#140000', align: 'left'}).setOrigin(0, 0).setScale(1, 0.98).setDepth(102);
+    instructContent.controls = PhaserScene.add.text(gameConsts.halfWidth - 170, gameConsts.halfHeight - 143, content, {fontFamily: 'kingthings', fontSize: language === 'ru' ? 19.5 : 23, color: '#140000', align: 'left'}).setOrigin(0, 0).setScale(1, 0.98).setDepth(102);
 
     let extraContents = {};
 
@@ -2020,7 +2033,7 @@ function openFlavorPopup(title = " ", content = " ", image, scale = 0.95) {
             closePopup()
         }
     });
-    extraContents.continueButton.addText("CONTINUE", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
+    extraContents.continueButton.addText(getLangText('continue'), {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
     extraContents.continueButton.setTextOffset(0, -1);
     extraContents.continueButton.setDepth(101);
     addPopupContents(extraContents);
@@ -2030,14 +2043,13 @@ function openFlavorPopup(title = " ", content = " ", image, scale = 0.95) {
 
 function setPicksLeft(amt) {
     gameVars.picksLeft = amt;
-    let text = gameVars.currRoom === "princess" ? "TRIES LEFT: " : "PICKS LEFT: "
+    let text = getLangText('picks_left');
     globalObjects.picksleftText.setText(text + gameVars.picksLeft);
 }
 
 function decrementPicksLeft() {
     gameVars.picksLeft--;
-    let text = gameVars.currRoom === "princess" ? "TRIES LEFT: " : "PICKS LEFT: "
-    globalObjects.picksleftText.setText(text + gameVars.picksLeft);
+    globalObjects.picksleftText.setText(getLangText('picks_left') + gameVars.picksLeft);
     if (gameVars.picksLeft >= 0) {
         globalObjects.picksleftText.setScale(1.18);
         PhaserScene.tweens.add({
