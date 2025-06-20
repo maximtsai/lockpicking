@@ -47,8 +47,7 @@ let textData = {
         "jp": "続ける"
     },
     "lvl_select": {
-        "en_us": "LEVEL SELECT",
-        "fr": "SÉLECTION NIVEAU",
+        "en_us": "LVL SELECT",
         "zh_tw": "等級選擇",
         "zh_cn": "级别选择",
         "ru": "ВЫБОР УРОВНЯ",

@@ -80,6 +80,7 @@ function setupGame() {
 
     setupLevelButton();
     setupMuteButtons();
+    setupLangButtons();
     setupQuestionButton();
     setupCheatButton();
 
@@ -452,9 +453,10 @@ function setupLevelButton() {
             openLevelPopup();
         }
     });
-    levelButton.addText("LVL SELECT", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
+    levelButton.addText(getLangText('lvl_select'), {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
     levelButton.setTextOffset(0, 1);
     levelButton.setDepth(2);
+    globalObjects.levelButton = levelButton;
 }
 
 function setupMuteButtons() {
@@ -532,6 +534,97 @@ function setupMuteButtons() {
     musicbtn.setOrigin(0.5, 0.5);
     globalObjects.musicbtn = musicbtn;
     musicbtn.setDepth(1);
+}
+
+function getLangFlag(isNormal) {
+    // isnormal is flipped oops
+    switch(language) {
+        case 'en_us':
+            if (isNormal) {
+                return 'flag_us.png';
+            } else {
+                return 'flag_us_glow.png';
+            }
+            break;
+        case 'zh_cn':
+            if (isNormal) {
+                return 'flag_cn.png';
+            } else {
+                return 'flag_cn_glow.png';
+            }
+            break;
+        case 'ru':
+            if (isNormal) {
+                return 'flag_ru.png';
+            } else {
+                return 'flag_ru_glow.png';
+            }
+            break;
+    }
+}
+
+function toggleLang() {
+    switch(language) {
+        case 'en_us':
+            language = 'ru';
+            break;
+        case 'ru':
+            language = 'zh_cn';
+            break;
+        case 'zh_cn':
+            language = 'en_us';
+            break;
+        default:
+            language = 'en_us';
+    }
+    globalObjects.langBtn.setNormalRef(getLangFlag(true));
+    globalObjects.langBtn.setHoverRef(getLangFlag(false));
+    globalObjects.langBtn.setPressRef(getLangFlag(true));
+    updateLangSurface();
+}
+
+function updateLangSurface() {
+    globalObjects.levelButton.setText(getLangText('lvl_select'))
+}
+
+function setupLangButtons() {
+    let langBtn = new Button({
+        normal: {
+            atlas: 'ui',
+            ref: getLangFlag(true),
+            scaleX: 0.7,
+            scaleY: 0.7,
+            x: gameConsts.width - 146,
+            y: 20,
+            alpha: 0.75
+        },
+        hover: {
+            atlas: 'ui',
+            alpha: 1,
+            ref: getLangFlag(false)
+        },
+        press: {
+            atlas: 'ui',
+            alpha: 0.8,
+            ref: getLangFlag(true)
+        },
+        onHover: () => {
+            if (canvas) {
+                canvas.style.cursor = 'pointer';
+            }
+        },
+        onHoverOut: () => {
+            if (canvas) {
+                canvas.style.cursor = 'default';
+            }
+        },
+        onMouseUp: () => {
+            toggleLang();
+        }
+    });
+    langBtn.setOrigin(0.5, 0.5);
+    globalObjects.langBtn = langBtn;
+    langBtn.setDepth(1);
 }
 
 function toggleMute() {
