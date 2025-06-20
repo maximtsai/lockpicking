@@ -35,31 +35,6 @@
 					}
 				},
 				{
-					"filename": "popupsmall.png",
-					"rotated": false,
-					"trimmed": true,
-					"sourceSize": {
-						"w": 450,
-						"h": 354
-					},
-					"spriteSourceSize": {
-						"x": 3,
-						"y": 0,
-						"w": 444,
-						"h": 354
-					},
-					"frame": {
-						"x": 453,
-						"y": 1,
-						"w": 444,
-						"h": 354
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
 					"filename": "top.png",
 					"rotated": false,
 					"trimmed": true,
@@ -75,9 +50,109 @@
 					},
 					"frame": {
 						"x": 453,
-						"y": 357,
+						"y": 1,
 						"w": 802,
 						"h": 92
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "popupsmall.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 450,
+						"h": 354
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 0,
+						"w": 444,
+						"h": 354
+					},
+					"frame": {
+						"x": 453,
+						"y": 95,
+						"w": 444,
+						"h": 354
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "flag_cn.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 54,
+						"h": 39
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 54,
+						"h": 39
+					},
+					"frame": {
+						"x": 453,
+						"y": 451,
+						"w": 54,
+						"h": 39
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "flag_ru.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 54,
+						"h": 39
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 54,
+						"h": 39
+					},
+					"frame": {
+						"x": 509,
+						"y": 451,
+						"w": 54,
+						"h": 39
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "flag_us.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 54,
+						"h": 39
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 54,
+						"h": 39
+					},
+					"frame": {
+						"x": 565,
+						"y": 451,
+						"w": 54,
+						"h": 39
 					},
 					"anchor": {
 						"x": 0.5,
@@ -99,7 +174,7 @@
 						"h": 34
 					},
 					"frame": {
-						"x": 453,
+						"x": 621,
 						"y": 451,
 						"w": 75,
 						"h": 34
@@ -124,7 +199,7 @@
 						"h": 34
 					},
 					"frame": {
-						"x": 530,
+						"x": 698,
 						"y": 451,
 						"w": 34,
 						"h": 34
@@ -150,7 +225,7 @@
 					},
 					"frame": {
 						"x": 899,
-						"y": 1,
+						"y": 95,
 						"w": 200,
 						"h": 174
 					},
@@ -175,9 +250,84 @@
 					},
 					"frame": {
 						"x": 899,
-						"y": 177,
+						"y": 271,
 						"w": 200,
 						"h": 159
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "flag_cn_glow.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 64,
+						"h": 49
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 64,
+						"h": 49
+					},
+					"frame": {
+						"x": 899,
+						"y": 432,
+						"w": 64,
+						"h": 49
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "flag_ru_glow.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 64,
+						"h": 49
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 64,
+						"h": 49
+					},
+					"frame": {
+						"x": 965,
+						"y": 432,
+						"w": 64,
+						"h": 49
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "flag_us_glow.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 64,
+						"h": 49
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 64,
+						"h": 49
+					},
+					"frame": {
+						"x": 1031,
+						"y": 432,
+						"w": 64,
+						"h": 49
 					},
 					"anchor": {
 						"x": 0.5,
@@ -200,7 +350,7 @@
 					},
 					"frame": {
 						"x": 1101,
-						"y": 1,
+						"y": 95,
 						"w": 71,
 						"h": 71
 					},
@@ -215,6 +365,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:6693b35ac9e03f1bfe01b7694d01b30a:f8ff2c0f259b753efc3ffbb271e49ae0:6af6d199855d1c5980a61db04791f8fb$"
+		"smartupdate": "$TexturePacker:SmartUpdate:44c3270064f145df1ac6121273b4b4fe:10e77aec1c007cbfda2c31bdba108d07:6af6d199855d1c5980a61db04791f8fb$"
 	}
 }
