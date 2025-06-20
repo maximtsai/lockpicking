@@ -1339,7 +1339,7 @@ function showFail() {
                 }
             });
             gameVars.showNextButton = gameVars.currLevel ? gameVars.currLevel : 0;
-            globalObjects.victory.retry.addText("RETRY", {fontFamily: 'kingthings', fontSize: 28, color: '#000000', align: 'center'});
+            globalObjects.victory.retry.addText(getLangText('retry'), {fontFamily: 'kingthings', fontSize: 28, color: '#000000', align: 'center'});
             globalObjects.victory.retry.setTextOffset(0, 1);
             globalObjects.victory.retry.setDepth(51);
         }

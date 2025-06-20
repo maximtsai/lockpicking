@@ -2,6 +2,15 @@ let language = 'en_us';
 
 let textData = {
     "translate_warn": {
+        "en_us": "ENGLISH",
+        "fr": "(Remarque: Certaines traductions\npeuvent être inexactes)",
+        "zh_tw": "中文",
+        "zh_cn": "中文",
+        "ru": "Русский",
+        "es": "",
+        "jp": ""
+    },
+    "translate_warn": {
         "en_us": " ",
         "fr": "(Remarque: Certaines traductions\npeuvent être inexactes)",
         "zh_tw": "(註：有些翻譯可能不準確)",
@@ -15,7 +24,7 @@ let textData = {
         "fr": "CRÉDITS",
         "zh_tw": "制作名单",
         "zh_cn": "制作名单",
-        "ru": "",
+        "ru": "Кредиты",
         "es": "",
         "jp": "。"
     },
@@ -42,19 +51,31 @@ let textData = {
         "fr": "SÉLECTION NIVEAU",
         "zh_tw": "等級選擇",
         "zh_cn": "级别选择",
-        "ru": "ПРОДОЛЖАТЬ",
+        "ru": "ВЫБОР УРОВНЯ",
         "es": "CONTINUAR",
         "jp": "続ける"
     },
-    "skip": {
-        "en_us": "SKIP",
-        "fr": "SAUTER",
-        "zh_tw": "跳过",
-        "zh_cn": "跳過",
-        "ru": "ПОКИДАТЬ",
-        "es": "ABANDONAR",
-        "jp": "やめる"
+    "retry": {
+        "en_us": "RETRY",
+        "zh_tw": "重試",
+        "zh_cn": "重试",
+        "ru": "ПОВТОРИТЬ",
     },
+
+    "continue": {
+        "en_us": "CONTINUE",
+        "zh_tw": "繼續",
+        "zh_cn": "继续",
+        "ru": "ПРОДОЛЖАТЬ",
+    },
+    "nextlvl": {
+        "en_us": "NEXT LEVEL",
+        "zh_tw": "下一級",
+        "zh_cn": "下一级",
+        "ru": "СЛЕДУЮЩИЙ УРОВЕНЬ",
+    },
+
+
     "exit": {
         "en_us": "EXIT",
         "fr": "QUITTER",
