@@ -379,7 +379,7 @@ function loadChallengeRoom() {
             duration: 500,
         })
         globalObjects.infoText.setAlpha(0);
-        globalObjects.infoText.setText("The lock practically falls apart once I crack it open.\nMy rival weeps while I stand victorious.")
+        globalObjects.infoText.setText(getLangText('practically'))
         if (globalObjects.infoText.currAnim) {
             globalObjects.infoText.currAnim.stop();
         }
@@ -773,7 +773,7 @@ function openCheatPopup() {
             })
         }
     });
-    cheatButton.addText("USE KEY", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'});
+    cheatButton.addText(getLangText('usekey'), {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'});
     cheatButton.setDepth(103);
     extraContents["cheatbtn"] = cheatButton;
     let hideButton = new Button({
@@ -817,7 +817,7 @@ function openCheatPopup() {
             closePopup();
         }
     });
-    hideButton.addText("HIDE", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'});
+    hideButton.addText(getLangText('hide'), {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'});
     hideButton.setDepth(103);
     extraContents["hidebtn"] = hideButton;
     addPopupContents(extraContents);

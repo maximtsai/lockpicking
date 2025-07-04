@@ -129,7 +129,7 @@ function setupGame() {
             }
             globalObjects.autopickText.visible = true;
             let lockpickChance = getLockpickChance();
-            globalObjects.autopickText.setText("UNLOCK CHANCE: "+lockpickChance+"%")
+            globalObjects.autopickText.setText(getLangText('unlockchance')+": "+lockpickChance+"%")
         },
         onHoverOut: () => {
             if (canvas) {
@@ -141,11 +141,11 @@ function setupGame() {
             attemptAutoLockpick();
         }
     });
-    globalObjects.autopick.addText("AUTO-ATTEMPT", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'});
+    globalObjects.autopick.addText(getLangText('autoattempt'), {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'center'});
     globalObjects.autopick.setTextOffset(0.5, 0.5);
     globalObjects.autopick.setDepth(2);
     globalObjects.autopick.setState(DISABLE);
-    globalObjects.autopickText = PhaserScene.add.text(gameConsts.halfWidth + 25, 457, "UNLOCK CHANCE: X%", {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setVisible(false).setOrigin(0.5, 0.5);
+    globalObjects.autopickText = PhaserScene.add.text(gameConsts.halfWidth + 25, 457, getLangText('unlockchance') + ": X%", {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 4).setDepth(50).setVisible(false).setOrigin(0.5, 0.5);
 
     setupTouchButtons();
 
@@ -589,13 +589,16 @@ function updateLangSurface() {
     globalObjects.picksleftText.setText(getLangText('picks_left') + gameVars.picksLeft);
 
     globalObjects.roomTitle.setText(getLangText('room' + gameVars.currLevel));
-    if (globalObjects.instructLang1) {
+    if (globalObjects.instructLang1 && globalObjects.instructLang1.active) {
         globalObjects.instructLang1.setText(getLangText('controls'));
         globalObjects.instructLang2.setText(getLangText('move_pick'));
         globalObjects.instructLang3.setText(getLangText('lift_pin'));
         globalObjects.instructLang4.setText(getLangText('lock_pin'));
     }
 
+    if (globalObjects.autopick) {
+        globalObjects.autopick.setText(getLangText('autoattempt'));
+    }
 
 }
 
@@ -844,7 +847,7 @@ function pinMoveUp(pinNum) {
             gameVars.firstPin = true;
             randVal = Math.max(2, randVal);
             if (gameVars.currLevel < 4) {
-                let instructions = PhaserScene.add.text(348, gameConsts.halfHeight - 103, "Press SPACE when\npin hits the top  ->", {fontFamily: 'kingthings', fontSize: 22, color: '#FFFFFF', align: 'left'}).setDepth(99).setAlpha(0).setStroke('#000000', 4).setOrigin(1, 0);
+                let instructions = PhaserScene.add.text(348, gameConsts.halfHeight - 103, getLangText("pressspace"), {fontFamily: 'kingthings', fontSize: 22, color: '#FFFFFF', align: 'left'}).setDepth(99).setAlpha(0).setStroke('#000000', 4).setOrigin(1, 0);
                 globalObjects.instructions = instructions;
                 PhaserScene.tweens.add({
                     targets: instructions,
@@ -1122,7 +1125,7 @@ function setPin(isAuto) {
         if (gameVars.pinsFixed === 5 && !gameVars.curses99) {
             gameVars.curses99 = true;
             globalObjects.infoText.setAlpha(0);
-            globalObjects.infoText.setText("Almost there...")
+            globalObjects.infoText.setText(getLangText('almost'));
             if (globalObjects.infoText.currAnim) {
                 globalObjects.infoText.currAnim.stop();
             }
@@ -1386,14 +1389,15 @@ function showFail() {
 
 
     let flavorText = [
-        "I somehow botch my practice lock with\na mountain of lockpicks. Great start.",
-        "My last lockpick breaks as I fumble the\nlockbox, leaving me with nothing.",
-        "My pick breaks in the door's lock, and\nI am forced to withdraw from the tavern.",
-        "The robust lock holds, and my broken picks\nsplash in the murky water.",
-        "The enchanted lock resets at my slightest\nmistake, sealing the door tight.",
-        "The masterful lock defies my trembling hands,\nand the scroll remains beyond reach.",
-        "I misjudge the star lock's shifting tumblers,\nand whatever secrets in the scroll are now sealed away.",
-        "My rival laughs in my face as his devilish\ncontraption remains tightly locked."
+        getLangText('fail0'),
+        getLangText('fail1'),
+        getLangText('fail2'),
+        getLangText('fail3'),
+        getLangText('fail4'),
+        getLangText('fail5'),
+        getLangText('fail6'),
+        getLangText('fail7'),
+
     ]
     globalObjects.victory.extraText = PhaserScene.add.text(gameConsts.halfWidth, gameConsts.height - 60, flavorText[gameVars.currLevel], {fontFamily: 'kingthings', fontSize: 24, color: '#FFFFFF', align: 'center'}).setStroke('#000000', 6).setDepth(50).setAlpha(0).setOrigin(0.5, 0.5);
 
@@ -1615,9 +1619,9 @@ function slideOpenLock() {
                     });
                     gameVars.showNextButton = gameVars.currLevel ? gameVars.currLevel + 1 : 1;
 
-                    let buttonText = gameVars.currRoom === 'princess' ? getLangText('continue') : "NEXT LEVEL";
+                    let buttonText = gameVars.currRoom === 'princess' ? getLangText('continue') : getLangText('nextlvl');
                     if (gameVars.currRoom === 'challenge') {
-                        buttonText = "RETURN";
+                        buttonText = getLangText('return');
                     }
                     globalObjects.victory.nextLvl.addText(buttonText, {fontFamily: 'kingthings', fontSize: 28, color: '#000000', align: 'center'});
                     globalObjects.victory.nextLvl.setTextOffset(0, 1);
@@ -1806,7 +1810,7 @@ function openEpiloguePopup() {
                     hideGlobalClickBlocker();
                 }
             });
-            continueButton.addText("RETURN", {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
+            continueButton.addText(getLangText("return"), {fontFamily: 'kingthings', fontSize: 24, color: '#000000', align: 'center'});
             continueButton.setTextOffset(0, -1);
             continueButton.setDepth(999);
         }
@@ -2118,7 +2122,7 @@ function attemptAutoLockpick() {
     }
 
     let lockpickChance = getLockpickChance();
-    globalObjects.autopickText.setText("UNLOCK CHANCE: "+lockpickChance+"%");
+    globalObjects.autopickText.setText(getLangText('unlockchance') + ": "+lockpickChance+"%");
 
     let currPin = globalObjects.pins[gameVars.currentPin]
     if (currPin.inMotion || currPin.locked) {

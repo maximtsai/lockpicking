@@ -194,7 +194,7 @@ let textData = {
 
     "story1": {
         "en_us": "I prowl the Imperial City's underground,\nneeding coin to fund my heist after\nhearing rumors of a valuable scroll with\na very generous payout.\n\nMy eyes notice an abandoned lockbox\nthat tempts me with easy pickings.",
-        "zh_cn": "我在帝国城的地下潜行，听到\n传言说有一卷价值连城的卷轴，\n报酬非常丰厚，我需要资金来支持\n我的抢劫计划。我的眼睛注意到\n一个废弃的锁箱，诱惑我去轻松拾取。",
+        "zh_cn": "我在帝国城的地下潜行，听到\n传言说有一卷价值连城的卷轴，\n报酬非常丰厚，我需要资金来\n支持我的抢劫计划。我的眼睛\n注意到一个废弃的锁箱，诱惑我\n去轻松拾取。",
         "ru": "Я крадусь по подземельям Имперского\nгорода, нуждаясь в деньгах для\nфинансирования ограбления, после слухов\nо ценном свитке с щедрой наградой.\n\nМои глаза замечают заброшенный сейф,\nкоторый манит лёгкой добычей.",
     },
     "story2": {
@@ -229,6 +229,47 @@ let textData = {
         "ru": "После обильного застолья и хвастовства\nо моём последнем ограблении,\nсоперник-слесарь показывает мне\nустройство, настолько сложное, что\nего едва ли можно назвать замком.\n\nВ этом механизме есть что-то\nковарное, но мои прежние\nпохвалы не позволяют мне\nотказаться от вызова.\n\nЯ возьму с собой лишние\nотмычки на всякий случай.",
     },
 
+    "fail0": {
+        "en_us": "I somehow botch my practice lock with\na mountain of lockpicks. Great start.",
+        "zh_cn": "我居然用一堆开锁器把练习锁搞砸了。\n完美的开局啊。",
+        "ru": "Я каким-то образом запорол тренировочный\nзамок кучей отмычек. отличное начало."
+    },
+    "fail1": {
+        "en_us": "My last lockpick breaks as I fumble the\nlockbox, leaving me with nothing.",
+        "zh_cn": "我的最后一根开锁器在弄锁盒时断了，我什么也没得到。",
+        "ru": "Моя последняя отмычка ломается, пока я вожусь с замком, и я остаюсь ни с чем."
+    },
+    "fail2": {
+        "en_us": "My pick breaks in the door's lock, and\nI am forced to withdraw from the tavern.",
+        "zh_cn": "我的开锁器在门锁里断了，我不得不从酒馆离开。",
+        "ru": "Моя отмычка ломается в замке двери, и мне приходится покинуть таверну."
+    },
+    "fail3": {
+        "en_us": "The robust lock holds, and my broken picks\nsplash in the murky water.",
+        "zh_cn": "坚固的锁没有被打开，我断了的开锁器\n掉进了浑浊的水中。",
+        "ru": "Прочный замок держится, а мои сломанные\nотмычки падают в мутную воду."
+    },
+    "fail4": {
+        "en_us": "The enchanted lock resets at my slightest\nmistake, sealing the door tight.",
+        "zh_cn": "魔法锁在我稍有失误时就重置，\n把门紧紧封住。",
+        "ru": "Зачарованный замок сбрасывается при\nмалейшей ошибке, плотно запирая дверь."
+    },
+    "fail5": {
+        "en_us": "The masterful lock defies my trembling hands,\nand the scroll remains beyond reach.",
+        "zh_cn": "高超的锁让我颤抖的双手无法打开，\n卷轴仍然遥不可及。",
+        "ru": "Искусный замок не поддаётся моим дрожащим\nрукам, и свиток остаётся недоступным."
+    },
+    "fail6": {
+        "en_us": "I misjudge the star lock's shifting tumblers,\nand whatever secrets in the scroll are now sealed away.",
+        "zh_cn": "我误判了星形锁的移动锁芯，\n卷轴里的秘密现在被锁住了。",
+        "ru": "Я неправильно оценил подвижные штифты звёздного\nзамка, и секреты свитка теперь заперты."
+    },
+    "fail7": {
+        "en_us": "My rival laughs in my face as his devilish\ncontraption remains tightly locked.",
+        "zh_cn": "我的对手在我面前大笑，\n他的狡猾装置依然紧紧锁着。",
+        "ru": "Мой соперник смеётся мне в лицо, пока его\nхитроумное устройство остаётся крепко запертым."
+    },
+
     "skullkey": {
         "en_us": "USE SKULL KEY?",
         "zh_cn": "使用骷髅钥匙？",
@@ -236,10 +277,56 @@ let textData = {
     },
     "skullkeyinfo": {
         "en_us": "A special lockpick themed after the legendary\nSkeleton Key. This tool is a lot more durable\nthan your normal lockpick.\n\nAllows you to \"auto-attempt\" the lock.",
-        "zh_cn": "一把以传奇骷髅钥匙为主\n题的特殊开锁工具。这种\n工具比普通开锁器耐用\n得多。\n\n允许你“自动尝试”开锁。",
+        "zh_cn": "一把以传奇骷髅钥匙为灵感的开锁神\n器，超级耐用，比普通开锁器强多了。\n\n允许你“自动尝试”开锁。",
         "ru": "Особый отмычка, оформленная в стиле\nлегендарного Ключа Черепа. Этот инструмент\nгораздо прочнее обычной отмычки.\n\nПозволяет \"автоматически пытаться\"\nоткрыть замок.",
     },
+    "pressspace": {
+        "en_us": "Press SPACE when\npin hits the top  ->",
+        "zh_cn": "当锁芯到达顶部\n按下空格键  ->",
+        "ru": "Нажмите ПРОБЕЛ, когда\nштифт достигнет верха  ->",
+    },
 
+    "usekey": {
+        "en_us": "USE KEY",
+        "zh_cn": "使用钥匙",
+        "ru": "КЛЮЧ",
+    },
+    "autoattempt": {
+        "en_us": "AUTO-ATTEMPT",
+        "zh_cn": "自动尝试",
+        "ru": "АВТО-ПОПЫТКА",
+    },
+
+    "hide": {
+        "en_us": "HIDE",
+        "zh_cn": "隐藏",
+        "ru": "СКРЫВАТЬ",
+    },
+
+    "almost": {
+        "en_us": "Almost there...",
+        "zh_cn": "快到了...",
+        "ru": "Почти готово...",
+    },
+
+    "practically": {
+        "en_us": "The lock practically falls apart once I crack it open.\nMy rival weeps while I stand victorious.",
+        "zh_cn": "锁一被我撬开，基本上就散架了。\n对手哭得稀里哗啦，我站着笑到最后！",
+        "ru": "Замок чуть ли не разваливается, как только я его\nвзламываю. Соперник рыдает, а я стою победителем!",
+    },
+
+    "return":{
+        "en_us": "RETURN",
+        "zh_cn": "返回",
+        "ru": "ВОЗВРАЩАТЬСЯ",
+    },
+
+    "unlockchance": {
+        "en_us": "UNLOCK CHANCE",
+        "zh_cn": "解锁概率",
+        "ru": "ПРОЦЕНТ РАЗБЛОКИРОВКИ",
+    }
+    
 }
 
 
