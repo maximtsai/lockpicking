@@ -1623,7 +1623,7 @@ function slideOpenLock() {
                     if (gameVars.currRoom === 'challenge') {
                         buttonText = getLangText('return');
                     }
-                    globalObjects.victory.nextLvl.addText(buttonText, {fontFamily: 'kingthings', fontSize: 28, color: '#000000', align: 'center'});
+                    globalObjects.victory.nextLvl.addText(buttonText, {fontFamily: 'kingthings', fontSize: language === 'ru' ? 20 : 28, color: '#000000', align: 'center'});
                     globalObjects.victory.nextLvl.setTextOffset(0, 1);
                     globalObjects.victory.nextLvl.setDepth(51);
                 }
@@ -1994,7 +1994,7 @@ function openCreditsPopup() {
 }
 function openFlavorPopup(title = " ", content = " ", image, scale = 0.95) {
     let instructContent = {};
-    instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, title, {fontFamily: 'kingthings', fontSize: language === 'ru' ? 23 : 32, color: '#140000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+    instructContent.title = PhaserScene.add.text(gameConsts.halfWidth, 123, title, {fontFamily: 'kingthings', fontSize: language === 'ru' ? 20 : 32, color: '#140000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
     instructContent.title.scaleX = language === 'ru' ? 0.93 : 1;
 
     if (image) {

@@ -171,9 +171,9 @@ let textData = {
         "ru": "КАНАЛИЗАЦИЯ",
     },
     "room4": {
-        "en_us": "ENCHANTED GATE",
-        "zh_cn": "魔法之门",
-        "ru": "ЗАЧАРОВАННЫЕ ВОРОТА",
+        "en_us": "MAGIC LOCK",
+        "zh_cn": "魔法之锁",
+        "ru": "ВОЛШЕБНЫЙ ЗАМОК",
     },
     "room5": {
         "en_us": "PALACE DOOR",
@@ -229,6 +229,23 @@ let textData = {
         "ru": "После обильного застолья и хвастовства\nо моём последнем ограблении,\nсоперник-слесарь показывает мне\nустройство, настолько сложное, что\nего едва ли можно назвать замком.\n\nВ этом механизме есть что-то\nковарное, но мои прежние\nпохвалы не позволяют мне\nотказаться от вызова.\n\nЯ возьму с собой лишние\nотмычки на всякий случай.",
     },
 
+    "finalstory1": {
+        "en_us": "The first tumbler unlocks, and I shake off\nan unnatural shiver.",
+        "zh_cn": "第一个锁芯解开了，我抖掉一阵不自然的寒颤。",
+        "ru": "Первый штифт отпирается,\nи я стряхиваю странный озноб.",
+    },
+
+    "finalstory2": {
+        "en_us": "A vision of the past flashes and I blink it away.\nOr was that the future?",
+        "zh_cn": "过去的幻象一闪而过，我眨眼将其驱散。或者是未来?",
+        "ru": "Видение прошлого мелькает, и я моргаю,\nпрогоняя его. Или это было будущее?",
+    },
+
+    "finalstory3": {
+        "en_us": "The seal unravels, and the scroll is mine now,\nthough I dare not look at it.",
+        "zh_cn": "封印解开了，卷轴现在属于我，尽管我不敢去看它。",
+        "ru": "Печать распутывается, и свиток теперь мой,\nхотя я не осмеливаюсь на него взглянуть.",
+    },
     "fail0": {
         "en_us": "I somehow botch my practice lock with\na mountain of lockpicks. Great start.",
         "zh_cn": "我居然用一堆开锁器把练习锁搞砸了。\n完美的开局啊。",
@@ -237,12 +254,12 @@ let textData = {
     "fail1": {
         "en_us": "My last lockpick breaks as I fumble the\nlockbox, leaving me with nothing.",
         "zh_cn": "我的最后一根开锁器在弄锁盒时断了，我什么也没得到。",
-        "ru": "Моя последняя отмычка ломается, пока я вожусь с замком, и я остаюсь ни с чем."
+        "ru": "Моя последняя отмычка ломается, пока я\nвожусь с замком, и я остаюсь ни с чем."
     },
     "fail2": {
         "en_us": "My pick breaks in the door's lock, and\nI am forced to withdraw from the tavern.",
         "zh_cn": "我的开锁器在门锁里断了，我不得不从酒馆离开。",
-        "ru": "Моя отмычка ломается в замке двери, и мне приходится покинуть таверну."
+        "ru": "Моя отмычка ломается в замке двери,\nи мне приходится покинуть таверну."
     },
     "fail3": {
         "en_us": "The robust lock holds, and my broken picks\nsplash in the murky water.",
@@ -250,7 +267,7 @@ let textData = {
         "ru": "Прочный замок держится, а мои сломанные\nотмычки падают в мутную воду."
     },
     "fail4": {
-        "en_us": "The enchanted lock resets at my slightest\nmistake, sealing the door tight.",
+        "en_us": "The magic lock resets at my slightest\nmistake, sealing the door tight.",
         "zh_cn": "魔法锁在我稍有失误时就重置，\n把门紧紧封住。",
         "ru": "Зачарованный замок сбрасывается при\nмалейшей ошибке, плотно запирая дверь."
     },
@@ -293,7 +310,7 @@ let textData = {
     },
     "autoattempt": {
         "en_us": "AUTO-ATTEMPT",
-        "zh_cn": "自动尝试",
+        "zh_cn": "自动解锁尝试",
         "ru": "АВТО-ПОПЫТКА",
     },
 
@@ -326,7 +343,7 @@ let textData = {
         "zh_cn": "解锁概率",
         "ru": "ПРОЦЕНТ РАЗБЛОКИРОВКИ",
     }
-    
+
 }
 
 

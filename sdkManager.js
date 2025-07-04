@@ -141,7 +141,7 @@ function sdkShowMidgameAd(onStart = () => {}, onFinish = () => {}, onError = () 
 }
 
 function sdkShowHappyTime() {
-    window.CrazyGames.SDK.game.happytime();
+    // Do nothing
 }
 
 let canCallBanner = true;
@@ -165,16 +165,6 @@ async function sdkShowBannerAd() {
     if (justClosedBanner) {
         return;
     }
-    try {
-        // await is not mandatory when requesting banners, but it will allow you to catch errors
-        await window.CrazyGames.SDK.banner.requestBanner({
-            id: "banner-container",
-            width: 468,
-            height: 60,
-        });
-    } catch (e) {
-        console.log("Banner request error", e);
-    }
 }
 
 let justClosedBanner = false;
@@ -186,7 +176,6 @@ function sdkClearBanner() {
     }, 200)
     const elem = document.getElementById("banner-container");
     elem.style.bottom = "-1500px";
-    window.CrazyGames.SDK.banner.clearAllBanners();
 }
 
 function sdkGetItem(key) {
