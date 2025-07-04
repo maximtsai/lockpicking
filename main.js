@@ -154,10 +154,10 @@ function onLoadComplete() {
 
 function onLoadCompleteAndSDKComplete() {
     if (!sdkIsLoaded) {
-        if (loadObjects.loadingText) {
-            loadObjects.loadingText.setText("waiting for SDK...")
-        }
-        return;
+        // if (loadObjects.loadingText) {
+        //     loadObjects.loadingText.setText("waiting for SDK...")
+        // }
+        // return;
     }
     if (gameVars.loadComplete) {
         if (loadObjects) {

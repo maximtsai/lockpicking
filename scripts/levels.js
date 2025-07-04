@@ -451,7 +451,7 @@ function gotoLevel(lvl, skipIntro = false) {
 
             globalObjects.pick.setFrame('pick.png');
             globalObjects.pickshadow.setVisible(true);
-            crazyGamesMidgameAd(() => {
+            yandexMidgameAd(() => {
                 loadingText.anim.stop();
                 loadingText.destroy();
                 hideGlobalClickBlocker();
@@ -618,8 +618,8 @@ function openLevelPopup() {
 
 function openCheatPopup() {
     let lvlContents = {};
-    lvlContents.title = PhaserScene.add.text(gameConsts.halfWidth, 187, 'USE SKULL KEY?', {fontFamily: 'kingthings', fontSize: 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
-    lvlContents.body = PhaserScene.add.text(gameConsts.halfWidth, 333, "A special lockpick themed after the legendary\nSkeleton Key. This tool is a lot more durable\nthan your normal lockpick.\n\nAllows you to \"auto-attempt\" the lock.", {fontFamily: 'kingthings', fontSize: 20, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0.5, 0.5);
+    lvlContents.title = PhaserScene.add.text(gameConsts.halfWidth, 187, getLangText('skullkey'), {fontFamily: 'kingthings', fontSize: language === 'ru' ? 24 : 32, color: '#000000', align: 'center'}).setDepth(102).setOrigin(0.5, 0.5);
+    lvlContents.body = PhaserScene.add.text(gameConsts.halfWidth, 333, getLangText('skullkeyinfo'), {fontFamily: 'kingthings', fontSize: language === 'ru' ? 16 : 20, color: '#000000', align: 'left'}).setDepth(102).setOrigin(0.5, 0.5);
     lvlContents.image = PhaserScene.add.image(gameConsts.halfWidth, 241, 'lock', 'imagekey.png').setDepth(102).setScale(0.86);
     openPopup(lvlContents, true);
     let extraContents = {};
